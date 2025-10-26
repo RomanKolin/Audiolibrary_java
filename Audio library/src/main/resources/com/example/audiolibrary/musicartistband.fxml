@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.audiolibrary.musicartistband">
+<Label id="label1change" prefWidth="815" prefHeight="485" style="-fx-background-color: #FFFFFF"/>
+<VBox>
+    <padding>
+        <Insets left="5"/>
+    </padding>
+    <VBox>
+        <HBox>
+            <VBox>
+                <padding>
+                    <Insets right="5"/>
+                </padding>
+                <HBox>
+                    <Label fx:id="label2change" alignment="CENTER" prefWidth="470" prefHeight="20" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #000000" text="Music artist/band"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="label3change" prefWidth="160" prefHeight="25" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #000000" text="Artist/band"/>
+                    <TextField fx:id="textfield1change" prefWidth="310" prefHeight="25" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="label4change" prefWidth="160" prefHeight="25" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #000000" text="Related artist(-s)/band(-s)"/>
+                    <TextArea fx:id="textfield2change" prefWidth="310" prefHeight="50" editable="false" wrapText="true" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000" stylesheets="/textarea.css"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="label5change" prefWidth="160" prefHeight="25" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #000000" text="Genre"/>
+                    <TextArea fx:id="textfield3change" prefWidth="310" prefHeight="25" wrapText="true" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000" stylesheets="/textarea.css"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="label6change" prefWidth="160" prefHeight="25" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #000000" text="Songs"/>
+                    <TextArea fx:id="textfield4change" prefWidth="310" prefHeight="100" editable="false" wrapText="true" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000" stylesheets="/textarea.css"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="label7change" prefWidth="160" prefHeight="25" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #000000" text="Number of songs"/>
+                    <TextField fx:id="textfield5change" prefWidth="310" prefHeight="25" editable="false" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="label8change" prefWidth="160" prefHeight="25" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #000000" text="Songs duration"/>
+                    <TextField fx:id="textfield6change" prefWidth="310" prefHeight="25" editable="false" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="label9change" prefWidth="160" prefHeight="25" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #000000" text="Total number of songs"/>
+                    <TextField fx:id="textfield7change" prefWidth="310" prefHeight="25" editable="false" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="label10change" prefWidth="160" prefHeight="25" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #000000" text="Total songs duration"/>
+                    <TextField fx:id="textfield8change" prefWidth="310" prefHeight="25" editable="false" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000"/>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT">
+                    <Button fx:id="button8add" text="Add" prefWidth="75" prefHeight="25" stylesheets="/button.css" onAction="#button8add"/>
+                    <Button fx:id="button9edit" text="Edit" prefWidth="75" prefHeight="25" stylesheets="/button.css" onAction="#button9edit"/>
+                </HBox>
+            </VBox>
+            <VBox>
+                <HBox>
+                    <Label fx:id="label11change" alignment="CENTER" prefWidth="330" prefHeight="20" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #000000" text="Related artist/band"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="label12change" prefWidth="105" prefHeight="25" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #000000" text="Artist/band"/>
+                    <TextField fx:id="textfield10change" prefWidth="225" prefHeight="25" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="label13change" prefWidth="105" prefHeight="25" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #000000" text="Songs"/>
+                    <TextArea fx:id="textfield11change" prefWidth="225" prefHeight="175" editable="false" wrapText="true" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000" stylesheets="/textarea.css"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="label14change" prefWidth="105" prefHeight="25" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #000000" text="Number of songs"/>
+                    <TextField fx:id="textfield12change" prefWidth="225" prefHeight="25" editable="false" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="label15change" prefWidth="105" prefHeight="25" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #000000" text="Songs duration"/>
+                    <TextField fx:id="textfield13change" prefWidth="225" prefHeight="25" editable="false" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000"/>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT">
+                    <Button fx:id="button10add" text="Add" prefWidth="75" prefHeight="25" stylesheets="/button.css" onAction="#button10add"/>
+                    <Button fx:id="button11edit" text="Edit" prefWidth="75" prefHeight="25" stylesheets="/button.css" onAction="#button11edit"/>
+                </HBox>
+            </VBox>
+        </HBox>
+        <HBox>
+            <padding>
+                <Insets top="5"/>
+            </padding>
+            <VBox>
+                <HBox>
+                    <Label fx:id="label16change" alignment="CENTER" prefWidth="805" prefHeight="20" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #000000" text="Song"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="label17change" prefWidth="65" prefHeight="25" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #000000" text="Name"/>
+                    <TextField fx:id="textfield14change" prefWidth="740" prefHeight="25" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="label18change" prefWidth="65" prefHeight="25" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #000000" text="Duration"/>
+                    <TextField fx:id="textfield15change" prefWidth="740" prefHeight="25" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="label19change" prefWidth="65" prefHeight="25" style="-fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #000000" text="Featuring"/>
+                    <TextField fx:id="textfield16change" prefWidth="740" prefHeight="25" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000"/>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT">
+                    <Button fx:id="button12add" text="Add" prefWidth="75" prefHeight="25" stylesheets="/button.css" onAction="#button12add"/>
+                    <Button fx:id="button13edit" text="Edit" prefWidth="75" prefHeight="25" stylesheets="/button.css" onAction="#button13edit"/>
+                    <Button fx:id="button14delete" text="Delete" prefWidth="75" prefHeight="25" stylesheets="/button.css" onAction="#button14delete"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </VBox>
+</VBox>
+</StackPane>

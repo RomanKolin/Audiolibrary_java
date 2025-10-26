@@ -1,0 +1,2 @@
+.text{-fx-text-alignment: justify}
+.scroll-bar *{-fx-pref-width: 0.1; -fx-pref-height: 0.1; -fx-background-color: #FFFFFF}
