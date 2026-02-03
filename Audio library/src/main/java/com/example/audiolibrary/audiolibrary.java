@@ -747,9 +747,12 @@ public class audiolibrary extends Application
                 label.setText("Songs count/duration: " + tableviewstring.getItems().size() + "/" + songsdur.getHour() + ":" + songsdur.getMinute() + ":" + songsdur.getSecond());
             }
         }
-        label.setText(label.getText().replace("0d ", ""));
-        if (songsdur.getHour()==0)
-            label.setText(label.getText().replaceFirst("0:", ""));
+        if (tabl != 1)
+        {
+            label.setText(label.getText().replace("/0d ", "/"));
+            if (songsdur.getHour()==0 && songsdur.getDayOfYear()-1 == 0)
+                label.setText(label.getText().replaceFirst("0:", ""));
+        }
         tableviewstring.getSelectionModel().clearSelection();
 
         if (tabl == 1 || tabl == 3 || tabl == 4 || tabl == 5 || tabl == 8)
