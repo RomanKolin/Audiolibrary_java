@@ -447,15 +447,25 @@ public class audiolibrary extends Application
                                         songsartband = Integer.parseInt(Arrays.asList(tableview2.getSelectionModel().getSelectedItem()).get(4));
                                     }
                                     TableColumn sub2sub1first = new TableColumn<>(nam13);
-                                    TableColumn sub2sub1second = new TableColumn<>(nam14);
+                                    TableColumn<String[], String> sub2sub1second = new TableColumn<>(nam14);
                                     TableColumn sub2sub1third = new TableColumn<>(nam15);
                                     TableColumn sub2sub1fourth = new TableColumn<>("");
+                                    if (tabl == 3 || tabl == 8)
+                                    {
+                                        sub2sub1second.setComparator(Comparator.comparing(s ->
+                                        {
+                                            if (s.split(":").length == 2)
+                                                return Duration.ofMinutes(Integer.parseInt(s.split(":")[0])).plusSeconds(Integer.parseInt(s.split(":")[1]));
+                                            else
+                                                return Duration.ofHours(Integer.parseInt(s.split(":")[0])).plusMinutes(Integer.parseInt(s.split(":")[1])).plusSeconds(Integer.parseInt(s.split(":")[2]));
+                                        }));
+                                    }
                                     tableview3.getColumns().add(sub2sub1first);
                                     tableview3.getColumns().add(sub2sub1second);
                                     tableview3.getColumns().add(sub2sub1third);
                                     tableview3.getColumns().add(sub2sub1fourth);
                                     sub2sub1first.setCellValueFactory((Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>) v -> new SimpleStringProperty(v.getValue()[0]));
-                                    sub2sub1second.setCellValueFactory((Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>) v -> new SimpleStringProperty(v.getValue()[1]));
+                                    sub2sub1second.setCellValueFactory(v -> new SimpleStringProperty(v.getValue()[1]));
                                     sub2sub1third.setCellValueFactory((Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>) v -> new SimpleStringProperty(v.getValue()[2]));
                                     sub2sub1fourth.setCellValueFactory((Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>) v -> new SimpleStringProperty(v.getValue()[3]));
                                     sub2sub1first.setPrefWidth(siz13);
