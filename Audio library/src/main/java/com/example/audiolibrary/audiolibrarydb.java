@@ -975,7 +975,7 @@ public class audiolibrarydb
                     pstat.setString(4, "1");
                     pstat.setString(5, "999");
                 }
-                else if (audiolibrary.combobox3.getValue().equals("<15"))
+                else if (audiolibrary.combobox3.getValue().equals("<10"))
                 {
                     pstat.setString(4, "1");
                     pstat.setString(5, "9");
@@ -995,14 +995,14 @@ public class audiolibrarydb
                     pstat.setString(4, "55");
                     pstat.setString(5, "55");
                 }
-                else if (audiolibrary.combobox3.getValue().equals(">55"))
+                else if (audiolibrary.combobox3.getValue().equals("70"))
                 {
-                    pstat.setString(4, "56");
-                    pstat.setString(5, "999");
+                    pstat.setString(4, "70");
+                    pstat.setString(5, "70");
                 }
-                else if (audiolibrary.combobox3.getValue().equals(">55"))
+                else if (audiolibrary.combobox3.getValue().equals(">70"))
                 {
-                    pstat.setString(4, "56");
+                    pstat.setString(4, "71");
                     pstat.setString(5, "999");
                 }
                 if (audiolibrary.combobox4.getSelectionModel().isEmpty())
@@ -1020,14 +1020,14 @@ public class audiolibrarydb
                     pstat.setString(6, "0:45:0");
                     pstat.setString(7, "1:14:59");
                 }
-                else if (audiolibrary.combobox4.getValue().equals(">=1:15:00 & <1:45:00"))
+                else if (audiolibrary.combobox4.getValue().equals(">=1:15:00 & <2:5:00"))
                 {
                     pstat.setString(6, "1:15:0");
-                    pstat.setString(7, "1:44:59");
+                    pstat.setString(7, "2:4:59");
                 }
-                else if (audiolibrary.combobox4.getValue().equals(">=1:45:00"))
+                else if (audiolibrary.combobox4.getValue().equals(">=2:5:00"))
                 {
-                    pstat.setString(6, "1:45:00");
+                    pstat.setString(6, "2:5:00");
                     pstat.setString(7, "71:59:59");
                 }
                 resset = pstat.executeQuery();
@@ -1057,7 +1057,7 @@ public class audiolibrarydb
                     pstat.setString(4, "1");
                     pstat.setString(5, "999");
                 }
-                else if (audiolibrary.combobox3.getValue().equals("<15"))
+                else if (audiolibrary.combobox3.getValue().equals("<10"))
                 {
                     pstat.setString(4, "1");
                     pstat.setString(5, "9");
@@ -1077,14 +1077,14 @@ public class audiolibrarydb
                     pstat.setString(4, "55");
                     pstat.setString(5, "55");
                 }
-                else if (audiolibrary.combobox3.getValue().equals(">55"))
+                else if (audiolibrary.combobox3.getValue().equals("70"))
                 {
-                    pstat.setString(4, "56");
-                    pstat.setString(5, "999");
+                    pstat.setString(4, "70");
+                    pstat.setString(5, "70");
                 }
-                else if (audiolibrary.combobox3.getValue().equals(">55"))
+                else if (audiolibrary.combobox3.getValue().equals(">70"))
                 {
-                    pstat.setString(4, "56");
+                    pstat.setString(4, "71");
                     pstat.setString(5, "999");
                 }
                 if (audiolibrary.combobox4.getSelectionModel().isEmpty())
@@ -1102,14 +1102,14 @@ public class audiolibrarydb
                     pstat.setString(6, "0:45:00");
                     pstat.setString(7, "1:14:59");
                 }
-                else if (audiolibrary.combobox4.getValue().equals(">=1:15:00 & <1:45:00"))
+                else if (audiolibrary.combobox4.getValue().equals(">=1:15:00 & <2:5:00"))
                 {
                     pstat.setString(6, "1:15:00");
-                    pstat.setString(7, "1:44:59");
+                    pstat.setString(7, "2:4:59");
                 }
-                else if (audiolibrary.combobox4.getValue().equals(">=1:45:00"))
+                else if (audiolibrary.combobox4.getValue().equals(">=2:5:00"))
                 {
-                    pstat.setString(6, "1:45:00");
+                    pstat.setString(6, "2:5:00");
                     pstat.setString(7, "71:59:59");
                 }
                 resset = pstat.executeQuery();
