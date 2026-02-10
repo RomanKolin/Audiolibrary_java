@@ -1391,6 +1391,59 @@ public class audiolibrarydb
         return datarr;
     }
 
+    public static String[][] SongsStatistics(String cat) throws Exception
+    {
+        int count;
+
+        conn();
+        Statement stat = conn.createStatement();
+        PreparedStatement pstat;
+        ResultSet resset;
+        String[][] datarr = new String[15][2];
+        if (cat.equals("Total") || cat.equals("Жанр") || cat.equals("Композиторы") || cat.equals("Блогеры") || cat.equals("Каверы") || cat.equals("Саундтреки"))
+        {
+            switch (cat)
+            {
+                case "Жанр":
+                    resset = stat.executeQuery("CALL SongsStatisticsTotalGenre();");
+                    break;
+                case "Композиторы":
+                    resset = stat.executeQuery("CALL SongsStatisticsComposers();");
+                    break;
+                case "Блогеры":
+                    resset = stat.executeQuery("CALL SongsStatisticsBloggers();");
+                    break;
+                case "Каверы":
+                    resset = stat.executeQuery("CALL SongsStatisticsCovers();");
+                    break;
+                case "Саундтреки":
+                    resset = stat.executeQuery("CALL SongsStatisticsSoundtracks();");
+                    break;
+                default:
+                    resset = stat.executeQuery("SELECT * FROM TotalSongsStatisticsVIEW;");
+                    break;
+            }
+        }
+        else
+        {
+            pstat = conn.prepareStatement("CALL SongsStatisticsGenre(?);");
+            pstat.setString(1, cat);
+            resset = pstat.executeQuery();
+        }
+        count = 0;
+        while (resset.next() && count < 15)
+        {
+            String shortestsongs = resset.getString(1);
+            String longestsongs = resset.getString(2);
+            datarr[count][0] = shortestsongs;
+            datarr[count][1] = longestsongs;
+            count += 1;
+        }
+        conn.close();
+
+        return datarr;
+    }
+
     public static int NewMusicArtistBandID() throws Exception
     {
         int artbandid = 0;

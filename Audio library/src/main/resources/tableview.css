@@ -17,3 +17,22 @@
 .scroll-bar .decrement-button{-fx-padding: 0 10}
 .scroll-bar .increment-arrow{-fx-shape: ""; -fx-padding: 0}
 .scroll-bar .decrement-arrow{-fx-shape: ""; -fx-padding: 0}
+
+#tableview4songsstatistics{-fx-border-width: 0; -fx-border-color: transparent; -fx-background-color: transparent}
+#tableview4songsstatistics .placeholder .label{-fx-text-fill: transparent}
+#tableview4songsstatistics .column-header-background{-fx-background-color: transparent; -fx-border-width: 0 0 0 0; -fx-border-color: #4B0000}
+#tableview4songsstatistics .column-header .label{-fx-alignment: CENTER; -fx-background-color: transparent}
+#tableview4songsstatistics .column-header .text{-fx-font-weight: bold; -fx-fill: #000000}
+#tableview4songsstatistics .filler{-fx-background-color: transparent}
+#tableview4songsstatistics .table-column{-fx-alignment: CENTER; -fx-background-color: transparent}
+#tableview4songsstatistics .table-cell{-fx-border-width: 0 0 0 0; -fx-alignment: CENTER}
+#tableview4songsstatistics .table-row-cell{-fx-background-color: transparent; -fx-cell-size: 20}
+#tableview4songsstatistics .table-row-cell .text{-fx-fill: #000000; -fx-font-style: Italic}
+#tableview4songsstatistics .table-row-cell:selected{-fx-background-color: #4B0000}
+#tableview4songsstatistics .table-row-cell:selected .text{-fx-fill: #FF0000}
+#tableview4songsstatistics .scroll-bar{-fx-background-color: transparent; -fx-pref-width: 10}
+#tableview4songsstatistics .scroll-bar .thumb{-fx-color: #4B0000; -fx-pref-width:100}
+#tableview4songsstatistics .scroll-bar .increment-button{-fx-padding: 0 10}
+#tableview4songsstatistics .scroll-bar .decrement-button{-fx-padding: 0 10}
+#tableview4songsstatistics .scroll-bar .increment-arrow{-fx-shape: ""; -fx-padding: 0}
+#tableview4songsstatistics .scroll-bar .decrement-arrow{-fx-shape: ""; -fx-padding: 0}

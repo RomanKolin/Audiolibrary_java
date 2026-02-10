@@ -144,6 +144,8 @@ public class audiolibrary extends Application
     @FXML
     TableView<String[]> tableview3songs;
     @FXML
+    TableView<String[]> tableview4songsstatistics;
+    @FXML
     ComboBox combobox1filtering;
     @FXML
     ComboBox combobox2filtering;
@@ -230,6 +232,7 @@ public class audiolibrary extends Application
     static ObservableList<String[]> sub1obslist = FXCollections.observableArrayList();
     static ObservableList<String[]> sub2obslist = FXCollections.observableArrayList();
     static ObservableList<String[]> sub2sub1obslist = FXCollections.observableArrayList();
+    static ObservableList<String[]> songsstatisticsobslist = FXCollections.observableArrayList();
 
     public void initialize()
     {
@@ -285,7 +288,19 @@ public class audiolibrary extends Application
                         if (tabl == 1)
                         {
                             if (textfield1.getText().equals("Жанр"))
+                            {
                                 tableview2.removeEventFilter(MouseEvent.ANY, me);
+                                try
+                                {
+                                    songsstatisticsobslist.clear();
+                                    songsstatisticsobslist.addAll(Arrays.asList(audiolibrarydb.SongsStatistics("Жанр")));
+                                    tableview4songsstatistics.setItems(songsstatisticsobslist);
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw new RuntimeException(ex);
+                                }
+                            }
                             else
                             {
                                 tableview2.getSelectionModel().clearSelection();
@@ -294,6 +309,23 @@ public class audiolibrary extends Application
                                 textfield12.setText("");
                                 textfield13.setText("");
                                 tableview2.addEventFilter(MouseEvent.ANY, me);
+                                try
+                                {
+                                    songsstatisticsobslist.clear();
+                                    if (textfield1.getText().equals("Композиторы"))
+                                        songsstatisticsobslist.addAll(Arrays.asList(audiolibrarydb.SongsStatistics("Композиторы")));
+                                    else if (textfield1.getText().equals("Блогеры"))
+                                        songsstatisticsobslist.addAll(Arrays.asList(audiolibrarydb.SongsStatistics("Блогеры")));
+                                    else if (textfield1.getText().equals("Каверы"))
+                                        songsstatisticsobslist.addAll(Arrays.asList(audiolibrarydb.SongsStatistics("Каверы")));
+                                    else if (textfield1.getText().equals("Саундтреки"))
+                                        songsstatisticsobslist.addAll(Arrays.asList(audiolibrarydb.SongsStatistics("Саундтреки")));
+                                    tableview4songsstatistics.setItems(songsstatisticsobslist);
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw new RuntimeException(ex);
+                                }
                             }
                             tableview2.getSelectionModel().selectedItemProperty().addListener((sub1s, sub1os, sub1ns) ->
                             {
@@ -303,6 +335,16 @@ public class audiolibrary extends Application
                                     textfield11.setText(Arrays.asList(tableview2.getSelectionModel().getSelectedItem()).get(1));
                                     textfield12.setText(Arrays.asList(tableview2.getSelectionModel().getSelectedItem()).get(2));
                                     textfield13.setText(Arrays.asList(tableview2.getSelectionModel().getSelectedItem()).get(3));
+                                }
+                                try
+                                {
+                                    songsstatisticsobslist.clear();
+                                    songsstatisticsobslist.addAll(Arrays.asList(audiolibrarydb.SongsStatistics(textfield10.getText())));
+                                    tableview4songsstatistics.setItems(songsstatisticsobslist);
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw new RuntimeException(ex);
                                 }
                             });
                         }
@@ -1289,6 +1331,31 @@ public class audiolibrary extends Application
             textfield12.setText("");
             textfield13.setText("");
         }
+
+        if (tabl == 1)
+        {
+            songsstatisticsobslist.clear();
+            tableview4songsstatistics.getColumns().clear();
+            songsstatisticsobslist.addAll(Arrays.asList(audiolibrarydb.SongsStatistics("Total")));
+            TableColumn songsstatisticsfirst = new TableColumn<>("Shortest songs");
+            TableColumn songsstatisticssecond = new TableColumn<>("Longest songs");
+            tableview4songsstatistics.getColumns().add(songsstatisticsfirst);
+            tableview4songsstatistics.getColumns().add(songsstatisticssecond);
+            songsstatisticsfirst.setCellValueFactory((Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>) v -> new SimpleStringProperty(v.getValue()[0]));
+            songsstatisticssecond.setCellValueFactory((Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>) v -> new SimpleStringProperty(v.getValue()[1]));
+            songsstatisticsfirst.setPrefWidth(402.5);
+            songsstatisticsfirst.setResizable(false);
+            songsstatisticsfirst.setReorderable(false);
+            songsstatisticsfirst.setSortable(false);
+            songsstatisticssecond.setPrefWidth(402.5);
+            songsstatisticssecond.setResizable(false);
+            songsstatisticssecond.setReorderable(false);
+            songsstatisticssecond.setSortable(false);
+            Tip(songsstatisticsfirst);
+            Tip(songsstatisticssecond);
+            tableview4songsstatistics.setItems(songsstatisticsobslist);
+            tableview4songsstatistics.getSelectionModel().selectedItemProperty().addListener((sub1s, sub1os, sub1ns) -> tableview4songsstatistics.getSelectionModel().clearSelection());
+        }
     }
 
     public void button1audiolibrarygenre() throws Exception
@@ -1314,6 +1381,7 @@ public class audiolibrary extends Application
         textfield11 = audiolibrarygenre.textfield11change;
         textfield12 = audiolibrarygenre.textfield12change;
         textfield13 = audiolibrarygenre.textfield13change;
+        tableview4songsstatistics = audiolibrarygenre.tableview4songsstatistics;
 
         tabl = 1;
         subtabl = 0;

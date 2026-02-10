@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.geometry.Insets?>
 
 <StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.audiolibrary.audiolibrarygenre">
@@ -62,7 +63,7 @@
                 </HBox>
             </VBox>
         </HBox>
-        <Label id="label27note" prefWidth="805" prefHeight="355" style="-fx-background-image: url(/note.png); -fx-background-size: stretch"/>
+        <TableView fx:id="tableview4songsstatistics" prefWidth="805" prefHeight="355" maxWidth="805" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-font-family: Times New Roman; -fx-font-size: 12; -fx-text-fill: #000000" stylesheets="/tableview.css"/>
     </VBox>
 </VBox>
 </StackPane>

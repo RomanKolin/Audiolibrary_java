@@ -41,4 +41,6 @@ public class audiolibrarygenre
     TextField textfield12change;
     @FXML
     TextField textfield13change;
+    @FXML
+    TableView<String[]> tableview4songsstatistics;
 }
