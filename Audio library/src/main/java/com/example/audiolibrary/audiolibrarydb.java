@@ -73,7 +73,7 @@ public class audiolibrarydb
                 while (resset.next())
                     count = resset.getInt("COUNT(cat)");
                 datarr = new String[count][4];
-                resset = stat.executeQuery("SELECT cat, noorigartsbands, nosongs, REPLACE(REPLACE(songsdur, ':0', ':'), '00:', '0:') FROM `Audio library` WHERE cat='Жанр' UNION (SELECT cat, noorigartsbands, nosongs, REPLACE(REPLACE(songsdur, ':0', ':'), '00:', '0:') FROM `Audio library` WHERE cat='Композиторы') UNION (SELECT cat, noorigartsbands, nosongs, REPLACE(REPLACE(songsdur, ':0', ':'), '00:', '0:') FROM `Audio library` WHERE cat='Блогеры') UNION (SELECT cat, noorigartsbands, nosongs, REPLACE(REPLACE(songsdur, ':0', ':'), '00:', '0:') FROM `Audio library` WHERE cat='Каверы') UNION (SELECT cat, noorigartsbands, nosongs, REPLACE(REPLACE(songsdur, ':0', ':'), '00:', '0:') FROM `Audio library` WHERE cat='Саундтреки');");
+                resset = stat.executeQuery("SELECT cat, noorigartsbands, nosongs, REPLACE(REPLACE(REPLACE(REPLACE(songsdur, ':0', ':'), '00:', '0:'), ' 0', ' '), ' :', ' 0:') FROM `Audio library` WHERE cat='Жанр' UNION (SELECT cat, noorigartsbands, nosongs, REPLACE(REPLACE(REPLACE(REPLACE(songsdur, ':0', ':'), '00:', '0:'), ' 0', ' '), ' :', ' 0:') FROM `Audio library` WHERE cat='Композиторы') UNION (SELECT cat, noorigartsbands, nosongs, REPLACE(REPLACE(REPLACE(REPLACE(songsdur, ':0', ':'), '00:', '0:'), ' 0', ' '), ' :', ' 0:') FROM `Audio library` WHERE cat='Блогеры') UNION (SELECT cat, noorigartsbands, nosongs, REPLACE(REPLACE(REPLACE(REPLACE(songsdur, ':0', ':'), '00:', '0:'), ' 0', ' '), ' :', ' 0:') FROM `Audio library` WHERE cat='Каверы') UNION (SELECT cat, noorigartsbands, nosongs, REPLACE(REPLACE(REPLACE(REPLACE(songsdur, ':0', ':'), '00:', '0:'), ' 0', ' '), ' :', ' 0:') FROM `Audio library` WHERE cat='Саундтреки');");
                 count = 0;
                 while (resset.next())
                 {
@@ -235,7 +235,7 @@ public class audiolibrarydb
                 while (resset.next())
                     count = resset.getInt("COUNT(ID)");
                 datarr = new String[count][6];
-                resset = stat.executeQuery("SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':')), ID FROM Soundtrack ORDER BY movanimsergam;");
+                resset = stat.executeQuery("SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REGEXP_REPLACE(REGEXP_REPLACE(REPLACE(songsdur, ':0', ':'), '^01', '1'), '^02', '2')), ID FROM Soundtrack ORDER BY movanimsergam;");
                 count = 0;
                 while (resset.next())
                 {
@@ -607,9 +607,9 @@ public class audiolibrarydb
         conn();
         String[][] datarr = new String[1][9];
         if (audiolibrary.tabl == 3)
-            pstat = conn.prepareStatement("WITH musicartistband AS(WITH musicartistband AS(SELECT `Music artist/band`.artband, `Related music artist/band`.relartband, `Music artist/band`.genr, Song.nam, `Music artist/band`.nosongs, `Music artist/band`.songsdur, `Music artist/band`.totnosongs, `Music artist/band`.totsongsdur, `Music artist/band`.ID FROM `Music artist/band` LEFT JOIN `Related music artist/band` ON `Music artist/band`.ID=`Related music artist/band`.artband LEFT JOIN `Music artist/band's song` ON `Music artist/band`.ID=`Music artist/band's song`.artband LEFT JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE `Music artist/band`.ID=?) SELECT artband, GROUP_CONCAT(DISTINCT relartband SEPARATOR ', ') AS relartband, genr, nam, nosongs, songsdur, totnosongs, totsongsdur, ID FROM musicartistband GROUP BY artband, genr, nam, nosongs, songsdur, totnosongs, totsongsdur, ID) SELECT artband, relartband, genr, GROUP_CONCAT(nam ORDER BY nam SEPARATOR ', '), nosongs, TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':')), totnosongs, TRIM(LEADING '00:' FROM REPLACE(totsongsdur, ':0', ':')), ID FROM musicartistband GROUP BY artband, relartband, genr, nosongs, songsdur, totnosongs, totsongsdur, ID ORDER BY artband;");
+            pstat = conn.prepareStatement("WITH musicartistband AS(WITH musicartistband AS(SELECT `Music artist/band`.artband, `Related music artist/band`.relartband, `Music artist/band`.genr, Song.nam, `Music artist/band`.nosongs, `Music artist/band`.songsdur, `Music artist/band`.totnosongs, `Music artist/band`.totsongsdur, `Music artist/band`.ID FROM `Music artist/band` LEFT JOIN `Related music artist/band` ON `Music artist/band`.ID=`Related music artist/band`.artband LEFT JOIN `Music artist/band's song` ON `Music artist/band`.ID=`Music artist/band's song`.artband LEFT JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE `Music artist/band`.ID=?) SELECT artband, GROUP_CONCAT(DISTINCT relartband SEPARATOR ', ') AS relartband, genr, nam, nosongs, songsdur, totnosongs, totsongsdur, ID FROM musicartistband GROUP BY artband, genr, nam, nosongs, songsdur, totnosongs, totsongsdur, ID) SELECT artband, relartband, genr, GROUP_CONCAT(nam ORDER BY nam SEPARATOR ', '), nosongs, TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':'))), totnosongs, TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(totsongsdur, ':0', ':'))), ID FROM musicartistband GROUP BY artband, relartband, genr, nosongs, songsdur, totnosongs, totsongsdur, ID ORDER BY artband;");
         else if (audiolibrary.tabl == 4 || audiolibrary.tabl == 5)
-            pstat = conn.prepareStatement("WITH musicartistband AS(SELECT `Music artist/band`.artband, Song.nam, `Music artist/band`.nosongs, `Music artist/band`.songsdur, `Music artist/band`.ID FROM `Music artist/band` LEFT JOIN `Music artist/band's song` ON `Music artist/band`.ID=`Music artist/band's song`.artband LEFT JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE `Music artist/band`.ID=?) SELECT artband, GROUP_CONCAT(nam ORDER BY nam SEPARATOR ', '), nosongs, TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':')), ID FROM musicartistband GROUP BY artband, nosongs, songsdur, ID ORDER BY artband;");
+            pstat = conn.prepareStatement("WITH musicartistband AS(SELECT `Music artist/band`.artband, Song.nam, `Music artist/band`.nosongs, `Music artist/band`.songsdur, `Music artist/band`.ID FROM `Music artist/band` LEFT JOIN `Music artist/band's song` ON `Music artist/band`.ID=`Music artist/band's song`.artband LEFT JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE `Music artist/band`.ID=?) SELECT artband, GROUP_CONCAT(nam ORDER BY nam SEPARATOR ', '), nosongs, TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':'))), ID FROM musicartistband GROUP BY artband, nosongs, songsdur, ID ORDER BY artband;");
         pstat.setInt(1, ID);
         resset = pstat.executeQuery();
         while (resset.next())
@@ -680,7 +680,7 @@ public class audiolibrarydb
 
         conn();
         String[][] datarr = new String[1][6];
-        pstat = conn.prepareStatement("SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':')), ID FROM Soundtrack WHERE ID=? ORDER BY movanimsergam;");
+        pstat = conn.prepareStatement("SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REGEXP_REPLACE(REGEXP_REPLACE(REPLACE(songsdur, ':0', ':'), '^01', '1'), '^02', '2')), ID FROM Soundtrack WHERE ID=? ORDER BY movanimsergam;");
         pstat.setInt(1, ID);
         resset = pstat.executeQuery();
         while (resset.next())
@@ -905,7 +905,7 @@ public class audiolibrarydb
                 }
                 break;
             case 7:
-                pstat = conn.prepareStatement("WITH soundtrack AS(WITH soundtrack AS((SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':')) AS songsdur, ID FROM Soundtrack WHERE movanimsergam LIKE ? ORDER BY movanimsergam) UNION (SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':')) AS songsdur, ID FROM Soundtrack WHERE artband LIKE ? ORDER BY movanimsergam) UNION (SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':')) AS songsdur, ID FROM Soundtrack WHERE song LIKE ? ORDER BY movanimsergam)) SELECT movanimsergam, artband, song, nosongs, songsdur, ID FROM soundtrack ORDER BY movanimsergam) SELECT COUNT(ID) FROM soundtrack;");
+                pstat = conn.prepareStatement("WITH soundtrack AS(WITH soundtrack AS((SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REGEXP_REPLACE(REGEXP_REPLACE(REPLACE(songsdur, ':0', ':'), '^01', '1'), '^02', '2')) AS songsdur, ID FROM Soundtrack WHERE movanimsergam LIKE ? ORDER BY movanimsergam) UNION (SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REGEXP_REPLACE(REGEXP_REPLACE(REPLACE(songsdur, ':0', ':'), '^01', '1'), '^02', '2')) AS songsdur, ID FROM Soundtrack WHERE artband LIKE ? ORDER BY movanimsergam) UNION (SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REGEXP_REPLACE(REGEXP_REPLACE(REPLACE(songsdur, ':0', ':'), '^01', '1'), '^02', '2')) AS songsdur, ID FROM Soundtrack WHERE song LIKE ? ORDER BY movanimsergam)) SELECT movanimsergam, artband, song, nosongs, songsdur, ID FROM soundtrack ORDER BY movanimsergam) SELECT COUNT(ID) FROM soundtrack;");
                 pstat.setString(1, search);
                 pstat.setString(2, search);
                 pstat.setString(3, search);
@@ -913,7 +913,7 @@ public class audiolibrarydb
                 while (resset.next())
                     count = resset.getInt("COUNT(ID)");
                 datarr = new String[count][6];
-                pstat = conn.prepareStatement("WITH soundtrack AS((SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':')) AS songsdur, ID FROM Soundtrack WHERE movanimsergam LIKE ? ORDER BY movanimsergam) UNION (SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':')) AS songsdur, ID FROM Soundtrack WHERE artband LIKE ? ORDER BY movanimsergam) UNION (SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':')) AS songsdur, ID FROM Soundtrack WHERE song LIKE ? ORDER BY movanimsergam)) SELECT movanimsergam, artband, song, nosongs, songsdur, ID FROM soundtrack ORDER BY movanimsergam;");
+                pstat = conn.prepareStatement("WITH soundtrack AS((SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REGEXP_REPLACE(REGEXP_REPLACE(REPLACE(songsdur, ':0', ':'), '^01', '1'), '^02', '2')) AS songsdur, ID FROM Soundtrack WHERE movanimsergam LIKE ? ORDER BY movanimsergam) UNION (SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REGEXP_REPLACE(REGEXP_REPLACE(REPLACE(songsdur, ':0', ':'), '^01', '1'), '^02', '2')) AS songsdur, ID FROM Soundtrack WHERE artband LIKE ? ORDER BY movanimsergam) UNION (SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REGEXP_REPLACE(REGEXP_REPLACE(REPLACE(songsdur, ':0', ':'), '^01', '1'), '^02', '2')) AS songsdur, ID FROM Soundtrack WHERE song LIKE ? ORDER BY movanimsergam)) SELECT movanimsergam, artband, song, nosongs, songsdur, ID FROM soundtrack ORDER BY movanimsergam;");
                 pstat.setString(1, search);
                 pstat.setString(2, search);
                 pstat.setString(3, search);
@@ -1300,7 +1300,7 @@ public class audiolibrarydb
             }
             break;
             case 7:
-                pstat = conn.prepareStatement("WITH soundtrack AS(SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':')), ID FROM Soundtrack WHERE nosongs BETWEEN ? AND ? AND songsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME) ORDER BY movanimsergam) SELECT COUNT(ID) FROM soundtrack;");
+                pstat = conn.prepareStatement("WITH soundtrack AS(SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REGEXP_REPLACE(REGEXP_REPLACE(REPLACE(songsdur, ':0', ':'), '^01', '1'), '^02', '2')), ID FROM Soundtrack WHERE nosongs BETWEEN ? AND ? AND songsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME) ORDER BY movanimsergam) SELECT COUNT(ID) FROM soundtrack;");
                 if (audiolibrary.combobox1.getSelectionModel().isEmpty())
                 {
                     pstat.setString(1, "1");
@@ -1335,7 +1335,7 @@ public class audiolibrarydb
                 while (resset.next())
                     count = resset.getInt("COUNT(ID)");
                 datarr = new String[count][6];
-                pstat = conn.prepareStatement("SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':')), ID FROM Soundtrack WHERE nosongs BETWEEN ? AND ? AND songsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME) ORDER BY movanimsergam;");
+                pstat = conn.prepareStatement("SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REGEXP_REPLACE(REGEXP_REPLACE(REPLACE(songsdur, ':0', ':'), '^01', '1'), '^02', '2')), ID FROM Soundtrack WHERE nosongs BETWEEN ? AND ? AND songsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME) ORDER BY movanimsergam;");
                 if (audiolibrary.combobox1.getSelectionModel().isEmpty())
                 {
                     pstat.setString(1, "1");
