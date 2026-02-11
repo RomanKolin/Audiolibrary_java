@@ -289,6 +289,7 @@ public class audiolibrary extends Application
                         {
                             if (textfield1.getText().equals("Жанр"))
                             {
+                                tableview2.getSelectionModel().clearSelection();
                                 tableview2.removeEventFilter(MouseEvent.ANY, me);
                                 try
                                 {
