@@ -1391,6 +1391,45 @@ public class audiolibrarydb
         return datarr;
     }
 
+    public static String ArtistsStatistics(String cat) throws Exception
+    {
+        String artistsstatistics = "";
+
+        conn();
+        Statement stat = conn.createStatement();
+        PreparedStatement pstat;
+        ResultSet resset;
+        if (cat.equals("Total") || cat.equals("Жанр") || cat.equals("Каверы"))
+        {
+            switch (cat)
+            {
+                case "Жанр":
+                    resset = stat.executeQuery("SELECT REPLACE(`Number of artists and related artists, songs count/duration`, 'Жанр: ', '') FROM TotalArtistsStatisticsVIEW WHERE `Number of artists and related artists, songs count/duration` LIKE 'Жанр%';");
+                    break;
+                case "Каверы":
+                    resset = stat.executeQuery("SELECT REPLACE(`Number of artists and related artists, songs count/duration`, 'Каверы: ', '') FROM TotalArtistsStatisticsVIEW WHERE `Number of artists and related artists, songs count/duration` LIKE 'Каверы%';");
+                    break;
+                default:
+                    resset = stat.executeQuery("SELECT REPLACE(`Number of artists and related artists, songs count/duration`, 'Total: ', '') FROM TotalArtistsStatisticsVIEW WHERE `Number of artists and related artists, songs count/duration` LIKE 'Total%';");
+                    break;
+            }
+        }
+        else
+        {
+            pstat = conn.prepareStatement("SELECT REPLACE(`Number of artists and related artists, songs count/duration`, ?, '') FROM TotalArtistsStatisticsVIEW WHERE `Number of artists and related artists, songs count/duration` LIKE ?;");
+            pstat.setString(1, cat + ":");
+            pstat.setString(2, cat + "%");
+            resset = pstat.executeQuery();
+        }
+        while (resset.next())
+        {
+            artistsstatistics = resset.getString(1);
+        }
+        conn.close();
+
+        return artistsstatistics;
+    }
+
     public static String[][] SongsStatistics(String cat) throws Exception
     {
         int count;

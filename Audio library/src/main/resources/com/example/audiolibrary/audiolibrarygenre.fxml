@@ -63,7 +63,15 @@
                 </HBox>
             </VBox>
         </HBox>
-        <TableView fx:id="tableview4songsstatistics" prefWidth="805" prefHeight="355" maxWidth="805" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-font-family: Times New Roman; -fx-font-size: 12; -fx-text-fill: #000000" stylesheets="/tableview.css"/>
+        <VBox>
+            <TableView fx:id="tableview4songsstatistics" prefWidth="805" prefHeight="350" maxWidth="805" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-font-family: Times New Roman; -fx-font-size: 12; -fx-text-fill: #000000" stylesheets="/tableview.css"/>
+            <VBox>
+                <padding>
+                    <Insets top="-30"/>
+                </padding>
+                <Label fx:id="label27artistsandsongsstatistics" alignment="CENTER_RIGHT" prefWidth="805" prefHeight="40" style="-fx-text-alignment: right; -fx-line-spacing: -5; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #000000"/>
+            </VBox>
+        </VBox>
     </VBox>
 </VBox>
 </StackPane>

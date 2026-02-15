@@ -48,6 +48,10 @@ WITH cover AS(WITH cover AS(SELECT Song.nam, `Music artist/band`.artband, `Music
 SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':')), ID FROM Soundtrack WHERE Soundtrack.nosongs BETWEEN ? AND ? ORDER BY movanimsergam;
 SELECT movanimsergam, artband, song, nosongs, TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':')), ID FROM Soundtrack WHERE Soundtrack.songsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME) ORDER BY movanimsergam;
 
+SELECT REPLACE(`Number of artists and related artists, songs count/duration`, 'Total: ', '') FROM TotalArtistsStatisticsVIEW WHERE `Number of artists and related artists, songs count/duration` LIKE 'Total%';
+SELECT REPLACE(`Number of artists and related artists, songs count/duration`, 'Жанр: ', '') FROM TotalArtistsStatisticsVIEW WHERE `Number of artists and related artists, songs count/duration` LIKE 'Жанр%';
+SELECT REPLACE(`Number of artists and related artists, songs count/duration`, 'Каверы: ', '') FROM TotalArtistsStatisticsVIEW WHERE `Number of artists and related artists, songs count/duration` LIKE 'Каверы%';
+SELECT REPLACE(`Number of artists and related artists, songs count/duration`, ?, '') FROM TotalArtistsStatisticsVIEW WHERE `Number of artists and related artists, songs count/duration` LIKE ?;
 SELECT * FROM TotalSongsStatisticsVIEW;
 CALL SongsStatisticsTotalGenre();
 CALL SongsStatisticsGenre(?);

@@ -26,6 +26,8 @@ public class audiolibrarygenre
     @FXML
     Label label15change;
     @FXML
+    Label label27artistsandsongsstatistics;
+    @FXML
     TextField textfield1change;
     @FXML
     TextArea textfield2change;
