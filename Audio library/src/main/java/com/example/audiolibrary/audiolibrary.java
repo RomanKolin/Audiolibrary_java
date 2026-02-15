@@ -718,7 +718,7 @@ public class audiolibrary extends Application
         if (tabl != 1)
         {
             tableview2.getItems().clear();
-            label25.setText("Number of artists; songs count/duration: 0; 0/0:0");
+            label25.setText("Number of artists, songs count/duration: 0, 0/0:0");
         }
         tableview3.getItems().clear();
         label26.setText("Songs count/duration: 0/0:0");
@@ -751,7 +751,7 @@ public class audiolibrary extends Application
                 }
                 songsdur = songsdur.plusDays(day).plusHours(Time.valueOf(dur).getHours()).plusMinutes(Time.valueOf(dur).getMinutes()).plusSeconds(Time.valueOf(dur).getSeconds());
             }
-            label.setText("Number of artists; songs count/duration: " + noart + "; " + songscount + "/" + (songsdur.getDayOfYear()-1) + "d " + songsdur.getHour() + ":" + songsdur.getMinute() + ":" + songsdur.getSecond());
+            label.setText("Number of artists, songs count/duration: " + noart + ", " + songscount + "/" + (songsdur.getDayOfYear()-1) + "d " + songsdur.getHour() + ":" + songsdur.getMinute() + ":" + songsdur.getSecond());
         }
         else if (tabl == 6)
         {
@@ -770,7 +770,7 @@ public class audiolibrary extends Application
                         coverartband.append(artband);
                     }
             }
-            label.setText("Number of artists; songs count/duration: " + noart + "; " + tableviewstring.getItems().size() + "/" + (songsdur.getDayOfYear()-1) + "d " + songsdur.getHour() + ":" + songsdur.getMinute() + ":" + songsdur.getSecond());
+            label.setText("Number of artists, songs count/duration: " + noart + ", " + tableviewstring.getItems().size() + "/" + (songsdur.getDayOfYear()-1) + "d " + songsdur.getHour() + ":" + songsdur.getMinute() + ":" + songsdur.getSecond());
         }
         else if (tabl == 7)
         {
@@ -784,7 +784,7 @@ public class audiolibrary extends Application
                     dur = Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(4);
                 songsdur = songsdur.plusHours(Time.valueOf(dur).getHours()).plusMinutes(Time.valueOf(dur).getMinutes()).plusSeconds(Time.valueOf(dur).getSeconds());
             }
-            label.setText("Number of artists; songs count/duration: " + 0 + "; " + songscount + "/" + (songsdur.getDayOfYear()-1) + "d " + songsdur.getHour() + ":" + songsdur.getMinute() + ":" + songsdur.getSecond());
+            label.setText("Number of artists, songs count/duration: " + 0 + ", " + songscount + "/" + (songsdur.getDayOfYear()-1) + "d " + songsdur.getHour() + ":" + songsdur.getMinute() + ":" + songsdur.getSecond());
         }
         else
         {
@@ -814,7 +814,7 @@ public class audiolibrary extends Application
                         songsdur = songsdur.plusHours(0).plusMinutes(0).plusSeconds(0);
                     }
                 }
-                label.setText("Number of artists; songs count/duration: " + tableviewstring.getItems().size() + "; " + songscount + "/" + (songsdur.getDayOfYear()-1) + "d " + songsdur.getHour() + ":" + songsdur.getMinute() + ":" + songsdur.getSecond());
+                label.setText("Number of artists, songs count/duration: " + tableviewstring.getItems().size() + ", " + songscount + "/" + (songsdur.getDayOfYear()-1) + "d " + songsdur.getHour() + ":" + songsdur.getMinute() + ":" + songsdur.getSecond());
             }
             else
             {
@@ -909,7 +909,7 @@ public class audiolibrary extends Application
                     NumberofArtistsSongsCountandDuration(tableview1, label24, 3);
                 if (tabl == 7)
                     NumberofArtistsSongsCountandDuration(tableview1, label24, 3);
-                label25.setText("Number of artists; songs count/duration: 0; 0/0:0");
+                label25.setText("Number of artists, songs count/duration: 0, 0/0:0");
                 label26.setText("Songs count/duration: 0/0:0");
             }
             else if (textfield10.getText().equals(""))
@@ -1009,7 +1009,7 @@ public class audiolibrary extends Application
         label21combobox.setText("");
         label22combobox.setText("");
         label23combobox.setText("");
-        label25.setText("Number of artists; songs count/duration: 0; 0/0:0");
+        label25.setText("Number of artists, songs count/duration: 0, 0/0:0");
         label26.setText("Songs count/duration: 0/0:0");
         textfield17.setVisible(true);
         textfield17.setEditable(true);
@@ -1389,7 +1389,7 @@ public class audiolibrary extends Application
             tableview4songsstatistics.setItems(songsstatisticsobslist);
             tableview4songsstatistics.getSelectionModel().selectedItemProperty().addListener((sub1s, sub1os, sub1ns) -> tableview4songsstatistics.getSelectionModel().clearSelection());
             label27artistsandsongsstatistics.setText(("Number of artists and related artists, songs count/duration: " + audiolibrarydb.ArtistsStatistics("Total") + "\n" +
-                                                      "Average songs count/duration per artist; average song duration: " + String.format("%.2f", (Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(";")+1, label24.getText().lastIndexOf("/")))/Double.parseDouble(label24.getText().substring(label24.getText().indexOf(":")+2, label24.getText().lastIndexOf(";"))))) + "/" + Math.round((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Double.parseDouble(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Double.parseDouble(label24.getText().substring(label24.getText().indexOf(':')+2, label24.getText().lastIndexOf(';'))))/60 + ":" + ((Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Integer.parseInt(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Integer.parseInt(label24.getText().substring(label24.getText().indexOf(':')+2, label24.getText().lastIndexOf(';'))))%60 + ":" + String.format("%.3f", (((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Double.parseDouble(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Double.parseDouble(label24.getText().substring(label24.getText().indexOf(':')+2, label24.getText().lastIndexOf(';'))))%1)).substring(2) + "; " + Math.round((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Double.parseDouble(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(';')+2, label24.getText().lastIndexOf('/'))))/60 + ":" + ((Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Integer.parseInt(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf(';')+2, label24.getText().lastIndexOf('/'))))%60 + ":" + String.format("%.3f", (((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Double.parseDouble(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(';')+2, label24.getText().lastIndexOf('/'))))%1)).substring(2)).replaceFirst("0/(?=[^0/]*$)", "/"));
+                                                      "Average songs count/duration per artist; average song duration: " + String.format("%.2f", (Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(",")+1, label24.getText().lastIndexOf("/")))/Double.parseDouble(label24.getText().substring(label24.getText().indexOf(":")+2, label24.getText().lastIndexOf(","))))) + "/" + Math.round((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Double.parseDouble(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Double.parseDouble(label24.getText().substring(label24.getText().indexOf(':')+2, label24.getText().lastIndexOf(','))))/60 + ":" + ((Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Integer.parseInt(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Integer.parseInt(label24.getText().substring(label24.getText().indexOf(':')+2, label24.getText().lastIndexOf(','))))%60 + ":" + String.format("%.3f", (((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Double.parseDouble(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Double.parseDouble(label24.getText().substring(label24.getText().indexOf(':')+2, label24.getText().lastIndexOf(','))))%1)).substring(2) + "; " + Math.round((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Double.parseDouble(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(',')+2, label24.getText().lastIndexOf('/'))))/60 + ":" + ((Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Integer.parseInt(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf(',')+2, label24.getText().lastIndexOf('/'))))%60 + ":" + String.format("%.3f", (((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Double.parseDouble(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(',')+2, label24.getText().lastIndexOf('/'))))%1)).substring(2)).replaceFirst("0/(?=[^0/]*$)", "/"));
         }
     }
 
@@ -1889,12 +1889,12 @@ public class audiolibrary extends Application
             else
                 audiolibrary.label26.setText("Songs count/duration: " + textfield5.getText() + "/" + textfield6.getText());
             audiolibrary.label26.setText(audiolibrary.label26.getText().replace("null", "0:0"));
-            audiolibrary.label24.setText("Number of artists; songs count/duration: 1; " + textfield5.getText() + "/" + textfield6.getText());
+            audiolibrary.label24.setText("Number of artists, songs count/duration: 1, " + textfield5.getText() + "/" + textfield6.getText());
             audiolibrary.label24.setText(audiolibrary.label24.getText().replace("null", "0:0"));
         }
         else if (tabl == 4 || tabl == 5)
         {
-            audiolibrary.label24.setText("Number of artists; songs count/duration: 1; " + textfield3.getText() + "/" + textfield4.getText());
+            audiolibrary.label24.setText("Number of artists, songs count/duration: 1, " + textfield3.getText() + "/" + textfield4.getText());
             audiolibrary.label26.setText("Songs count/duration: " + textfield3.getText() + "/" + textfield4.getText());
         }
         if (chang == 3 || chang == 4 || chang == 5 || chang == 6)
