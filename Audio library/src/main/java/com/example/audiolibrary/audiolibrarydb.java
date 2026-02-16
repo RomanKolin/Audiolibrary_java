@@ -1418,7 +1418,7 @@ public class audiolibrarydb
         {
             pstat = conn.prepareStatement("SELECT REPLACE(`Number of artists and related artists, songs count/duration`, ?, '') FROM TotalArtistsStatisticsVIEW WHERE `Number of artists and related artists, songs count/duration` LIKE ?;");
             pstat.setString(1, cat + ":");
-            pstat.setString(2, cat + "%");
+            pstat.setString(2, cat + ":%");
             resset = pstat.executeQuery();
         }
         while (resset.next())
