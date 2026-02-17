@@ -478,6 +478,7 @@ public class audiolibrary extends Application
                                     else
                                         return Duration.ofHours(Integer.parseInt(s.split(":")[0])).plusMinutes(Integer.parseInt(s.split(":")[1])).plusSeconds(Integer.parseInt(s.split(":")[2]));
                                 }));
+                                sub2third.setComparator(Comparator.nullsLast(String::compareToIgnoreCase));
                             }
                             tableview3.getColumns().add(sub2first);
                             tableview3.getColumns().add(sub2second);
@@ -534,6 +535,7 @@ public class audiolibrary extends Application
                                             else
                                                 return Duration.ofHours(Integer.parseInt(s.split(":")[0])).plusMinutes(Integer.parseInt(s.split(":")[1])).plusSeconds(Integer.parseInt(s.split(":")[2]));
                                         }));
+                                        sub2sub1third.setComparator(Comparator.nullsLast(String::compareToIgnoreCase));
                                     }
                                     tableview3.getColumns().add(sub2sub1first);
                                     tableview3.getColumns().add(sub2sub1second);
@@ -1198,6 +1200,9 @@ public class audiolibrary extends Application
                 }
                 if (tabl == 6)
                 {
+                    third.setComparator(Comparator.nullsLast(String::compareToIgnoreCase));
+                    fifth.setComparator(Comparator.nullsLast(String::compareToIgnoreCase));
+                    sixth.setComparator(Comparator.nullsLast(String::compareToIgnoreCase));
                     Tip(first);
                     Tip(second);
                     Tip(third);
