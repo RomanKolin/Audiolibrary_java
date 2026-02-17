@@ -533,8 +533,56 @@ public class audiolibrarydb
                 PreparedStatement(pstat, datarr, 2);
                 break;
             case 5:
-                pstat = conn.prepareStatement("UPDATE Song SET nam=?, dur=? WHERE ID=?;");
-                PreparedStatement(pstat, datarr, 3);
+                if (datarr.length == 6)
+                {
+                    pstat = conn.prepareStatement("UPDATE Song SET nam=?, dur=? WHERE ID=?;");
+                    PreparedStatement(pstat, datarr, 3);
+                    try
+                    {
+                        row = pstat.executeUpdate();
+                    }
+                    catch (Exception e)
+                    {
+                        row = 0;
+                    }
+                    if (row == 0)
+                        return "Your data hasn't been updated";
+                    datarr[0] = String.valueOf(MusicArtistBandID(audiolibrary.textfield2.getText()));
+                    datarr[1] = datarr[3];
+                    datarr[3] = datarr[4];
+                    datarr[4] = datarr[5];
+                    datarr = Arrays.copyOfRange(datarr, 0, 5);
+                    UPDATE(5, datarr);
+                    if (!datarr[0].equals("0"))
+                        return "Your data has been updated";
+                    else
+                        return "Your data hasn't been updated";
+                }
+                if (datarr.length == 5)
+                {
+                    pstat = conn.prepareStatement("UPDATE `Music artist/band's song` SET artband=?, feat=? WHERE song=?;");
+                    PreparedStatement(pstat, datarr, 3);
+                    try
+                    {
+                        row = pstat.executeUpdate();
+                    }
+                    catch (Exception e)
+                    {
+                        row = 0;
+                    }
+                    if (row == 0)
+                        return "Your data hasn't been updated";
+                    datarr[0] = String.valueOf(MusicArtistBandID(datarr[3]));
+                    datarr[1] = datarr[4];
+                    datarr = Arrays.copyOfRange(datarr, 0, 3);
+                    UPDATE(5, datarr);
+                    return "Your data has been updated";
+                }
+                if (datarr.length == 3)
+                {
+                    pstat = conn.prepareStatement("UPDATE `Cover's original music artist/band` SET artband=?, feat=? WHERE song=?;");
+                    PreparedStatement(pstat, datarr, 3);
+                }
                 break;
             case 6:
                 pstat = conn.prepareStatement("UPDATE Soundtrack SET movanimsergam=?, artband=?, song=?, nosongs=?, songsdur=? WHERE ID=?;");
@@ -578,6 +626,8 @@ public class audiolibrarydb
                 {
                     row = 0;
                 }
+                if (audiolibrary.textfield5.getText() == null || audiolibrary.textfield5.getText().equals(""))
+                    DELETE(1, datarr);
                 if (row == 0)
                     return "Your data hasn't been deleted";
                 DELETE(1, datarr);

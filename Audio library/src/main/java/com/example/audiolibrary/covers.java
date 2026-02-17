@@ -52,7 +52,7 @@ public class covers
         dp.getButtonTypes().add(ButtonType.OK);
         dp.getStylesheets().add("/alert.css");
 
-        String[] datarr = new String[6];
+        String[] datarr = new String[6], datarr1 = new String[7];
         datarr[0] = textfield1change.getText();
         if((textfield4change.getText().length()>=3 && textfield4change.getText().length()<=5) && textfield4change.getText().lastIndexOf(":") != 3)
             datarr[1] = "00:" + textfield4change.getText();
@@ -62,8 +62,19 @@ public class covers
         datarr[3] = textfield3change.getText();
         datarr[4] = textfield5change.getText();
         datarr[5] = textfield6change.getText();
+        datarr1[0] = textfield1change.getText();
+        datarr1[1] = textfield2change.getText();
+        datarr1[2] = textfield3change.getText();
+        datarr1[3] = textfield4change.getText();
+        datarr1[4] = textfield5change.getText();
+        datarr1[5] = textfield6change.getText();
         if (chang == 1)
-            al.setContentText(audiolibrarydb.INSERT(6, datarr));
+        {
+            if (!String.valueOf(audiolibrarydb.MusicArtistBandID(datarr[2])).equals("0") && (!String.valueOf(audiolibrarydb.MusicArtistBandID(datarr[4])).equals("0") || datarr[4].equals("")))
+                al.setContentText(audiolibrarydb.INSERT(6, datarr));
+            else
+                al.setContentText("Your data hasn't been saved");
+        }
         else if (chang == 2)
         {
             ind = Integer.parseInt(Arrays.asList(audiolibrary.tableview1.getSelectionModel().getSelectedItem()).get(6));
@@ -84,7 +95,15 @@ public class covers
             audiolibrary.textfield17.setText("");
             audiolibrary.obslist.clear();
             if (chang == 1)
+            {
                 audiolibrary.obslist.addAll(Arrays.asList(audiolibrarydb.SELECTCOVER(audiolibrarydb.SongID())));
+                if (!audiolibrary.obslist.isEmpty() && audiolibrary.obslist.get(0)[0] == null)
+                {
+                    datarr1[6] = String.valueOf(audiolibrarydb.SongID());
+                    audiolibrary.obslist.clear();
+                    audiolibrary.obslist.addAll(datarr1);
+                }
+            }
             else if (chang == 2)
                 audiolibrary.obslist.addAll(Arrays.asList(audiolibrarydb.SELECTCOVER(ind)));
             audiolibrary.tableview1.setItems(audiolibrary.obslist);

@@ -171,13 +171,13 @@ public class audiolibrary extends Application
     Label label17;
     Label label18;
     Label label19;
-    TextArea textfield2;
     TextField textfield9;
     ContextMenu cm;
     static Label label24;
     static Label label25;
     static Label label26;
     static TextField textfield1;
+    static TextArea textfield2;
     static TextArea textfield3;
     static TextArea textfield4;
     static TextField textfield5;
