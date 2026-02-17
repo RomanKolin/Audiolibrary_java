@@ -607,6 +607,16 @@ public class audiolibrary extends Application
             TableRow row = new TableRow();
             row.setOnMouseClicked(emouse ->
             {
+                if (emouse.getButton() == MouseButton.PRIMARY)
+                {
+                    if (tabl == 3 || tabl == 8)
+                    {
+                        tableview3.getSelectionModel().clearSelection();
+                        textfield14.setText("");
+                        textfield15.setText("");
+                        textfield16.setText("");
+                    }
+                }
                 if (emouse.getButton() == MouseButton.SECONDARY)
                 {
                     cm.show(row, emouse.getScreenX(), emouse.getScreenY());
