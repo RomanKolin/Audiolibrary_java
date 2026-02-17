@@ -77,9 +77,14 @@ public class covers
         }
         else if (chang == 2)
         {
-            ind = Integer.parseInt(Arrays.asList(audiolibrary.tableview1.getSelectionModel().getSelectedItem()).get(6));
-            datarr[2] = String.valueOf(audiolibrary.CoverID());
-            al.setContentText(audiolibrarydb.UPDATE(5, datarr));
+            if (!audiolibrary.tableview1.getSelectionModel().isEmpty())
+            {
+                ind = Integer.parseInt(Arrays.asList(audiolibrary.tableview1.getSelectionModel().getSelectedItem()).get(6));
+                datarr[2] = String.valueOf(audiolibrary.CoverID());
+                al.setContentText(audiolibrarydb.UPDATE(5, datarr));
+            }
+            else
+                al.setContentText("Your data hasn't been updated");
         }
         else if (chang == 3)
         {

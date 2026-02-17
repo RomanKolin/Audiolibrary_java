@@ -59,9 +59,14 @@ public class soundtracks
             al.setContentText(audiolibrarydb.INSERT(7, datarr));
         else if (chang == 2)
         {
-            ind = Integer.parseInt(Arrays.asList(audiolibrary.tableview1.getSelectionModel().getSelectedItem()).get(5));
-            datarr[5] = String.valueOf(audiolibrary.SoundtrackID());
-            al.setContentText(audiolibrarydb.UPDATE(6, datarr));
+            if (!audiolibrary.tableview1.getSelectionModel().isEmpty())
+            {
+                ind = Integer.parseInt(Arrays.asList(audiolibrary.tableview1.getSelectionModel().getSelectedItem()).get(5));
+                datarr[5] = String.valueOf(audiolibrary.SoundtrackID());
+                al.setContentText(audiolibrarydb.UPDATE(6, datarr));
+            }
+            else
+                al.setContentText("Your data hasn't been updated");
         }
         if (al.getContentText().equals("Your data has been saved") || al.getContentText().equals("Your data has been updated"))
         {
