@@ -147,9 +147,9 @@ DELETE FROM Song WHERE ID=OLD.song;
 END$
 DELIMITER ;
 CREATE TRIGGER SoundtracksCountandDurationAFTERINSERTONSOUNDTRACK AFTER INSERT ON Soundtrack FOR EACH ROW
-UPDATE `Audio library` SET noorigartsbands=0, nosongs=(SELECT SUM(nosongs) FROM Soundtrack), songsdur=REPLACE((SELECT DATE_FORMAT(DATE('1000-01-01 00:00:00') + INTERVAL SUM(TIME_TO_SEC(songsdur)) SECOND, '%jd %H:%i:%s') FROM Soundtrack), '001d ', '') WHERE cat='Саундтреки';
+UPDATE `Audio library` SET noorigartsbands=0, nosongs=(SELECT SUM(nosongs) FROM Soundtrack), songsdur=REGEXP_REPLACE(REPLACE((SELECT DATE_FORMAT(DATE('1000-01-01 00:00:00') + INTERVAL SUM(TIME_TO_SEC(songsdur)) SECOND - INTERVAL 1 DAY, '%jd %H:%i:%s') FROM Soundtrack), '365d ', ''), '^00', '') WHERE cat='Саундтреки';
 CREATE TRIGGER SoundtracksCountandDurationAFTERUPDATEONSOUNDTRACK AFTER UPDATE ON Soundtrack FOR EACH ROW
-UPDATE `Audio library` SET noorigartsbands=0, nosongs=(SELECT SUM(nosongs) FROM Soundtrack), songsdur=REPLACE((SELECT DATE_FORMAT(DATE('1000-01-01 00:00:00') + INTERVAL SUM(TIME_TO_SEC(songsdur)) SECOND, '%jd %H:%i:%s') FROM Soundtrack), '001d ', '') WHERE cat='Саундтреки';
+UPDATE `Audio library` SET noorigartsbands=0, nosongs=(SELECT SUM(nosongs) FROM Soundtrack), songsdur=REGEXP_REPLACE(REPLACE((SELECT DATE_FORMAT(DATE('1000-01-01 00:00:00') + INTERVAL SUM(TIME_TO_SEC(songsdur)) SECOND - INTERVAL 1 DAY, '%jd %H:%i:%s') FROM Soundtrack), '365d ', ''), '^00', '') WHERE cat='Саундтреки';
 
 INSERT INTO `Audio library`(cat) VALUES('Жанр'),
                                                                           ('Композиторы'),
