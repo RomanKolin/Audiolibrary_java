@@ -1916,7 +1916,7 @@ public class audiolibrary extends Application
             audiolibrary.label24.setText("Number of artists, songs count/duration: 1, " + textfield3.getText() + "/" + textfield4.getText());
             audiolibrary.label26.setText("Songs count/duration: " + textfield3.getText() + "/" + textfield4.getText());
         }
-        if (chang == 3 || chang == 4 || chang == 5 || chang == 6)
+        if (chang == 3 || chang == 4 || (chang == 5 && tabl == 3) || chang == 6)
             for (int i = 0; i < audiolibrary.tableview3.getItems().size(); i++)
             {
                 audiolibrary.tableview3.getSelectionModel().select(i);
