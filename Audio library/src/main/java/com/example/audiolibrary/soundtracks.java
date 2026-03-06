@@ -83,6 +83,7 @@ public class soundtracks
             audiolibrary.label24.setText("Number of artists; songs count/duration: 0; " + textfield4change.getText() + "/" + textfield5change.getText());
         }
         al.show();
+        audiolibrary.flowpane1.requestFocus();
 
         if (audiolibrary.backup == 0)
             audiolibrary.backup += 1;

@@ -86,6 +86,8 @@ public class musicartistband
     Button button13edit;
     @FXML
     Button button14delete;
+    @FXML
+    ComboBox combobox5genre;
 
     static int chang;
 
@@ -204,6 +206,7 @@ public class musicartistband
                 audiolibrary.DataChanging(chang, ind);
         }
         al.show();
+        audiolibrary.flowpane1.requestFocus();
 
         if (audiolibrary.backup == 0)
             audiolibrary.backup += 1;

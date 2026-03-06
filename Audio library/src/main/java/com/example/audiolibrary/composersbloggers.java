@@ -127,6 +127,7 @@ public class composersbloggers
                 audiolibrary.DataChanging(chang, ind);
         }
         al.show();
+        audiolibrary.flowpane1.requestFocus();
 
         if (audiolibrary.backup == 0)
             audiolibrary.backup += 1;

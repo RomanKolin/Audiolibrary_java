@@ -1,4 +1,5 @@
-.combo-box{-fx-border-color: transparent}
+.combo-box{-fx-background-color: transparent; -fx-border-color: transparent}
+.combo-box:focused{-fx-background-color: #4B0000}
 .cell{-fx-background-color: #FFFFFF; -fx-text-fill: #000000}
 .arrow-button{-fx-background-color: #FFFFFF}
 .arrow{-fx-background-color: #4B0000}
@@ -6,3 +7,5 @@
 .combo-box-popup .cell:hover{-fx-background-color: #4B0000; -fx-text-fill: #FF0000}
 .combo-box-popup .cell:selected{-fx-background-color: #4B0000; -fx-text-fill: #FF0000}
 .scroll-bar *{-fx-pref-width: 0.1; -fx-pref-height: 0.1; -fx-background-color: #FFFFFF}
+.combobox5genre .cell{-fx-background-color: transparent}
+.combobox5genre .arrow-button{-fx-background-color: transparent}

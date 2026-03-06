@@ -138,7 +138,7 @@ public class audiolibrary extends Application
     @FXML
     Button button7favourites;
     @FXML
-    Button button8add;
+    Button button15visualization;
     @FXML
     TableView<String[]> tableview1audiolibrary;
     @FXML
@@ -173,6 +173,7 @@ public class audiolibrary extends Application
     Label label19;
     TextField textfield9;
     ContextMenu cm;
+    static FlowPane flowpane1;
     static Label label24;
     static Label label25;
     static Label label26;
@@ -193,12 +194,7 @@ public class audiolibrary extends Application
     static TextField textfield16;
     static TextField textfield17;
     static TextField textfield18;
-    static Button button2;
-    static Button button3;
-    static Button button4;
     static Button button5;
-    static Button button6;
-    static Button button8;
     static TableView<String[]> tableview1;
     static TableView<String[]> tableview2;
     static TableView<String[]> tableview3;
@@ -215,6 +211,7 @@ public class audiolibrary extends Application
         scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add("/contextmenu.css");
         scene.getStylesheets().add("/tooltip.css");
+        scene.setOnMouseClicked(e -> scene.getRoot().requestFocus());
         stage.setTitle("Audio library");
         stage.setScene(scene);
         stage.getIcons().add(new Image("/audiolibraryicon.png"));
@@ -241,6 +238,7 @@ public class audiolibrary extends Application
         if (Screen.getPrimary().getBounds().getWidth() >= 1920)
             FlowPane1.getTransforms().add(new Scale(Screen.getPrimary().getBounds().getWidth()/1280, Screen.getPrimary().getBounds().getHeight()/1024));
 
+        flowpane1 = FlowPane1;
         label24 = label24numberofartistssongscountandduration;
         label25 = label25numberofrelatedartistssongscountandduration;
         label26 = label26songscountandduration;
@@ -260,12 +258,7 @@ public class audiolibrary extends Application
         textfield16 = textfield16change;
         textfield17 = textfield17search;
         textfield18 = textfield18search;
-        button2 = button2musicartistband;
-        button3 = button3composers;
-        button4 = button4bloggers;
         button5 = button5covers;
-        button6 = button6soundtracks;
-        button8 = button8add;
         tableview1 = tableview1audiolibrary;
         tableview2 = tableview2genrerelatedartistsbands;
         tableview3 = tableview3songs;
@@ -1561,6 +1554,10 @@ public class audiolibrary extends Application
                 ">=1:15:00 & <2:5:00",
                 ">=2:5:00"));
         combobox4.setOnAction(e -> Filtering());
+
+        musicartistband.combobox5genre.setVisibleRowCount(17);
+        musicartistband.combobox5genre.getItems().addAll(combobox1.getItems());
+        musicartistband.combobox5genre.setOnAction(e -> textfield3.setText(String.valueOf(musicartistband.combobox5genre.getValue())));
     }
 
     public void button3composers() throws Exception
@@ -1838,6 +1835,14 @@ public class audiolibrary extends Application
         nam15="Featuring";
         siz15=410;
         Table(250, 0, 230, 0, 135, 135, 0, 0, 215, 135, 135, 770, 75, 410);
+    }
+
+    public void button15visualization() throws Exception
+    {
+        FlowPane1.getChildren().clear();
+        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("visualization.fxml"));
+        FlowPane1.getChildren().add(fxmlloader.load());
+        visualization visualization = fxmlloader.getController();
     }
 
     public static int MusicArtistBandID()

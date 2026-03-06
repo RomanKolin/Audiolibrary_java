@@ -125,6 +125,7 @@ public class covers
                 audiolibrary.button5.fire();
         }
         al.show();
+        audiolibrary.flowpane1.requestFocus();
 
         if (audiolibrary.backup == 0)
             audiolibrary.backup += 1;
