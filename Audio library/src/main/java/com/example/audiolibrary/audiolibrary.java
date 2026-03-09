@@ -1512,47 +1512,47 @@ public class audiolibrary extends Application
         combobox1.setVisibleRowCount(17);
         combobox1.setItems(FXCollections.observableArrayList(
                 "Авторская песня, Шансон",
-                "Альтернатива, Инди",
-                "Блюз",
-                "ВИА",
-                "Вокальная музыка",
-                "Джаз",
-                "Кантри",
-                "Легкая, Инструментальная музыка",
-                "Метал, Ню-метал, Металкор",
-                "Панк, Эмо, Постхардкор",
-                "Поп",
-                "Поп-рок",
-                "Регги, Реггетон",
-                "Рок",
-                "Соул, Фанк, Диско",
-                "Хип-хоп",
-                "Электронная музыка"));
+                     "Альтернатива, Инди",
+                     "Блюз",
+                     "ВИА",
+                     "Вокальная музыка",
+                     "Джаз",
+                     "Кантри",
+                     "Легкая, Инструментальная музыка",
+                     "Метал, Ню-метал, Металкор",
+                     "Панк, Эмо, Постхардкор",
+                     "Поп",
+                     "Поп-рок",
+                     "Регги, Реггетон",
+                     "Рок",
+                     "Соул, Фанк, Диско",
+                     "Хип-хоп",
+                     "Электронная музыка"));
         combobox1.setOnAction(e -> Filtering());
         combobox2.setPrefWidth(285);
         combobox2.setVisible(true);
         combobox2.setVisibleRowCount(2);
         combobox2.setItems(FXCollections.observableArrayList(
                 "With related artist(-s)/band(-s)",
-                "Without related artist(-s)/band(-s)"));
+                     "Without related artist(-s)/band(-s)"));
         combobox2.setOnAction(e -> Filtering());
         combobox3.setVisible(true);
         combobox3.setVisibleRowCount(6);
         combobox3.setItems(FXCollections.observableArrayList(
                 "<10",
-                "15",
-                "25",
-                "55",
-                "70",
-                ">70"));
+                     "15",
+                     "25",
+                     "55",
+                     "70",
+                     ">70"));
         combobox3.setOnAction(e -> Filtering());
         combobox4.setVisible(true);
         combobox4.setVisibleRowCount(4);
         combobox4.setItems(FXCollections.observableArrayList(
                 "<45:00",
-                ">=45:00 & <1:15:00",
-                ">=1:15:00 & <2:5:00",
-                ">=2:5:00"));
+                     ">=45:00 & <1:15:00",
+                     ">=1:15:00 & <2:5:00",
+                     ">=2:5:00"));
         combobox4.setOnAction(e -> Filtering());
 
         musicartistband.combobox5genre.setVisibleRowCount(17);
@@ -1843,6 +1843,8 @@ public class audiolibrary extends Application
         FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("visualization.fxml"));
         FlowPane1.getChildren().add(fxmlloader.load());
         visualization visualization = fxmlloader.getController();
+
+        visualization.Visualization();
     }
 
     public static int MusicArtistBandID()
