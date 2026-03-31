@@ -1334,7 +1334,7 @@ public class audiolibrarydb
             }
             break;
             case 7:
-                pstat = conn.prepareStatement("WITH soundtrack AS(SELECT movanimsergam, artband, song, nosongs, REGEXP_REPLACE(TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(Song.dur, ':0', ':'))), '^:', '0:'), ID FROM Soundtrack WHERE nosongs BETWEEN ? AND ? AND songsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME) ORDER BY movanimsergam) SELECT COUNT(ID) FROM soundtrack;");
+                pstat = conn.prepareStatement("WITH soundtrack AS(SELECT movanimsergam, artband, song, nosongs, REGEXP_REPLACE(TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':'))), '^:', '0:'), ID FROM Soundtrack WHERE nosongs BETWEEN ? AND ? AND songsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME) ORDER BY movanimsergam) SELECT COUNT(ID) FROM soundtrack;");
                 if (audiolibrary.combobox1.getSelectionModel().isEmpty())
                 {
                     pstat.setString(1, "1");
@@ -1369,7 +1369,7 @@ public class audiolibrarydb
                 while (resset.next())
                     count = resset.getInt("COUNT(ID)");
                 datarr = new String[count][6];
-                pstat = conn.prepareStatement("SELECT movanimsergam, artband, song, nosongs, REGEXP_REPLACE(TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(Song.dur, ':0', ':'))), '^:', '0:'), ID FROM Soundtrack WHERE nosongs BETWEEN ? AND ? AND songsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME) ORDER BY movanimsergam;");
+                pstat = conn.prepareStatement("SELECT movanimsergam, artband, song, nosongs, REGEXP_REPLACE(TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':'))), '^:', '0:'), ID FROM Soundtrack WHERE nosongs BETWEEN ? AND ? AND songsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME) ORDER BY movanimsergam;");
                 if (audiolibrary.combobox1.getSelectionModel().isEmpty())
                 {
                     pstat.setString(1, "1");
