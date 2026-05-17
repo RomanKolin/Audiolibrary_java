@@ -4,7 +4,7 @@ import javafx.fxml.*;
 import javafx.scene.control.*;
 import java.util.*;
 
-public class covers
+public class Covers
 {
     @FXML
     Label label2change;
@@ -41,7 +41,7 @@ public class covers
 
     static int chang;
 
-    public void ChangeData() throws Exception
+    public void changedata() throws Exception
     {
         int ind = 0;
         Alert al;
@@ -70,18 +70,18 @@ public class covers
         datarr1[5] = textfield6change.getText();
         if (chang == 1)
         {
-            if (!String.valueOf(audiolibrarydb.MusicArtistBandID(datarr[2])).equals("0") && (!String.valueOf(audiolibrarydb.MusicArtistBandID(datarr[4])).equals("0") || datarr[4].equals("")))
-                al.setContentText(audiolibrarydb.INSERT(6, datarr));
+            if (!String.valueOf(AudioLibraryDB.musicartistbandid(datarr[2])).equals("0") && (!String.valueOf(AudioLibraryDB.musicartistbandid(datarr[4])).equals("0") || datarr[4].equals("")))
+                al.setContentText(AudioLibraryDB.insert(6, datarr));
             else
                 al.setContentText("Your data hasn't been saved");
         }
         else if (chang == 2)
         {
-            if (!audiolibrary.tableview1.getSelectionModel().isEmpty())
+            if (!AudioLibrary.tableview1.getSelectionModel().isEmpty())
             {
-                ind = Integer.parseInt(Arrays.asList(audiolibrary.tableview1.getSelectionModel().getSelectedItem()).get(6));
-                datarr[2] = String.valueOf(audiolibrary.CoverID());
-                al.setContentText(audiolibrarydb.UPDATE(5, datarr));
+                ind = Integer.parseInt(Arrays.asList(AudioLibrary.tableview1.getSelectionModel().getSelectedItem()).get(6));
+                datarr[2] = String.valueOf(AudioLibrary.coverid());
+                al.setContentText(AudioLibraryDB.update(5, datarr));
             }
             else
                 al.setContentText("Your data hasn't been updated");
@@ -90,62 +90,62 @@ public class covers
         {
             datarr = Arrays.copyOfRange(datarr, 0, 1);
             if (!textfield1change.getText().isEmpty())
-                datarr[0] = String.valueOf(audiolibrary.CoverID());
-            al.setContentText(audiolibrarydb.DELETE(2, datarr));
+                datarr[0] = String.valueOf(AudioLibrary.coverid());
+            al.setContentText(AudioLibraryDB.delete(2, datarr));
         }
         if (al.getContentText().equals("Your data has been saved") || al.getContentText().equals("Your data has been updated") || al.getContentText().equals("Your data has been deleted"))
         {
             int noart = 0;
 
-            audiolibrary.textfield17.setText("");
-            audiolibrary.obslist.clear();
+            AudioLibrary.textfield17.setText("");
+            AudioLibrary.obslist.clear();
             if (chang == 1)
             {
-                audiolibrary.obslist.addAll(Arrays.asList(audiolibrarydb.SELECTCOVER(audiolibrarydb.SongID())));
-                if (!audiolibrary.obslist.isEmpty() && audiolibrary.obslist.get(0)[0] == null)
+                AudioLibrary.obslist.addAll(Arrays.asList(AudioLibraryDB.selectcover(AudioLibraryDB.songid())));
+                if (!AudioLibrary.obslist.isEmpty() && AudioLibrary.obslist.get(0)[0] == null)
                 {
-                    datarr1[6] = String.valueOf(audiolibrarydb.SongID());
-                    audiolibrary.obslist.clear();
-                    audiolibrary.obslist.addAll(datarr1);
+                    datarr1[6] = String.valueOf(AudioLibraryDB.songid());
+                    AudioLibrary.obslist.clear();
+                    AudioLibrary.obslist.addAll(datarr1);
                 }
             }
             else if (chang == 2)
-                audiolibrary.obslist.addAll(Arrays.asList(audiolibrarydb.SELECTCOVER(ind)));
-            audiolibrary.tableview1.setItems(audiolibrary.obslist);
-            audiolibrary.tableview1.getSelectionModel().select(0);
-            audiolibrary.tableview1.scrollTo(0);
-            audiolibrary.RowClick(audiolibrary.tableview1, 0);
-            if (!audiolibrary.tableview1.getItems().isEmpty())
-                for (String artband:audiolibrary.coverartbandarr)
-                    if (Arrays.asList(audiolibrary.tableview1.getSelectionModel().getSelectedItem()).get(1).equals(artband))
+                AudioLibrary.obslist.addAll(Arrays.asList(AudioLibraryDB.selectcover(ind)));
+            AudioLibrary.tableview1.setItems(AudioLibrary.obslist);
+            AudioLibrary.tableview1.getSelectionModel().select(0);
+            AudioLibrary.tableview1.scrollTo(0);
+            AudioLibrary.rowclick(AudioLibrary.tableview1, 0);
+            if (!AudioLibrary.tableview1.getItems().isEmpty())
+                for (String artband: AudioLibrary.coverartbandarr)
+                    if (Arrays.asList(AudioLibrary.tableview1.getSelectionModel().getSelectedItem()).get(1).equals(artband))
                         noart = 1;
             if (!textfield1change.getText().isEmpty())
-                audiolibrary.label24.setText("Number of artists; songs count/duration: " + noart + "; 1/" + textfield4change.getText());
+                AudioLibrary.label24.setText("Number of artists; songs count/duration: " + noart + "; 1/" + textfield4change.getText());
             else
-                audiolibrary.button5.fire();
+                AudioLibrary.button5.fire();
         }
         al.show();
-        audiolibrary.flowpane1.requestFocus();
+        AudioLibrary.flowpane1.requestFocus();
 
-        if (audiolibrary.backup == 0)
-            audiolibrary.backup += 1;
+        if (AudioLibrary.backup == 0)
+            AudioLibrary.backup += 1;
     }
 
     public void button8add() throws Exception
     {
         chang = 1;
-        ChangeData();
+        changedata();
     }
 
     public void button9edit() throws Exception
     {
         chang = 2;
-        ChangeData();
+        changedata();
     }
 
     public void button10delete() throws Exception
     {
         chang = 3;
-        ChangeData();
+        changedata();
     }
 }

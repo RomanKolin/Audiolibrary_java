@@ -4,7 +4,7 @@ import javafx.fxml.*;
 import javafx.scene.control.*;
 import java.util.*;
 
-public class musicartistband
+public class MusicArtistBand
 {
     @FXML
     Label label2change;
@@ -91,7 +91,7 @@ public class musicartistband
 
     static int chang;
 
-    public void ChangeData() throws Exception
+    public void changedata() throws Exception
     {
         int ind;
         Alert al;
@@ -104,60 +104,60 @@ public class musicartistband
 
         if (chang == 1 || chang == 2)
         {
-            audiolibrary.textfield18.setText("");
+            AudioLibrary.textfield18.setText("");
             String[] datarr = new String[3];
             datarr[0] = textfield1change.getText();
             datarr[1] = textfield3change.getText();
             if (chang == 1)
-                al.setContentText(audiolibrarydb.INSERT(1, datarr));
+                al.setContentText(AudioLibraryDB.insert(1, datarr));
             else if (chang == 2)
             {
-                datarr[2] = String.valueOf(audiolibrary.MusicArtistBandID());
-                al.setContentText(audiolibrarydb.UPDATE(1, datarr));
+                datarr[2] = String.valueOf(AudioLibrary.musicartistbandid());
+                al.setContentText(AudioLibraryDB.update(1, datarr));
             }
             if (al.getContentText().equals("Your data has been saved") || al.getContentText().equals("Your data has been updated"))
             {
                 if (chang == 1)
-                    audiolibrary.DataChanging(chang, 0);
+                    AudioLibrary.datachanging(chang, 0);
                 else if (chang == 2)
-                    audiolibrary.DataChanging(chang, 0);
+                    AudioLibrary.datachanging(chang, 0);
             }
         }
         if (chang == 3 || chang == 4)
         {
-            audiolibrary.textfield18.setText("");
+            AudioLibrary.textfield18.setText("");
             String[] datarr = new String[3];
             datarr[0] = textfield10change.getText();
-            datarr[1] = String.valueOf(audiolibrary.MusicArtistBandID());
+            datarr[1] = String.valueOf(AudioLibrary.musicartistbandid());
             if (chang == 3)
-                al.setContentText(audiolibrarydb.INSERT(2, datarr));
+                al.setContentText(AudioLibraryDB.insert(2, datarr));
             else if (chang == 4)
             {
-                datarr[2] = String.valueOf(audiolibrary.RelatedMusicArtistBandID());
-                al.setContentText(audiolibrarydb.UPDATE(2, datarr));
+                datarr[2] = String.valueOf(AudioLibrary.relatedmusicartistbandid());
+                al.setContentText(AudioLibraryDB.update(2, datarr));
             }
             if (al.getContentText().equals("Your data has been saved") || al.getContentText().equals("Your data has been updated"))
             {
-                int relartbandid = audiolibrary.RelatedMusicArtistBandID();
-                audiolibrary.DataChanging(chang, 0);
-                for (int i = 0; i < audiolibrary.tableview2.getItems().size(); i++)
+                int relartbandid = AudioLibrary.relatedmusicartistbandid();
+                AudioLibrary.datachanging(chang, 0);
+                for (int i = 0; i < AudioLibrary.tableview2.getItems().size(); i++)
                 {
-                    audiolibrary.tableview2.getSelectionModel().select(i);
+                    AudioLibrary.tableview2.getSelectionModel().select(i);
                     if (chang == 3)
                     {
-                        if (Integer.parseInt(Arrays.asList(audiolibrary.tableview2.getSelectionModel().getSelectedItem()).get(4)) == audiolibrarydb.NewMusicArtistBandID())
+                        if (Integer.parseInt(Arrays.asList(AudioLibrary.tableview2.getSelectionModel().getSelectedItem()).get(4)) == AudioLibraryDB.newmusicartistbandid())
                         {
-                            audiolibrary.tableview2.getSelectionModel().select(i);
-                            audiolibrary.RowClick(audiolibrary.tableview2, i);
+                            AudioLibrary.tableview2.getSelectionModel().select(i);
+                            AudioLibrary.rowclick(AudioLibrary.tableview2, i);
                             break;
                         }
                     }
                     else if (chang == 4)
                     {
-                        if (Integer.parseInt(Arrays.asList(audiolibrary.tableview2.getSelectionModel().getSelectedItem()).get(4)) == relartbandid)
+                        if (Integer.parseInt(Arrays.asList(AudioLibrary.tableview2.getSelectionModel().getSelectedItem()).get(4)) == relartbandid)
                         {
-                            audiolibrary.tableview2.getSelectionModel().select(i);
-                            audiolibrary.RowClick(audiolibrary.tableview2, i);
+                            AudioLibrary.tableview2.getSelectionModel().select(i);
+                            AudioLibrary.rowclick(AudioLibrary.tableview2, i);
                             break;
                         }
                     }
@@ -174,82 +174,82 @@ public class musicartistband
             else
                 datarr[1] = textfield15change.getText();
             if (!textfield1change.getText().equals(""))
-                datarr[2] = String.valueOf(audiolibrary.MusicArtistBandID());
+                datarr[2] = String.valueOf(AudioLibrary.musicartistbandid());
             if (!textfield10change.getText().equals(""))
-                datarr[2] = String.valueOf(audiolibrary.RelatedMusicArtistBandID());
+                datarr[2] = String.valueOf(AudioLibrary.relatedmusicartistbandid());
             datarr[3] = textfield16change.getText();
             if (chang == 5)
             {
-                al.setContentText(audiolibrarydb.INSERT(3, datarr));
-                ind = audiolibrarydb.SongID();
+                al.setContentText(AudioLibraryDB.insert(3, datarr));
+                ind = AudioLibraryDB.songid();
             }
             else if (chang == 6)
             {
                 try
                 {
-                    ind = Integer.parseInt(Arrays.asList(audiolibrary.tableview3.getSelectionModel().getSelectedItem()).get(3));
+                    ind = Integer.parseInt(Arrays.asList(AudioLibrary.tableview3.getSelectionModel().getSelectedItem()).get(3));
                 }
                 catch (Exception e)
                 {
                     ind = -1;
                 }
-                datarr[2]=String.valueOf(audiolibrary.SongID());
-                al.setContentText(audiolibrarydb.UPDATE(3, datarr));
+                datarr[2]=String.valueOf(AudioLibrary.songid());
+                al.setContentText(AudioLibraryDB.update(3, datarr));
             }
             else if (chang == 7)
             {
                 datarr = Arrays.copyOfRange(datarr, 0, 1);
-                datarr[0]=String.valueOf(audiolibrary.SongID());
-                al.setContentText(audiolibrarydb.DELETE(1, datarr));
+                datarr[0]=String.valueOf(AudioLibrary.songid());
+                al.setContentText(AudioLibraryDB.delete(1, datarr));
             }
             if (al.getContentText().equals("Your data has been saved") || al.getContentText().equals("Your data has been updated") || al.getContentText().equals("Your data has been deleted"))
-                audiolibrary.DataChanging(chang, ind);
+                AudioLibrary.datachanging(chang, ind);
         }
         al.show();
-        audiolibrary.flowpane1.requestFocus();
+        AudioLibrary.flowpane1.requestFocus();
 
-        if (audiolibrary.backup == 0)
-            audiolibrary.backup += 1;
+        if (AudioLibrary.backup == 0)
+            AudioLibrary.backup += 1;
     }
 
     public void button8add() throws Exception
     {
         chang = 1;
-        ChangeData();
+        changedata();
     }
 
     public void button9edit() throws Exception
     {
         chang = 2;
-        ChangeData();
+        changedata();
     }
 
     public void button10add() throws Exception
     {
         chang = 3;
-        ChangeData();
+        changedata();
     }
 
     public void button11edit() throws Exception
     {
         chang = 4;
-        ChangeData();
+        changedata();
     }
 
     public void button12add() throws Exception
     {
         chang = 5;
-        ChangeData();
+        changedata();
     }
 
     public void button13edit() throws Exception
     {
         chang = 6;
-        ChangeData();
+        changedata();
     }
     public void button14delete() throws Exception
     {
         chang = 7;
-        ChangeData();
+        changedata();
     }
 }

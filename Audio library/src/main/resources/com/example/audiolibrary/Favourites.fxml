@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.geometry.Insets?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.audiolibrary.favourites">
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.audiolibrary.Favourites">
     <Label id="label1change" prefWidth="815" prefHeight="485" style="-fx-background-color: #FFFFFF"/>
     <VBox>
         <padding>

@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.geometry.Insets?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.audiolibrary.audiolibrarygenre">
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.audiolibrary.AudioLibraryGenre">
 <Label id="label1change" prefWidth="815" prefHeight="485" style="-fx-background-color: #FFFFFF"/>
 <VBox>
     <padding>

@@ -10,9 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.transform.*;
 import javafx.scene.image.*;
-import javafx.scene.text.Text;
-import javafx.event.Event;
-import javafx.event.EventHandler;
+import javafx.scene.text.*;
+import javafx.event.*;
 import javafx.collections.*;
 import javafx.beans.property.*;
 import javafx.beans.value.*;
@@ -23,7 +22,7 @@ import java.time.format.*;
 import java.time.Duration;
 import java.sql.*;
 
-public class audiolibrary extends Application
+public class AudioLibrary extends Application
 {
     @FXML
     Scene scene;
@@ -138,7 +137,7 @@ public class audiolibrary extends Application
     @FXML
     Button button7favourites;
     @FXML
-    Button button15visualization;
+    Button button15musicartistsbandsbynumberofsongsvisualization;
     @FXML
     TableView<String[]> tableview1audiolibrary;
     @FXML
@@ -206,15 +205,15 @@ public class audiolibrary extends Application
     @Override
     public void start(Stage stage) throws IOException
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(audiolibrary.class.getResource("audiolibrary.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(AudioLibrary.class.getResource("AudioLibrary.fxml"));
         System.setProperty("prism.lcdtext", "false");
         scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add("/contextmenu.css");
         scene.getStylesheets().add("/tooltip.css");
         scene.setOnMouseClicked(e -> scene.getRoot().requestFocus());
-        stage.setTitle("Audio library");
         stage.setScene(scene);
         stage.getIcons().add(new Image("/audiolibraryicon.png"));
+        stage.setTitle("Audio library");
         stage.setWidth(Screen.getPrimary().getBounds().getWidth());
         stage.setHeight(Screen.getPrimary().getBounds().getHeight());
         stage.setResizable(false);
@@ -267,7 +266,7 @@ public class audiolibrary extends Application
         combobox3 = combobox3filtering;
         combobox4 = combobox4filtering;
 
-        ContextMenu();
+        contextmenu();
         button1audiolibrarygenre.fire();
 
         tableview1.setRowFactory(rf ->
@@ -289,9 +288,9 @@ public class audiolibrary extends Application
                                 try
                                 {
                                     songsstatisticsobslist.clear();
-                                    songsstatisticsobslist.addAll(Arrays.asList(audiolibrarydb.SongsStatistics("Жанр")));
+                                    songsstatisticsobslist.addAll(Arrays.asList(AudioLibraryDB.songsstatistics("Жанр")));
                                     tableview4songsstatistics.setItems(songsstatisticsobslist);
-                                    label27artistsandsongsstatistics.setText(("Number of artists and related artists, songs count/duration: " + audiolibrarydb.ArtistsStatistics("Жанр") + "\n" +
+                                    label27artistsandsongsstatistics.setText(("Number of artists and related artists, songs count/duration: " + AudioLibraryDB.artistsstatistics("Жанр") + "\n" +
                                                                               "Average songs count/duration per artist; average song duration: " + String.format("%.2f", Double.parseDouble(textfield3.getText())/Double.parseDouble(textfield2.getText())) + "/" + (int)((Double.parseDouble(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield2.getText()))/60 + ":" + ((Integer.parseInt(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Integer.parseInt(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Integer.parseInt(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Integer.parseInt(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Integer.parseInt(textfield2.getText()))%60 + ":" + String.format("%.3f", (((Double.parseDouble(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield2.getText()))%1)).substring(2) + "; " + (int)((Double.parseDouble(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield3.getText()))/60 + ":" + ((Integer.parseInt(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Integer.parseInt(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Integer.parseInt(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Integer.parseInt(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Integer.parseInt(textfield3.getText()))%60 + ":" + String.format("%.3f", (((Double.parseDouble(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield3.getText()))%1)).substring(2)).replaceFirst("0/(?=[^0/]*$)", "/"));
                                 }
                                 catch (Exception ex)
@@ -312,7 +311,7 @@ public class audiolibrary extends Application
                                     songsstatisticsobslist.clear();
                                     if (textfield1.getText().equals("Композиторы"))
                                     {
-                                        songsstatisticsobslist.addAll(Arrays.asList(audiolibrarydb.SongsStatistics("Композиторы")));
+                                        songsstatisticsobslist.addAll(Arrays.asList(AudioLibraryDB.songsstatistics("Композиторы")));
                                         if (textfield4.getText().contains("d"))
                                             label27artistsandsongsstatistics.setText(("\nAverage songs count/duration per artist; average song duration: " + String.format("%.2f", Double.parseDouble(textfield3.getText())/Double.parseDouble(textfield2.getText())) + "/" + (int)((Double.parseDouble(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield2.getText()))/60 + ":" + ((Integer.parseInt(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Integer.parseInt(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Integer.parseInt(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Integer.parseInt(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Integer.parseInt(textfield2.getText()))%60 + ":" + String.format("%.3f", (((Double.parseDouble(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield2.getText()))%1)).substring(2) + "; " + (int)((Double.parseDouble(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield3.getText()))/60 + ":" + ((Integer.parseInt(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Integer.parseInt(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Integer.parseInt(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Integer.parseInt(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Integer.parseInt(textfield3.getText()))%60 + ":" + String.format("%.3f", (((Double.parseDouble(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield3.getText()))%1)).substring(2)).replace("0/", "/"));
                                         else
@@ -320,7 +319,7 @@ public class audiolibrary extends Application
                                     }
                                     else if (textfield1.getText().equals("Блогеры"))
                                     {
-                                        songsstatisticsobslist.addAll(Arrays.asList(audiolibrarydb.SongsStatistics("Блогеры")));
+                                        songsstatisticsobslist.addAll(Arrays.asList(AudioLibraryDB.songsstatistics("Блогеры")));
                                         if (textfield4.getText().contains("d"))
                                             label27artistsandsongsstatistics.setText(("\nAverage songs count/duration per artist; average song duration: " + String.format("%.2f", Double.parseDouble(textfield3.getText())/Double.parseDouble(textfield2.getText())) + "/" + (int)((Double.parseDouble(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield2.getText()))/60 + ":" + ((Integer.parseInt(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Integer.parseInt(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Integer.parseInt(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Integer.parseInt(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Integer.parseInt(textfield2.getText()))%60 + ":" + String.format("%.3f", (((Double.parseDouble(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield2.getText()))%1)).substring(2) + "; " + (int)((Double.parseDouble(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield3.getText()))/60 + ":" + ((Integer.parseInt(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Integer.parseInt(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Integer.parseInt(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Integer.parseInt(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Integer.parseInt(textfield3.getText()))%60 + ":" + String.format("%.3f", (((Double.parseDouble(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield3.getText()))%1)).substring(2)).replace("0/", "/"));
                                         else
@@ -328,13 +327,13 @@ public class audiolibrary extends Application
                                     }
                                     else if (textfield1.getText().equals("Каверы"))
                                     {
-                                        songsstatisticsobslist.addAll(Arrays.asList(audiolibrarydb.SongsStatistics("Каверы")));
-                                        label27artistsandsongsstatistics.setText(("Number of artists and related artists, songs count/duration: " + audiolibrarydb.ArtistsStatistics("Каверы") + "\n" +
+                                        songsstatisticsobslist.addAll(Arrays.asList(AudioLibraryDB.songsstatistics("Каверы")));
+                                        label27artistsandsongsstatistics.setText(("Number of artists and related artists, songs count/duration: " + AudioLibraryDB.artistsstatistics("Каверы") + "\n" +
                                                                                   "Average song duration: " + (int)((Double.parseDouble(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield3.getText()))/60 + ":" + ((Integer.parseInt(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Integer.parseInt(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Integer.parseInt(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Integer.parseInt(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Integer.parseInt(textfield3.getText()))%60 + ":" + String.format("%.3f", (((Double.parseDouble(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield3.getText()))%1)).substring(2)).replaceFirst("0/(?=[^0/]*$)", "/"));
                                     }
                                     else if (textfield1.getText().equals("Саундтреки"))
                                     {
-                                        songsstatisticsobslist.addAll(Arrays.asList(audiolibrarydb.SongsStatistics("Саундтреки")));
+                                        songsstatisticsobslist.addAll(Arrays.asList(AudioLibraryDB.songsstatistics("Саундтреки")));
                                         if (textfield4.getText().contains("d"))
                                             label27artistsandsongsstatistics.setText("\nAverage song duration: " + (int)((Double.parseDouble(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield3.getText()))/60 + ":" + ((Integer.parseInt(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Integer.parseInt(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Integer.parseInt(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Integer.parseInt(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Integer.parseInt(textfield3.getText()))%60 + ":" + String.format("%.3f", (((Double.parseDouble(textfield4.getText().substring(0, textfield4.getText().indexOf('d')))*86400+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf('d')+2, textfield4.getText().indexOf(':')))*3600+Double.parseDouble(textfield4.getText().substring(textfield4.getText().indexOf(':')+1, textfield4.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield4.getText().substring(textfield4.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield3.getText()))%1)).substring(2));
                                         else
@@ -359,13 +358,13 @@ public class audiolibrary extends Application
                                 try
                                 {
                                     songsstatisticsobslist.clear();
-                                    songsstatisticsobslist.addAll(Arrays.asList(audiolibrarydb.SongsStatistics(textfield10.getText())));
+                                    songsstatisticsobslist.addAll(Arrays.asList(AudioLibraryDB.songsstatistics(textfield10.getText())));
                                     tableview4songsstatistics.setItems(songsstatisticsobslist);
                                     if (textfield13.getText().contains("d"))
-                                        label27artistsandsongsstatistics.setText(("Number of artists and related artists, songs count/duration: " + audiolibrarydb.ArtistsStatistics(textfield10.getText()) + "\n" +
+                                        label27artistsandsongsstatistics.setText(("Number of artists and related artists, songs count/duration: " + AudioLibraryDB.artistsstatistics(textfield10.getText()) + "\n" +
                                                 "Average songs count/duration per artist; average song duration: " + String.format("%.2f", Double.parseDouble(textfield12.getText())/Double.parseDouble(textfield11.getText())) + "/" + (int)((Double.parseDouble(textfield13.getText().substring(0, textfield13.getText().indexOf('d')))*86400+Double.parseDouble(textfield13.getText().substring(textfield13.getText().indexOf('d')+2, textfield13.getText().indexOf(':')))*3600+Double.parseDouble(textfield13.getText().substring(textfield13.getText().indexOf(':')+1, textfield13.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield13.getText().substring(textfield13.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield11.getText()))/60 + ":" + ((Integer.parseInt(textfield13.getText().substring(0, textfield13.getText().indexOf('d')))*86400+Integer.parseInt(textfield13.getText().substring(textfield13.getText().indexOf('d')+2, textfield13.getText().indexOf(':')))*3600+Integer.parseInt(textfield13.getText().substring(textfield13.getText().indexOf(':')+1, textfield13.getText().lastIndexOf(':')))*60+Integer.parseInt(textfield13.getText().substring(textfield13.getText().lastIndexOf(':')+1)))/Integer.parseInt(textfield11.getText()))%60 + ":" + String.format("%.3f", (((Double.parseDouble(textfield13.getText().substring(0, textfield13.getText().indexOf('d')))*86400+Double.parseDouble(textfield13.getText().substring(textfield13.getText().indexOf('d')+2, textfield13.getText().indexOf(':')))*3600+Double.parseDouble(textfield13.getText().substring(textfield13.getText().indexOf(':')+1, textfield13.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield13.getText().substring(textfield13.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield11.getText()))%1)).substring(2) + "; " + (int)((Double.parseDouble(textfield13.getText().substring(0, textfield13.getText().indexOf('d')))*86400+Double.parseDouble(textfield13.getText().substring(textfield13.getText().indexOf('d')+2, textfield13.getText().indexOf(':')))*3600+Double.parseDouble(textfield13.getText().substring(textfield13.getText().indexOf(':')+1, textfield13.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield13.getText().substring(textfield13.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield12.getText()))/60 + ":" + ((Integer.parseInt(textfield13.getText().substring(0, textfield13.getText().indexOf('d')))*86400+Integer.parseInt(textfield13.getText().substring(textfield13.getText().indexOf('d')+2, textfield13.getText().indexOf(':')))*3600+Integer.parseInt(textfield13.getText().substring(textfield13.getText().indexOf(':')+1, textfield13.getText().lastIndexOf(':')))*60+Integer.parseInt(textfield13.getText().substring(textfield13.getText().lastIndexOf(':')+1)))/Integer.parseInt(textfield12.getText()))%60 + ":" + String.format("%.3f", (((Double.parseDouble(textfield13.getText().substring(0, textfield13.getText().indexOf('d')))*86400+Double.parseDouble(textfield13.getText().substring(textfield13.getText().indexOf('d')+2, textfield13.getText().indexOf(':')))*3600+Double.parseDouble(textfield13.getText().substring(textfield13.getText().indexOf(':')+1, textfield13.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield13.getText().substring(textfield13.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield12.getText()))%1)).substring(2)).replaceFirst("0/(?=[^0/]*$)", "/"));
                                     else
-                                        label27artistsandsongsstatistics.setText(("Number of artists and related artists, songs count/duration: " + audiolibrarydb.ArtistsStatistics(textfield10.getText()) + "\n" +
+                                        label27artistsandsongsstatistics.setText(("Number of artists and related artists, songs count/duration: " + AudioLibraryDB.artistsstatistics(textfield10.getText()) + "\n" +
                                                 "Average songs count/duration per artist; average song duration: " + String.format("%.2f", Double.parseDouble(textfield12.getText())/Double.parseDouble(textfield11.getText())) + "/" + (int)((Double.parseDouble(textfield13.getText().substring(0, textfield13.getText().indexOf(':')))*3600+Double.parseDouble(textfield13.getText().substring(textfield13.getText().indexOf(':')+1, textfield13.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield13.getText().substring(textfield13.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield11.getText()))/60 + ":" + ((Integer.parseInt(textfield13.getText().substring(0, textfield13.getText().indexOf(':')))*3600+Integer.parseInt(textfield13.getText().substring(textfield13.getText().indexOf(':')+1, textfield13.getText().lastIndexOf(':')))*60+Integer.parseInt(textfield13.getText().substring(textfield13.getText().lastIndexOf(':')+1)))/Integer.parseInt(textfield11.getText()))%60 + ":" + String.format("%.3f", (((Double.parseDouble(textfield13.getText().substring(0, textfield13.getText().indexOf(':')))*3600+Double.parseDouble(textfield13.getText().substring(textfield13.getText().indexOf(':')+1, textfield13.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield13.getText().substring(textfield13.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield11.getText()))%1)).substring(2) + "; " + (int)((Double.parseDouble(textfield13.getText().substring(0, textfield13.getText().indexOf(':')))*3600+Double.parseDouble(textfield13.getText().substring(textfield13.getText().indexOf(':')+1, textfield13.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield13.getText().substring(textfield13.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield12.getText()))/60 + ":" + ((Integer.parseInt(textfield13.getText().substring(0, textfield13.getText().indexOf(':')))*3600+Integer.parseInt(textfield13.getText().substring(textfield13.getText().indexOf(':')+1, textfield13.getText().lastIndexOf(':')))*60+Integer.parseInt(textfield13.getText().substring(textfield13.getText().lastIndexOf(':')+1)))/Integer.parseInt(textfield12.getText()))%60 + ":" + String.format("%.3f", (((Double.parseDouble(textfield13.getText().substring(0, textfield13.getText().indexOf(':')))*3600+Double.parseDouble(textfield13.getText().substring(textfield13.getText().indexOf(':')+1, textfield13.getText().lastIndexOf(':')))*60+Double.parseDouble(textfield13.getText().substring(textfield13.getText().lastIndexOf(':')+1)))/Double.parseDouble(textfield12.getText()))%1)).substring(2)).replaceFirst("0/(?=[^0/]*$)", "/"));
                                 }
                                 catch (Exception ex)
@@ -382,9 +381,9 @@ public class audiolibrary extends Application
                             {
                                 sub1obslist.clear();
                                 if (tabl == 3)
-                                    sub1obslist.addAll(Arrays.asList(audiolibrarydb.SUB1SELECT(Integer.parseInt(Arrays.asList(tableview1.getSelectionModel().getSelectedItem()).get(8)))));
+                                    sub1obslist.addAll(Arrays.asList(AudioLibraryDB.sub1select(Integer.parseInt(Arrays.asList(tableview1.getSelectionModel().getSelectedItem()).get(8)))));
                                 else if (tabl == 8)
-                                    sub1obslist.addAll(Arrays.asList(audiolibrarydb.SUB1SELECT(audiolibrarydb.MusicArtistBandID(Arrays.asList(tableview1.getSelectionModel().getSelectedItem()).get(0)))));
+                                    sub1obslist.addAll(Arrays.asList(AudioLibraryDB.sub1select(AudioLibraryDB.musicartistbandid(Arrays.asList(tableview1.getSelectionModel().getSelectedItem()).get(0)))));
                             }
                             catch (Exception re)
                             {
@@ -422,10 +421,10 @@ public class audiolibrary extends Application
                             sub1third.setPrefWidth(siz11);
                             sub1fourth.setPrefWidth(siz12);
                             sub1fifth.setVisible(false);
-                            ColumnProperties(sub1first, sub1second, sub1third, sub1fourth, sub1fifth, null, null, null, null);
-                            Tip(sub1first);
+                            columnproperties(sub1first, sub1second, sub1third, sub1fourth, sub1fifth, null, null, null, null);
+                            tip(sub1first);
                             tableview2.setItems(sub1obslist);
-                            NumberofArtistsSongsCountandDuration(tableview2, label25, 2);
+                            numberofartistssongscountandduration(tableview2, label25, 2);
                             textfield10.setText("");
                             textfield11.setText("");
                             textfield12.setText("");
@@ -436,9 +435,9 @@ public class audiolibrary extends Application
                                 try
                                 {
                                     if (tabl == 3)
-                                        sub2obslist.addAll(Arrays.asList(audiolibrarydb.SUB2SELECT(Integer.parseInt(Arrays.asList(tableview1.getSelectionModel().getSelectedItem()).get(8)), 0)));
+                                        sub2obslist.addAll(Arrays.asList(AudioLibraryDB.sub2select(Integer.parseInt(Arrays.asList(tableview1.getSelectionModel().getSelectedItem()).get(8)), 0)));
                                     else
-                                        sub2obslist.addAll(Arrays.asList(audiolibrarydb.SUB2SELECT(audiolibrarydb.MusicArtistBandID(Arrays.asList(tableview1.getSelectionModel().getSelectedItem()).get(0)), 0)));
+                                        sub2obslist.addAll(Arrays.asList(AudioLibraryDB.sub2select(AudioLibraryDB.musicartistbandid(Arrays.asList(tableview1.getSelectionModel().getSelectedItem()).get(0)), 0)));
                                 }
                                 catch (Exception re)
                                 {
@@ -450,7 +449,7 @@ public class audiolibrary extends Application
                             {
                                 try
                                 {
-                                    sub2obslist.addAll(Arrays.asList(audiolibrarydb.SUB2SELECT(Integer.parseInt(Arrays.asList(tableview1.getSelectionModel().getSelectedItem()).get(4)), 0)));
+                                    sub2obslist.addAll(Arrays.asList(AudioLibraryDB.sub2select(Integer.parseInt(Arrays.asList(tableview1.getSelectionModel().getSelectedItem()).get(4)), 0)));
                                 }
                                 catch (Exception re)
                                 {
@@ -485,11 +484,11 @@ public class audiolibrary extends Application
                             sub2second.setPrefWidth(siz14);
                             sub2third.setPrefWidth(siz15);
                             sub2fourth.setVisible(false);
-                            ColumnProperties(sub2first, sub2second, sub2third, sub2fourth, null, null, null, null, null);
-                            Tip(sub2first);
-                            Tip(sub2third);
+                            columnproperties(sub2first, sub2second, sub2third, sub2fourth, null, null, null, null, null);
+                            tip(sub2first);
+                            tip(sub2third);
                             tableview3.setItems(sub2obslist);
-                            NumberofArtistsSongsCountandDuration(tableview3, label26, 1);
+                            numberofartistssongscountandduration(tableview3, label26, 1);
                             tableview2.getSelectionModel().selectedItemProperty().addListener((sub1s, sub1os, sub1ns) ->
                             {
                                 if (sub1ns != null)
@@ -507,7 +506,7 @@ public class audiolibrary extends Application
                                     {
                                         try
                                         {
-                                            sub2sub1obslist.addAll(Arrays.asList(audiolibrarydb.SUB2SELECT(Integer.parseInt(Arrays.asList(tableview2.getSelectionModel().getSelectedItem()).get(4)), 1)));
+                                            sub2sub1obslist.addAll(Arrays.asList(AudioLibraryDB.sub2select(Integer.parseInt(Arrays.asList(tableview2.getSelectionModel().getSelectedItem()).get(4)), 1)));
                                         }
                                         catch (Exception re)
                                         {
@@ -542,11 +541,11 @@ public class audiolibrary extends Application
                                     sub2sub1second.setPrefWidth(siz14);
                                     sub2sub1third.setPrefWidth(siz15);
                                     sub2sub1fourth.setVisible(false);
-                                    ColumnProperties(sub2sub1first, sub2sub1second, sub2sub1third, sub2sub1fourth, null, null, null, null, null);
-                                    Tip(sub2sub1first);
-                                    Tip(sub2sub1third);
+                                    columnproperties(sub2sub1first, sub2sub1second, sub2sub1third, sub2sub1fourth, null, null, null, null, null);
+                                    tip(sub2sub1first);
+                                    tip(sub2sub1third);
                                     tableview3.setItems(sub2sub1obslist);
-                                    NumberofArtistsSongsCountandDuration(tableview3, label26, 1);
+                                    numberofartistssongscountandduration(tableview3, label26, 1);
                                 }
                             });
                             tableview3.getSelectionModel().selectedItemProperty().addListener((sub2s, sub2os, sub2ns) ->
@@ -593,7 +592,7 @@ public class audiolibrary extends Application
         tableview1.setOnKeyPressed(e ->
         {
             if (e.getCode().equals(KeyCode.UP) || e.getCode().equals(KeyCode.DOWN))
-                RowClick(tableview1, tableview1.getSelectionModel().getSelectedIndex());
+                rowclick(tableview1, tableview1.getSelectionModel().getSelectedIndex());
         });
         tableview2.setRowFactory(rf ->
         {
@@ -660,7 +659,7 @@ public class audiolibrary extends Application
         });
     }
 
-    public void ContextMenu() throws RuntimeException
+    public void contextmenu() throws RuntimeException
     {
         if (tabl == 3 || tabl == 4 || tabl == 5 || tabl == 6 || tabl == 8)
         {
@@ -672,26 +671,31 @@ public class audiolibrary extends Application
         }
     }
 
-    public void Tip(TableColumn col)
+    public void tip(TableColumn col)
     {
         col.setCellFactory(cf -> new TableCell<String, String>()
         {
-            final Tooltip tooltip = new Tooltip();
+            final Tooltip tt = new Tooltip();
 
             @Override
             protected void updateItem(String item, boolean empty)
             {
                 super.updateItem(item, empty);
 
+                tt.setMaxWidth(Screen.getPrimary().getBounds().getWidth());
+                tt.setStyle("-fx-text-fill: #000000");
+                tt.setWrapText(true);
+                tt.setShowDuration(javafx.util.Duration.INDEFINITE);
                 setText(item);
                 Platform.runLater(() ->
                 {
                     Text itemtext = new Text(item);
+
                     itemtext.setFont(getFont());
                     if (itemtext.getLayoutBounds().getWidth() > (getWidth() - getPadding().getLeft() - getPadding().getRight()) && getWidth() > 0)
                     {
-                        tooltip.setText(item);
-                        setTooltip(tooltip);
+                        tt.setText(item);
+                        setTooltip(tt);
                     }
                     else
                         setTooltip(null);
@@ -700,7 +704,7 @@ public class audiolibrary extends Application
         });
     }
 
-    public void Clear()
+    public void clear()
     {
         textfield1.setText("");
         textfield2.setText("");
@@ -729,7 +733,7 @@ public class audiolibrary extends Application
         label26.setText("Songs count/duration: 0/0:0");
     }
 
-    public void NumberofArtistsSongsCountandDuration(TableView<String[]> tableviewstring, Label label, int rsong)
+    public void numberofartistssongscountandduration(TableView<String[]> tableviewstring, Label label, int rsong)
     {
         int noart = 0, songscount = 0, day;
         String dur;
@@ -866,7 +870,7 @@ public class audiolibrary extends Application
         }
     }
 
-    public void Filtering()
+    public void filtering()
     {
         textfield17.setEditable(false);
         textfield17.setText("");
@@ -875,7 +879,7 @@ public class audiolibrary extends Application
         try
         {
             obslist.clear();
-            obslist.addAll(Arrays.asList(audiolibrarydb.SELECTFILTERING(tabl)));
+            obslist.addAll(Arrays.asList(AudioLibraryDB.selectfiltering(tabl)));
             tableview1.setItems(obslist);
         }
         catch (Exception e)
@@ -883,51 +887,51 @@ public class audiolibrary extends Application
             throw new RuntimeException(e);
         }
         if (tabl == 3)
-            NumberofArtistsSongsCountandDuration(tableview1, label24, 4);
+            numberofartistssongscountandduration(tableview1, label24, 4);
         if (tabl == 4 || tabl == 5)
-            NumberofArtistsSongsCountandDuration(tableview1, label24, 2);
+            numberofartistssongscountandduration(tableview1, label24, 2);
         if (tabl == 6)
-            NumberofArtistsSongsCountandDuration(tableview1, label24, 0);
+            numberofartistssongscountandduration(tableview1, label24, 0);
         if (tabl == 7)
-            NumberofArtistsSongsCountandDuration(tableview1, label24, 3);
+            numberofartistssongscountandduration(tableview1, label24, 3);
         tableview1.getSelectionModel().select(null);
         tableview1.scrollTo(0);
-        Clear();
+        clear();
     }
 
-    public void Searching(TextField textfield, ObservableList<String[]> observablelist)
+    public void searching(TextField textfield, ObservableList<String[]> observablelist)
     {
         try
         {
             observablelist.clear();
             if (observablelist == obslist)
             {
-                observablelist.addAll(Arrays.asList(audiolibrarydb.SELECTSEARCHING(tabl, 0, "%" + textfield.getText() + "%")));
+                observablelist.addAll(Arrays.asList(AudioLibraryDB.selectsearching(tabl, 0, "%" + textfield.getText() + "%")));
                 tableview1.setItems(observablelist);
                 tableview2.getItems().clear();
                 tableview3.getItems().clear();
                 if (tabl == 3 || tabl == 8)
-                    NumberofArtistsSongsCountandDuration(tableview1, label24, 4);
+                    numberofartistssongscountandduration(tableview1, label24, 4);
                 if (tabl == 4 || tabl == 5)
-                    NumberofArtistsSongsCountandDuration(tableview1, label24, 2);
+                    numberofartistssongscountandduration(tableview1, label24, 2);
                 if (tabl == 6)
-                    NumberofArtistsSongsCountandDuration(tableview1, label24, 3);
+                    numberofartistssongscountandduration(tableview1, label24, 3);
                 if (tabl == 7)
-                    NumberofArtistsSongsCountandDuration(tableview1, label24, 3);
+                    numberofartistssongscountandduration(tableview1, label24, 3);
                 label25.setText("Number of artists, songs count/duration: 0, 0/0:0");
                 label26.setText("Songs count/duration: 0/0:0");
             }
             else if (textfield10.getText().equals(""))
             {
-                observablelist.addAll(Arrays.asList(audiolibrarydb.SELECTSEARCHING(tabl, 1, "%" + textfield.getText() + "%")));
+                observablelist.addAll(Arrays.asList(AudioLibraryDB.selectsearching(tabl, 1, "%" + textfield.getText() + "%")));
                 tableview3.setItems(observablelist);
-                NumberofArtistsSongsCountandDuration(tableview3, label26, 1);
+                numberofartistssongscountandduration(tableview3, label26, 1);
             }
             else
             {
-                observablelist.addAll(Arrays.asList(audiolibrarydb.SELECTSEARCHING(tabl, 2, "%" + textfield.getText() + "%")));
+                observablelist.addAll(Arrays.asList(AudioLibraryDB.selectsearching(tabl, 2, "%" + textfield.getText() + "%")));
                 tableview3.setItems(observablelist);
-                NumberofArtistsSongsCountandDuration(tableview3, label26, 1);
+                numberofartistssongscountandduration(tableview3, label26, 1);
             }
         }
         catch (Exception e)
@@ -936,7 +940,7 @@ public class audiolibrary extends Application
         }
     }
 
-    public static void ColumnProperties(TableColumn col1, TableColumn col2, TableColumn col3, TableColumn col4, TableColumn col5, TableColumn col6, TableColumn col7, TableColumn col8, TableColumn col9)
+    public static void columnproperties(TableColumn col1, TableColumn col2, TableColumn col3, TableColumn col4, TableColumn col5, TableColumn col6, TableColumn col7, TableColumn col8, TableColumn col9)
     {
         TableColumn col = col1;
         col.setResizable(false);
@@ -944,46 +948,46 @@ public class audiolibrary extends Application
         if (col2 != null)
         {
             col1 = col2;
-            ColumnProperties(col1, null, col3, col4, col5, col6, col7, col8, col9);
+            columnproperties(col1, null, col3, col4, col5, col6, col7, col8, col9);
         }
         if (col3 != null)
         {
             col1 = col3;
-            ColumnProperties(col1, null, null, col4, col5, col6, col7, col8, col9);
+            columnproperties(col1, null, null, col4, col5, col6, col7, col8, col9);
         }
         if (col4 != null)
         {
             col1 = col4;
-            ColumnProperties(col1, null, null, null, col5, col6, col7, col8, col9);
+            columnproperties(col1, null, null, null, col5, col6, col7, col8, col9);
         }
         if (col5 != null)
         {
             col1 = col5;
-            ColumnProperties(col1, null, null, null, null, col6, col7, col8, col9);
+            columnproperties(col1, null, null, null, null, col6, col7, col8, col9);
         }
         if (col6 != null)
         {
             col1 = col6;
-            ColumnProperties(col1, null, null, null, null, null, col7, col8, col9);
+            columnproperties(col1, null, null, null, null, null, col7, col8, col9);
         }
         if (col7 != null)
         {
             col1 = col7;
-            ColumnProperties(col1, null, null, null, null, null, null, col8, col9);
+            columnproperties(col1, null, null, null, null, null, null, col8, col9);
         }
         if (col8 != null)
         {
             col1 = col8;
-            ColumnProperties(col1, null, null, null, null, null, null, null, col9);
+            columnproperties(col1, null, null, null, null, null, null, null, col9);
         }
         if (col9 != null)
         {
             col1 = col9;
-            ColumnProperties(col1, null, null, null, null, null, null, null, null);
+            columnproperties(col1, null, null, null, null, null, null, null, null);
         }
     }
 
-    public void Table(int siz1, int siz2, int siz3, int siz4, int siz5, int siz6, int siz7, int siz8, int siz9, int siz11, int siz12, int siz13, int siz14, int siz15) throws Exception
+    public void table(int siz1, int siz2, int siz3, int siz4, int siz5, int siz6, int siz7, int siz8, int siz9, int siz11, int siz12, int siz13, int siz14, int siz15) throws Exception
     {
         textfield1.setContextMenu(new ContextMenu());
         textfield2.setContextMenu(new ContextMenu());
@@ -1008,7 +1012,7 @@ public class audiolibrary extends Application
             cm.getItems().clear();
         }
         else
-            ContextMenu();
+            contextmenu();
 
         label20combobox.setText("");
         label21combobox.setText("");
@@ -1102,7 +1106,7 @@ public class audiolibrary extends Application
 
         obslist.clear();
         tableview1.getColumns().clear();
-        obslist.addAll(Arrays.asList(audiolibrarydb.SELECT(tabl)));
+        obslist.addAll(Arrays.asList(AudioLibraryDB.select(tabl)));
         TableColumn first = new TableColumn<>(label3.getText());
         TableColumn<String[], String> second = new TableColumn<>(label4.getText());
         TableColumn<String[], String> third = new TableColumn<>(label5.getText());
@@ -1142,13 +1146,13 @@ public class audiolibrary extends Application
         second.setPrefWidth(siz2);
         third.setPrefWidth(siz3);
         fourth.setPrefWidth(siz4);
-        ColumnProperties(first, second, third, fourth, null, null, null, null, null);
+        columnproperties(first, second, third, fourth, null, null, null, null, null);
         if (tabl == 3 || tabl == 4 || tabl == 5 || tabl == 7 || tabl == 8)
         {
             second.setVisible(false);
             if (tabl == 7)
                 third.setVisible(false);
-            Tip(first);
+            tip(first);
         }
         if (tabl == 3 || tabl == 6 || tabl == 7 || tabl == 8)
         {
@@ -1166,7 +1170,7 @@ public class audiolibrary extends Application
             tableview1.getColumns().add(fifth);
             fifth.setCellValueFactory(v -> new SimpleStringProperty(v.getValue()[4]));
             fifth.setPrefWidth(siz5);
-            ColumnProperties(first, second, third, fourth, fifth, null, null, null, null);
+            columnproperties(first, second, third, fourth, fifth, null, null, null, null);
             if (tabl == 3 || tabl == 6 || tabl == 8)
             {
                 TableColumn<String[], String> sixth = new TableColumn<>(label8.getText());
@@ -1181,7 +1185,7 @@ public class audiolibrary extends Application
                 tableview1.getColumns().add(sixth);
                 sixth.setCellValueFactory(v -> new SimpleStringProperty(v.getValue()[5]));
                 sixth.setPrefWidth(siz6);
-                ColumnProperties(first, second, third, fourth, fifth, sixth, null, null, null);
+                columnproperties(first, second, third, fourth, fifth, sixth, null, null, null);
                 if (tabl == 3 || tabl == 8)
                 {
                     fourth.setVisible(false);
@@ -1189,28 +1193,28 @@ public class audiolibrary extends Application
                     tableview1.getColumns().add(seventh);
                     seventh.setCellValueFactory((Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>) v -> new SimpleStringProperty(v.getValue()[6]));
                     seventh.setVisible(false);
-                    ColumnProperties(first, second, third, fourth, fifth, sixth, seventh, null, null);
+                    columnproperties(first, second, third, fourth, fifth, sixth, seventh, null, null);
                     TableColumn eighth = new TableColumn<>(label10.getText());
                     tableview1.getColumns().add(eighth);
                     eighth.setCellValueFactory((Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>) v -> new SimpleStringProperty(v.getValue()[7]));
                     eighth.setVisible(false);
-                    ColumnProperties(first, second, third, fourth, fifth, sixth, seventh, eighth, null);
+                    columnproperties(first, second, third, fourth, fifth, sixth, seventh, eighth, null);
                     TableColumn ninth = new TableColumn<>(label12.getText());
                     tableview1.getColumns().add(ninth);
                     ninth.setCellValueFactory((Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>) v -> new SimpleStringProperty(v.getValue()[8]));
                     ninth.setVisible(false);
-                    ColumnProperties(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
+                    columnproperties(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
                 }
                 if (tabl == 6)
                 {
                     third.setComparator(Comparator.nullsLast(String::compareToIgnoreCase));
                     fifth.setComparator(Comparator.nullsLast(String::compareToIgnoreCase));
                     sixth.setComparator(Comparator.nullsLast(String::compareToIgnoreCase));
-                    Tip(first);
-                    Tip(second);
-                    Tip(third);
-                    Tip(fifth);
-                    Tip(sixth);
+                    tip(first);
+                    tip(second);
+                    tip(third);
+                    tip(fifth);
+                    tip(sixth);
                 }
             }
         }
@@ -1218,7 +1222,7 @@ public class audiolibrary extends Application
         tableview1.getSelectionModel().selectedItemProperty().addListener((s, os, ns) ->
         {
             if (!textfield1.getText().equals("Жанр"))
-                Clear();
+                clear();
             if (ns != null)
             {
                 textfield1.setText(Arrays.asList(tableview1.getSelectionModel().getSelectedItem()).get(0));
@@ -1282,7 +1286,7 @@ public class audiolibrary extends Application
         sub1third.setPrefWidth(siz11);
         sub1fourth.setPrefWidth(siz12);
         sub1fifth.setVisible(false);
-        ColumnProperties(sub1first, sub1second, sub1third, sub1fourth, sub1fifth, null, null, null, null);
+        columnproperties(sub1first, sub1second, sub1third, sub1fourth, sub1fifth, null, null, null, null);
         if (tabl == 1)
         {
             HBox1.setPrefWidth(572);
@@ -1297,7 +1301,7 @@ public class audiolibrary extends Application
             tableview2.setMaxWidth(678);
             tableview2.getColumns().clear();
             sub1obslist.clear();
-            sub1obslist.addAll(Arrays.asList(audiolibrarydb.SELECT(2)));
+            sub1obslist.addAll(Arrays.asList(AudioLibraryDB.select(2)));
             sub1first = new TableColumn<>(label12.getText());
             sub1second = new TableColumn<>(label13.getText());
             sub1third = new TableColumn<>(label14.getText());
@@ -1325,7 +1329,7 @@ public class audiolibrary extends Application
             sub1second.setPrefWidth(siz6);
             sub1third.setPrefWidth(siz7);
             sub1fourth.setPrefWidth(siz8);
-            ColumnProperties(sub1first, sub1second, sub1third, sub1fourth, null, null, null, null, null);
+            columnproperties(sub1first, sub1second, sub1third, sub1fourth, null, null, null, null, null);
             tableview2.setItems(sub1obslist);
         }
         if (tabl == 3 || tabl == 4 || tabl == 5 || tabl == 8)
@@ -1342,26 +1346,26 @@ public class audiolibrary extends Application
             sub2second.setPrefWidth(siz14);
             sub2third.setPrefWidth(siz15);
             sub2fourth.setVisible(false);
-            ColumnProperties(sub2first, sub2second, sub2third, sub2fourth, null, null, null, null, null);
+            columnproperties(sub2first, sub2second, sub2third, sub2fourth, null, null, null, null, null);
         }
 
-        textfield17.textProperty().addListener((o, ov, nv) -> Searching(textfield17, obslist));
-        textfield18.textProperty().addListener((o, ov, nv) -> Searching(textfield18, sub2obslist));
-        textfield18.textProperty().addListener((o, ov, nv) -> Searching(textfield18, sub2sub1obslist));
+        textfield17.textProperty().addListener((o, ov, nv) -> searching(textfield17, obslist));
+        textfield18.textProperty().addListener((o, ov, nv) -> searching(textfield18, sub2obslist));
+        textfield18.textProperty().addListener((o, ov, nv) -> searching(textfield18, sub2sub1obslist));
 
         if (tabl == 1)
         {
-            NumberofArtistsSongsCountandDuration(tableview1, label24, 2);
-            NumberofArtistsSongsCountandDuration(tableview2, label25, 2);
+            numberofartistssongscountandduration(tableview1, label24, 2);
+            numberofartistssongscountandduration(tableview2, label25, 2);
         }
         if (tabl == 3 || tabl == 8)
-            NumberofArtistsSongsCountandDuration(tableview1, label24, 4);
+            numberofartistssongscountandduration(tableview1, label24, 4);
         if (tabl == 4 || tabl == 5)
-            NumberofArtistsSongsCountandDuration(tableview1, label24, 2);
+            numberofartistssongscountandduration(tableview1, label24, 2);
         if (tabl == 6)
-            NumberofArtistsSongsCountandDuration(tableview1, label24, 0);
+            numberofartistssongscountandduration(tableview1, label24, 0);
         if (tabl == 7)
-            NumberofArtistsSongsCountandDuration(tableview1, label24, 3);
+            numberofartistssongscountandduration(tableview1, label24, 3);
 
         if (String.valueOf(textfield2.getText()).equals("null"))
             textfield2.setText("");
@@ -1377,7 +1381,7 @@ public class audiolibrary extends Application
         {
             songsstatisticsobslist.clear();
             tableview4songsstatistics.getColumns().clear();
-            songsstatisticsobslist.addAll(Arrays.asList(audiolibrarydb.SongsStatistics("Total")));
+            songsstatisticsobslist.addAll(Arrays.asList(AudioLibraryDB.songsstatistics("Total")));
             TableColumn songsstatisticsfirst = new TableColumn<>("Shortest songs");
             TableColumn songsstatisticssecond = new TableColumn<>("Longest songs");
             tableview4songsstatistics.getColumns().add(songsstatisticsfirst);
@@ -1392,15 +1396,15 @@ public class audiolibrary extends Application
             songsstatisticssecond.setResizable(false);
             songsstatisticssecond.setReorderable(false);
             songsstatisticssecond.setSortable(false);
-            Tip(songsstatisticsfirst);
-            Tip(songsstatisticssecond);
+            tip(songsstatisticsfirst);
+            tip(songsstatisticssecond);
             tableview4songsstatistics.setItems(songsstatisticsobslist);
-            tableview4songsstatistics.getSelectionModel().selectedItemProperty().addListener((sub1s, sub1os, sub1ns) -> tableview4songsstatistics.getSelectionModel().clearSelection());
+            tableview4songsstatistics.addEventFilter(MouseEvent.MOUSE_PRESSED, me);
             if (obslist.get(4)[3].contains("d"))
-                label27artistsandsongsstatistics.setText(("Number of artists and related artists, songs count/duration: " + audiolibrarydb.ArtistsStatistics("Total") + "\n" +
+                label27artistsandsongsstatistics.setText(("Number of artists and related artists, songs count/duration: " + AudioLibraryDB.artistsstatistics("Total") + "\n" +
                         "Average songs count/duration per artist; average song duration: " + String.format("%.2f", ((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(",")+1, label24.getText().lastIndexOf("/")))-Double.parseDouble(obslist.get(4)[2]))/Double.parseDouble(label24.getText().substring(label24.getText().indexOf(":")+2, label24.getText().lastIndexOf(","))))) + "/" + (int)(((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Double.parseDouble(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))-(Double.parseDouble(obslist.get(4)[3].substring(0, obslist.get(4)[3].indexOf('d')))*86400+Double.parseDouble(obslist.get(4)[3].substring(obslist.get(4)[3].indexOf('d')+2, obslist.get(4)[3].indexOf(':')))*3600+Double.parseDouble(obslist.get(4)[3].substring(obslist.get(4)[3].indexOf(':')+1, obslist.get(4)[3].lastIndexOf(':')))*60+Double.parseDouble(obslist.get(4)[3].substring(obslist.get(4)[3].lastIndexOf(':')+1))))/Double.parseDouble(label24.getText().substring(label24.getText().indexOf(':')+2, label24.getText().lastIndexOf(','))))/60 + ":" + (((Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Integer.parseInt(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))-(Integer.parseInt(obslist.get(4)[3].substring(0, obslist.get(4)[3].indexOf('d')))*86400+Integer.parseInt(obslist.get(4)[3].substring(obslist.get(4)[3].indexOf('d')+2, obslist.get(4)[3].indexOf(':')))*3600+Integer.parseInt(obslist.get(4)[3].substring(obslist.get(4)[3].indexOf(':')+1, obslist.get(4)[3].lastIndexOf(':')))*60+Integer.parseInt(obslist.get(4)[3].substring(obslist.get(4)[3].lastIndexOf(':')+1))))/Integer.parseInt(label24.getText().substring(label24.getText().indexOf(':')+2, label24.getText().lastIndexOf(','))))%60 + ":" + String.format("%.3f", ((((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Double.parseDouble(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))-(Double.parseDouble(obslist.get(4)[3].substring(0, obslist.get(4)[3].indexOf('d')))*86400+Double.parseDouble(obslist.get(4)[3].substring(obslist.get(4)[3].indexOf('d')+2, obslist.get(4)[3].indexOf(':')))*3600+Double.parseDouble(obslist.get(4)[3].substring(obslist.get(4)[3].indexOf(':')+1, obslist.get(4)[3].lastIndexOf(':')))*60+Double.parseDouble(obslist.get(4)[3].substring(obslist.get(4)[3].lastIndexOf(':')+1))))/Double.parseDouble(label24.getText().substring(label24.getText().indexOf(':')+2, label24.getText().lastIndexOf(','))))%1)).substring(2) + "; " + (int)((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Double.parseDouble(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(',')+2, label24.getText().lastIndexOf('/'))))/60 + ":" + ((Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Integer.parseInt(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf(',')+2, label24.getText().lastIndexOf('/'))))%60 + ":" + String.format("%.3f", (((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Double.parseDouble(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(',')+2, label24.getText().lastIndexOf('/'))))%1)).substring(2)).replaceFirst("0/(?=[^0/]*$)", "/"));
             else
-                label27artistsandsongsstatistics.setText(("Number of artists and related artists, songs count/duration: " + audiolibrarydb.ArtistsStatistics("Total") + "\n" +
+                label27artistsandsongsstatistics.setText(("Number of artists and related artists, songs count/duration: " + AudioLibraryDB.artistsstatistics("Total") + "\n" +
                         "Average songs count/duration per artist; average song duration: " + String.format("%.2f", ((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(",")+1, label24.getText().lastIndexOf("/")))-Double.parseDouble(obslist.get(4)[2]))/Double.parseDouble(label24.getText().substring(label24.getText().indexOf(":")+2, label24.getText().lastIndexOf(","))))) + "/" + (int)(((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Double.parseDouble(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))-(Double.parseDouble(obslist.get(4)[3].substring(0, obslist.get(4)[3].indexOf(':')))*3600+Double.parseDouble(obslist.get(4)[3].substring(obslist.get(4)[3].indexOf(':')+1, obslist.get(4)[3].lastIndexOf(':')))*60+Double.parseDouble(obslist.get(4)[3].substring(obslist.get(4)[3].lastIndexOf(':')+1))))/Double.parseDouble(label24.getText().substring(label24.getText().indexOf(':')+2, label24.getText().lastIndexOf(','))))/60 + ":" + (((Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Integer.parseInt(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))-(Integer.parseInt(obslist.get(4)[3].substring(0, obslist.get(4)[3].indexOf(':')))*3600+Integer.parseInt(obslist.get(4)[3].substring(obslist.get(4)[3].indexOf(':')+1, obslist.get(4)[3].lastIndexOf(':')))*60+Integer.parseInt(obslist.get(4)[3].substring(obslist.get(4)[3].lastIndexOf(':')+1))))/Integer.parseInt(label24.getText().substring(label24.getText().indexOf(':')+2, label24.getText().lastIndexOf(','))))%60 + ":" + String.format("%.3f", ((((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Double.parseDouble(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))-(Double.parseDouble(obslist.get(4)[3].substring(0, obslist.get(4)[3].indexOf(':')))*3600+Double.parseDouble(obslist.get(4)[3].substring(obslist.get(4)[3].indexOf(':')+1, obslist.get(4)[3].lastIndexOf(':')))*60+Double.parseDouble(obslist.get(4)[3].substring(obslist.get(4)[3].lastIndexOf(':')+1))))/Double.parseDouble(label24.getText().substring(label24.getText().indexOf(':')+2, label24.getText().lastIndexOf(','))))%1)).substring(2) + "; " + (int)((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Double.parseDouble(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(',')+2, label24.getText().lastIndexOf('/'))))/60 + ":" + ((Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Integer.parseInt(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Integer.parseInt(label24.getText().substring(label24.getText().lastIndexOf(',')+2, label24.getText().lastIndexOf('/'))))%60 + ":" + String.format("%.3f", (((Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf('d')))*86400+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf('d')+2, label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+label24.getText().lastIndexOf('/')+1))*3600+Double.parseDouble(label24.getText().substring(label24.getText().substring(label24.getText().lastIndexOf('/')+1).indexOf(':')+1+label24.getText().lastIndexOf('/')+1, label24.getText().lastIndexOf(':')))*60+Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(':')+1)))/Double.parseDouble(label24.getText().substring(label24.getText().lastIndexOf(',')+2, label24.getText().lastIndexOf('/'))))%1)).substring(2)).replaceFirst("0/(?=[^0/]*$)", "/"));
         }
     }
@@ -1409,9 +1413,9 @@ public class audiolibrary extends Application
     {
         StackPane1.getChildren().clear();
         StackPane1.setPrefHeight(485);
-        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("audiolibrarygenre.fxml"));
+        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("AudioLibraryGenre.fxml"));
         StackPane1.getChildren().add(fxmlloader.load());
-        audiolibrarygenre audiolibrarygenre = fxmlloader.getController();
+        AudioLibraryGenre audiolibrarygenre = fxmlloader.getController();
         label3 = audiolibrarygenre.label3change;
         label4 = audiolibrarygenre.label4change;
         label5 = audiolibrarygenre.label5change;
@@ -1437,16 +1441,16 @@ public class audiolibrary extends Application
         rfnum = 0;
         rsnum = 0;
         rtnum = 0;
-        Table(100, 225, 130, 130, 238, 175, 125, 125, 0, 0, 0, 0, 0, 0);
+        table(100, 225, 130, 130, 238, 175, 125, 125, 0, 0, 0, 0, 0, 0);
     }
 
     public void button2musicartistband() throws Exception
     {
         StackPane1.getChildren().clear();
         StackPane1.setPrefHeight(485);
-        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("musicartistband.fxml"));
+        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("MusicArtistBand.fxml"));
         StackPane1.getChildren().add(fxmlloader.load());
-        musicartistband musicartistband = fxmlloader.getController();
+        MusicArtistBand musicartistband = fxmlloader.getController();
         tableview1.scrollTo(0);
         label3 = musicartistband.label3change;
         label4 = musicartistband.label4change;
@@ -1499,7 +1503,7 @@ public class audiolibrary extends Application
         siz14=75;
         nam15="Featuring";
         siz15=410;
-        Table(250, 0, 230, 0, 135, 135, 0, 0, 215, 135, 135, 770, 75, 410);
+        table(250, 0, 230, 0, 135, 135, 0, 0, 215, 135, 135, 770, 75, 410);
 
         label20combobox.setPrefWidth(160);
         label20combobox.setText("Genre");
@@ -1528,14 +1532,14 @@ public class audiolibrary extends Application
                      "Соул, Фанк, Диско",
                      "Хип-хоп",
                      "Электронная музыка"));
-        combobox1.setOnAction(e -> Filtering());
+        combobox1.setOnAction(e -> filtering());
         combobox2.setPrefWidth(285);
         combobox2.setVisible(true);
         combobox2.setVisibleRowCount(2);
         combobox2.setItems(FXCollections.observableArrayList(
                 "With related artist(-s)/band(-s)",
                      "Without related artist(-s)/band(-s)"));
-        combobox2.setOnAction(e -> Filtering());
+        combobox2.setOnAction(e -> filtering());
         combobox3.setVisible(true);
         combobox3.setVisibleRowCount(6);
         combobox3.setItems(FXCollections.observableArrayList(
@@ -1545,7 +1549,7 @@ public class audiolibrary extends Application
                      "55",
                      "70",
                      ">70"));
-        combobox3.setOnAction(e -> Filtering());
+        combobox3.setOnAction(e -> filtering());
         combobox4.setVisible(true);
         combobox4.setVisibleRowCount(4);
         combobox4.setItems(FXCollections.observableArrayList(
@@ -1553,7 +1557,7 @@ public class audiolibrary extends Application
                      ">=45:00 & <1:15:00",
                      ">=1:15:00 & <2:5:00",
                      ">=2:5:00"));
-        combobox4.setOnAction(e -> Filtering());
+        combobox4.setOnAction(e -> filtering());
 
         musicartistband.combobox5genre.setVisibleRowCount(17);
         musicartistband.combobox5genre.getItems().addAll(combobox1.getItems());
@@ -1564,9 +1568,9 @@ public class audiolibrary extends Application
     {
         StackPane1.getChildren().clear();
         StackPane1.setPrefHeight(360);
-        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("composersbloggers.fxml"));
+        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("ComposersBloggers.fxml"));
         StackPane1.getChildren().add(fxmlloader.load());
-        composersbloggers composersbloggers = fxmlloader.getController();
+        ComposersBloggers composersbloggers = fxmlloader.getController();
         tableview1.scrollTo(0);
         composersbloggers.label2change.setText("Composers");
         composersbloggers.label3change.setText("Name");
@@ -1605,7 +1609,7 @@ public class audiolibrary extends Application
         siz14=75;
         nam15="Featuring";
         siz15=410;
-        Table(985, 0, 135, 135, 0, 0, 0, 0, 50, 50, 50, 770, 75, 410);
+        table(985, 0, 135, 135, 0, 0, 0, 0, 50, 50, 50, 770, 75, 410);
 
         label20combobox.setPrefWidth(105);
         label20combobox.setText("Number of songs");
@@ -1616,22 +1620,22 @@ public class audiolibrary extends Application
         combobox1.setItems(FXCollections.observableArrayList(
                 "<5",
                 ">=5"));
-        combobox1.setOnAction(e -> Filtering());
+        combobox1.setOnAction(e -> filtering());
         combobox2.setPrefWidth(100);
         combobox2.setVisibleRowCount(2);
         combobox2.setItems(FXCollections.observableArrayList(
                 "<20:00",
                 ">=20:00"));
-        combobox2.setOnAction(e -> Filtering());
+        combobox2.setOnAction(e -> filtering());
     }
 
     public void button4bloggers() throws Exception
     {
         StackPane1.getChildren().clear();
         StackPane1.setPrefHeight(360);
-        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("composersbloggers.fxml"));
+        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("ComposersBloggers.fxml"));
         StackPane1.getChildren().add(fxmlloader.load());
-        composersbloggers composersbloggers = fxmlloader.getController();
+        ComposersBloggers composersbloggers = fxmlloader.getController();
         tableview1.scrollTo(0);
         composersbloggers.label2change.setText("Bloggers");
         composersbloggers.label3change.setText("Nickname/name");
@@ -1670,7 +1674,7 @@ public class audiolibrary extends Application
         siz14=75;
         nam15="Featuring";
         siz15=410;
-        Table(985, 0, 135, 135, 0, 0, 0, 0, 50, 50, 50, 770, 75, 410);
+        table(985, 0, 135, 135, 0, 0, 0, 0, 50, 50, 50, 770, 75, 410);
 
         label20combobox.setPrefWidth(105);
         label20combobox.setText("Number of songs");
@@ -1681,22 +1685,22 @@ public class audiolibrary extends Application
         combobox1.setItems(FXCollections.observableArrayList(
                 "<5",
                 ">=5"));
-        combobox1.setOnAction(e -> Filtering());
+        combobox1.setOnAction(e -> filtering());
         combobox2.setPrefWidth(100);
         combobox2.setVisibleRowCount(2);
         combobox2.setItems(FXCollections.observableArrayList(
                 "<20:00",
                 ">=20:00"));
-        combobox2.setOnAction(e -> Filtering());
+        combobox2.setOnAction(e -> filtering());
     }
 
     public void button5covers() throws Exception
     {
         StackPane1.getChildren().clear();
         StackPane1.setPrefHeight(206);
-        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("covers.fxml"));
+        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Covers.fxml"));
         StackPane1.getChildren().add(fxmlloader.load());
-        covers covers = fxmlloader.getController();
+        Covers covers = fxmlloader.getController();
         tableview1.scrollTo(0);
         label3 = covers.label3change;
         label4 = covers.label4change;
@@ -1717,7 +1721,7 @@ public class audiolibrary extends Application
         rfnum = 0;
         rsnum = 1;
         rtnum = 4;
-        Table(325, 250, 175, 80, 250, 175, 0, 0, 0, 0, 0, 0, 0, 0);
+        table(325, 250, 175, 80, 250, 175, 0, 0, 0, 0, 0, 0, 0, 0);
 
         label20combobox.setPrefWidth(90);
         label20combobox.setText("Song duration");
@@ -1726,16 +1730,16 @@ public class audiolibrary extends Application
         combobox1.setItems(FXCollections.observableArrayList(
                 "<4:00",
                 ">=4:00"));
-        combobox1.setOnAction(e -> Filtering());
+        combobox1.setOnAction(e -> filtering());
     }
 
     public void button6soundtracks() throws Exception
     {
         StackPane1.getChildren().clear();
         StackPane1.setPrefHeight(280);
-        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("soundtracks.fxml"));
+        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Soundtracks.fxml"));
         StackPane1.getChildren().add(fxmlloader.load());
-        soundtracks soundtracks = fxmlloader.getController();
+        Soundtracks soundtracks = fxmlloader.getController();
         tableview1.scrollTo(0);
         label3 = soundtracks.label3change;
         label4 = soundtracks.label4change;
@@ -1754,7 +1758,7 @@ public class audiolibrary extends Application
         rfnum = 0;
         rsnum = 1;
         rtnum = 2;
-        Table(985, 0, 0, 135, 135, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        table(985, 0, 0, 135, 135, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
         label20combobox.setPrefWidth(105);
         label20combobox.setText("Number of songs");
@@ -1765,22 +1769,22 @@ public class audiolibrary extends Application
         combobox1filtering.setItems(FXCollections.observableArrayList(
                 "1",
                 ">1"));
-        combobox1filtering.setOnAction(e -> Filtering());
+        combobox1filtering.setOnAction(e -> filtering());
         combobox2filtering.setPrefWidth(100);
         combobox2filtering.setVisibleRowCount(2);
         combobox2filtering.setItems(FXCollections.observableArrayList(
                 "<4:00",
                 ">=4:00"));
-        combobox2filtering.setOnAction(e -> Filtering());
+        combobox2filtering.setOnAction(e -> filtering());
     }
 
     public void button7favourites() throws Exception
     {
         StackPane1.getChildren().clear();
         StackPane1.setPrefHeight(485);
-        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("favourites.fxml"));
+        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Favourites.fxml"));
         StackPane1.getChildren().add(fxmlloader.load());
-        favourites favourites = fxmlloader.getController();
+        Favourites favourites = fxmlloader.getController();
         tableview1.scrollTo(0);
         label3 = favourites.label3change;
         label4 = favourites.label4change;
@@ -1834,104 +1838,94 @@ public class audiolibrary extends Application
         siz14=75;
         nam15="Featuring";
         siz15=410;
-        Table(250, 0, 230, 0, 135, 135, 0, 0, 215, 135, 135, 770, 75, 410);
+        table(250, 0, 230, 0, 135, 135, 0, 0, 215, 135, 135, 770, 75, 410);
     }
 
-    public void button15visualization() throws Exception
-    {
-        FlowPane1.getChildren().clear();
-        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("visualization.fxml"));
-        FlowPane1.getChildren().add(fxmlloader.load());
-        visualization visualization = fxmlloader.getController();
-
-        visualization.Visualization();
-    }
-
-    public static int MusicArtistBandID()
+    public static int musicartistbandid()
     {
         return artbandid;
     }
 
-    public static int RelatedMusicArtistBandID()
+    public static int relatedmusicartistbandid()
     {
         return relartbandid;
     }
 
-    public static int SongID()
+    public static int songid()
     {
         return songid;
     }
 
-    public static int CoverID()
+    public static int coverid()
     {
         return coverid;
     }
 
-    public static int SoundtrackID()
+    public static int soundtrackid()
     {
         return soundtrackid;
     }
 
-    public static void RowClick(TableView tabl, int rownum)
+    public static void rowclick(TableView tabl, int rownum)
     {
         TableRow row = (TableRow)tabl.lookupAll(".table-row-cell").stream().filter(n -> ((TableRow)n).getIndex() == rownum).findFirst().orElse(null);
         MouseEvent me = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1, false, false, false, false, true, false, false, true, false, false, null);
         row.fireEvent(me);
     }
 
-    public static void DataChanging(int chang, int songid) throws Exception
+    public static void datachanging(int chang, int songid) throws Exception
     {
-        int relartband = audiolibrary.RelatedMusicArtistBandID();
+        int relartband = AudioLibrary.relatedmusicartistbandid();
         boolean empttext = textfield10.getText().isEmpty();
 
         textfield14.setText("");
         textfield15.setText("");
         textfield16.setText("");
-        audiolibrary.obslist.clear();
+        AudioLibrary.obslist.clear();
         if (chang == 1)
-            audiolibrary.obslist.addAll(Arrays.asList(audiolibrarydb.SELECTMUSICARTISTBAND(audiolibrarydb.NewMusicArtistBandID())));
+            AudioLibrary.obslist.addAll(Arrays.asList(AudioLibraryDB.selectmusicartistband(AudioLibraryDB.newmusicartistbandid())));
         else
-            audiolibrary.obslist.addAll(Arrays.asList(audiolibrarydb.SELECTMUSICARTISTBAND(audiolibrary.MusicArtistBandID())));
-        audiolibrary.tableview1.setItems(audiolibrary.obslist);
-        audiolibrary.tableview1.getSelectionModel().select(0);
-        audiolibrary.tableview1.scrollTo(0);
-        audiolibrary.RowClick(audiolibrary.tableview1, 0);
+            AudioLibrary.obslist.addAll(Arrays.asList(AudioLibraryDB.selectmusicartistband(AudioLibrary.musicartistbandid())));
+        AudioLibrary.tableview1.setItems(AudioLibrary.obslist);
+        AudioLibrary.tableview1.getSelectionModel().select(0);
+        AudioLibrary.tableview1.scrollTo(0);
+        AudioLibrary.rowclick(AudioLibrary.tableview1, 0);
         if (tabl == 3)
         {
             if (!empttext)
             {
-                for (int i = 0; i < audiolibrary.tableview2.getItems().size(); i++)
+                for (int i = 0; i < AudioLibrary.tableview2.getItems().size(); i++)
                 {
-                    audiolibrary.tableview2.getSelectionModel().select(i);
-                    if (Integer.parseInt(Arrays.asList(audiolibrary.tableview2.getSelectionModel().getSelectedItem()).get(4)) == relartband)
+                    AudioLibrary.tableview2.getSelectionModel().select(i);
+                    if (Integer.parseInt(Arrays.asList(AudioLibrary.tableview2.getSelectionModel().getSelectedItem()).get(4)) == relartband)
                     {
-                        audiolibrary.tableview2.getSelectionModel().select(i);
-                        audiolibrary.RowClick(audiolibrary.tableview2, i);
+                        AudioLibrary.tableview2.getSelectionModel().select(i);
+                        AudioLibrary.rowclick(AudioLibrary.tableview2, i);
                         break;
                     }
                 }
-                audiolibrary.label26.setText("Songs count/duration: " + textfield12.getText() + "/" + textfield13.getText());
+                AudioLibrary.label26.setText("Songs count/duration: " + textfield12.getText() + "/" + textfield13.getText());
             }
             else
-                audiolibrary.label26.setText("Songs count/duration: " + textfield5.getText() + "/" + textfield6.getText());
-            audiolibrary.label26.setText(audiolibrary.label26.getText().replace("null", "0:0"));
-            audiolibrary.label24.setText("Number of artists, songs count/duration: 1, " + textfield5.getText() + "/" + textfield6.getText());
-            audiolibrary.label24.setText(audiolibrary.label24.getText().replace("null", "0:0"));
+                AudioLibrary.label26.setText("Songs count/duration: " + textfield5.getText() + "/" + textfield6.getText());
+            AudioLibrary.label26.setText(AudioLibrary.label26.getText().replace("null", "0:0"));
+            AudioLibrary.label24.setText("Number of artists, songs count/duration: 1, " + textfield5.getText() + "/" + textfield6.getText());
+            AudioLibrary.label24.setText(AudioLibrary.label24.getText().replace("null", "0:0"));
         }
         else if (tabl == 4 || tabl == 5)
         {
-            audiolibrary.label24.setText("Number of artists, songs count/duration: 1, " + textfield3.getText() + "/" + textfield4.getText());
-            audiolibrary.label26.setText("Songs count/duration: " + textfield3.getText() + "/" + textfield4.getText());
+            AudioLibrary.label24.setText("Number of artists, songs count/duration: 1, " + textfield3.getText() + "/" + textfield4.getText());
+            AudioLibrary.label26.setText("Songs count/duration: " + textfield3.getText() + "/" + textfield4.getText());
         }
         if (chang == 3 || chang == 4 || (chang == 5 && tabl == 3) || chang == 6)
-            for (int i = 0; i < audiolibrary.tableview3.getItems().size(); i++)
+            for (int i = 0; i < AudioLibrary.tableview3.getItems().size(); i++)
             {
-                audiolibrary.tableview3.getSelectionModel().select(i);
-                if (Integer.parseInt(Arrays.asList(audiolibrary.tableview3.getSelectionModel().getSelectedItem()).get(3)) == songid)
+                AudioLibrary.tableview3.getSelectionModel().select(i);
+                if (Integer.parseInt(Arrays.asList(AudioLibrary.tableview3.getSelectionModel().getSelectedItem()).get(3)) == songid)
                 {
-                    audiolibrary.tableview3.getSelectionModel().clearSelection();
-                    audiolibrary.tableview3.getSelectionModel().select(i);
-                    audiolibrary.tableview3.scrollTo(i);
+                    AudioLibrary.tableview3.getSelectionModel().clearSelection();
+                    AudioLibrary.tableview3.getSelectionModel().select(i);
+                    AudioLibrary.tableview3.scrollTo(i);
                     break;
                 }
             }
@@ -1940,6 +1934,6 @@ public class audiolibrary extends Application
     public void stop() throws Exception
     {
         if (backup == 1)
-            Runtime.getRuntime().exec("/home/romankolin/audiolibrary/./.audiolibrarybackup.sh");
+            Runtime.getRuntime().exec("/home/romankolin/AudioLibrary/./.audiolibrarybackup.sh");
     }
 }

@@ -3,7 +3,7 @@ package com.example.audiolibrary;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 
-public class favourites
+public class AudioLibraryGenre
 {
     @FXML
     Label label2change;
@@ -16,14 +16,6 @@ public class favourites
     @FXML
     Label label6change;
     @FXML
-    Label label7change;
-    @FXML
-    Label label8change;
-    @FXML
-    Label label9change;
-    @FXML
-    Label label10change;
-    @FXML
     Label label11change;
     @FXML
     Label label12change;
@@ -34,13 +26,7 @@ public class favourites
     @FXML
     Label label15change;
     @FXML
-    Label label16change;
-    @FXML
-    Label label17change;
-    @FXML
-    Label label18change;
-    @FXML
-    Label label19change;
+    Label label27artistsandsongsstatistics;
     @FXML
     TextField textfield1change;
     @FXML
@@ -50,16 +36,6 @@ public class favourites
     @FXML
     TextArea textfield4change;
     @FXML
-    TextField textfield5change;
-    @FXML
-    TextField textfield6change;
-    @FXML
-    TextField textfield7change;
-    @FXML
-    TextField textfield8change;
-    @FXML
-    TextField textfield9change;
-    @FXML
     TextField textfield10change;
     @FXML
     TextArea textfield11change;
@@ -68,9 +44,5 @@ public class favourites
     @FXML
     TextField textfield13change;
     @FXML
-    TextField textfield14change;
-    @FXML
-    TextField textfield15change;
-    @FXML
-    TextField textfield16change;
+    TableView<String[]> tableview4songsstatistics;
 }

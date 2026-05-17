@@ -12,7 +12,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.geometry.Insets?>
 
-<FlowPane fx:id="FlowPane1" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.audiolibrary.audiolibrary" orientation="VERTICAL" style="-fx-background-image: url(/background.jpg); -fx-background-size: stretch">
+<FlowPane fx:id="FlowPane1" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.audiolibrary.AudioLibrary" orientation="VERTICAL" style="-fx-background-image: url(/background.jpg); -fx-background-size: stretch">
     <padding>
         <Insets bottom="5" left="5" right="5" top="5"/>
     </padding>
@@ -22,7 +22,11 @@
                 <padding>
                     <Insets bottom="-45"/>
                 </padding>
-                <Button fx:id="button1audiolibrarygenre" text="Audio library" prefWidth="450" prefHeight="25" styleClass="button1audiolibrarygenre" stylesheets="/button.css" onAction="#button1audiolibrarygenre"/>
+                <HBox>
+                    <Button fx:id="button1audiolibrarygenre" text="Audio library&#x1D160;" prefWidth="300" prefHeight="31" styleClass="buttons1audiolibrarygenre15musicartistsbandsbynumberofsongsvisualization" stylesheets="/button.css" onAction="#button1audiolibrarygenre"/>
+                    <Button fx:id="button15musicartistsbandsbynumberofsongsvisualization" text="&#x2582; &#x2585; &#x2588;" prefWidth="75" prefHeight="31" styleClass="buttons1audiolibrarygenre15musicartistsbandsbynumberofsongsvisualization" stylesheets="/button.css" onAction="#button15musicartistsbandsbynumberofsongsvisualization"/>
+                    <Button fx:id="button16songsbydurationrange" text="&#x25D5;" scaleX="-1" prefWidth="75" prefHeight="31" styleClass="button16songsbydurationrange" stylesheets="/button.css" onAction="#button16songsbydurationrange"/>
+                </HBox>
                 <HBox>
                     <VBox>
                         <Button fx:id="button2musicartistband" text="Music artist/band" prefWidth="150" prefHeight="25" stylesheets="/button.css" onAction="#button2musicartistband"/>
@@ -181,7 +185,7 @@
             </VBox>
             <VBox>
                 <TableView fx:id="tableview2genrerelatedartistsbands" prefWidth="330" prefHeight="150" visible="false" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-font-family: Times New Roman; -fx-font-size: 12; -fx-text-fill: #000000" stylesheets="/tableview.css"/>
-                <HBox id="HBox16" alignment="CENTER_RIGHT">
+                <HBox alignment="CENTER_RIGHT">
                     <padding>
                         <Insets top="3"/>
                     </padding>
@@ -193,9 +197,9 @@
         </HBox>
         <VBox>
             <TableView fx:id="tableview3songs" prefWidth="1270" prefHeight="267" maxWidth="1270" visible="false" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-font-family: Times New Roman; -fx-font-size: 12; -fx-text-fill: #000000" stylesheets="/tableview.css"/>
-            <HBox id="HBox17">
+            <HBox>
                 <TextField fx:id="textfield18search" prefWidth="150" prefHeight="25" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000"/>
-                <HBox id="HBox18" alignment="CENTER_RIGHT" prefWidth="1120">
+                <HBox alignment="CENTER_RIGHT" prefWidth="1120">
                     <Label fx:id="label26songscountandduration" style="-fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #000000"/>
                 </HBox>
             </HBox>

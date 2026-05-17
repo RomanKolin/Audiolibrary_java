@@ -3,7 +3,7 @@ package com.example.audiolibrary;
 import java.util.*;
 import java.sql.*;
 
-public class audiolibrarydb
+public class AudioLibraryDB
 {
     static Connection conn;
     static int row;
@@ -16,7 +16,7 @@ public class audiolibrarydb
         return conn;
     }
 
-    public static void PreparedStatement(PreparedStatement pstat, String[] datarr, int itim) throws Exception
+    public static void preparedstatement(PreparedStatement pstat, String[] datarr, int itim) throws Exception
     {
         for (int i = 1; i <= itim; i++)
             if (String.valueOf(Arrays.asList(datarr).get(i-1)).equals(""))
@@ -25,7 +25,7 @@ public class audiolibrarydb
                 pstat.setString(i, Arrays.asList(datarr).get(i-1));
     }
 
-    public static int MusicArtistBandID(String artband) throws Exception
+    public static int musicartistbandid(String artband) throws Exception
     {
         int artbandid = 0;
 
@@ -43,7 +43,7 @@ public class audiolibrarydb
         return artbandid;
     }
 
-    public static int SongID() throws Exception
+    public static int songid() throws Exception
     {
         int songid = 0;
 
@@ -58,7 +58,7 @@ public class audiolibrarydb
         return songid;
     }
 
-    public static String[][] SELECT(int tabl) throws Exception
+    public static String[][] select(int tabl) throws Exception
     {
         int count = 0;
 
@@ -212,13 +212,13 @@ public class audiolibrarydb
                 resset1 = stat.executeQuery("SELECT COUNT(artband) FROM `Music artist/band` WHERE cat='Каверы';");
                 while (resset1.next())
                     count = resset1.getInt("COUNT(artband)");
-                audiolibrary.coverartbandarr = new String[count];
+                AudioLibrary.coverartbandarr = new String[count];
                 resset1 = stat.executeQuery("SELECT artband FROM `Music artist/band` WHERE cat='Каверы';");
                 count = 0;
                 while (resset1.next())
                 {
                     String artband = resset1.getString(1);
-                    audiolibrary.coverartbandarr[count] = artband;
+                    AudioLibrary.coverartbandarr[count] = artband;
                     count += 1;
                 }
                 break;
@@ -282,7 +282,7 @@ public class audiolibrarydb
         return datarr;
     }
 
-    public static String[][] SUB1SELECT(int ID) throws Exception
+    public static String[][] sub1select(int ID) throws Exception
     {
         int count = 0;
 
@@ -318,7 +318,7 @@ public class audiolibrarydb
         return datarr;
     }
 
-    public static String[][] SUB2SELECT(int ID, int rel) throws Exception
+    public static String[][] sub2select(int ID, int rel) throws Exception
     {
         int count = 0;
 
@@ -355,7 +355,7 @@ public class audiolibrarydb
         return datarr;
     }
 
-    public static String INSERT(int chang, String[] datarr) throws Exception
+    public static String insert(int chang, String[] datarr) throws Exception
     {
         String swap;
 
@@ -365,17 +365,17 @@ public class audiolibrarydb
         {
             case 1:
                 pstat = conn.prepareStatement("INSERT INTO `Music artist/band`(artband, genr, cat) VALUES(?, ?, 'Жанр');");
-                PreparedStatement(pstat, datarr, 2);
+                preparedstatement(pstat, datarr, 2);
                 break;
             case 2:
                 pstat = conn.prepareStatement("INSERT INTO `Related music artist/band`(relartband, artband) VALUES(?, ?);");
-                PreparedStatement(pstat, datarr, 2);
+                preparedstatement(pstat, datarr, 2);
                 break;
             case 3:
                 if (datarr.length == 4)
                 {
                     pstat = conn.prepareStatement("INSERT INTO Song(nam, dur, cat) VALUES(?, ?, null);");
-                    PreparedStatement(pstat, datarr, 2);
+                    preparedstatement(pstat, datarr, 2);
                     try
                     {
                         row = pstat.executeUpdate();
@@ -388,32 +388,32 @@ public class audiolibrarydb
                         return "Your data hasn't been saved";
                     datarr = Arrays.copyOf(datarr, datarr.length+1);
                     datarr = Arrays.copyOfRange(datarr, 2, datarr.length);
-                    datarr[datarr.length-1] = String.valueOf(audiolibrarydb.SongID());
+                    datarr[datarr.length-1] = String.valueOf(AudioLibraryDB.songid());
                     swap = datarr[0];
                     datarr[0] = datarr[2];
                     datarr[2] = swap;
                     swap = datarr[1];
                     datarr[1] = datarr[2];
                     datarr[2] = swap;
-                    INSERT(3, datarr);
+                    insert(3, datarr);
                     return "Your data has been saved";
                 }
                 pstat = conn.prepareStatement("INSERT INTO `Music artist/band's song`(song, artband, feat) VALUES(?, ?, ?);");
-                PreparedStatement(pstat, datarr, 3);
+                preparedstatement(pstat, datarr, 3);
                 break;
             case 4:
                 pstat = conn.prepareStatement("INSERT INTO `Music artist/band`(artband, cat) VALUES(?, 'Композиторы');");
-                PreparedStatement(pstat, datarr, 1);
+                preparedstatement(pstat, datarr, 1);
                 break;
             case 5:
                 pstat = conn.prepareStatement("INSERT INTO `Music artist/band`(artband, cat) VALUES(?, 'Блогеры');");
-                PreparedStatement(pstat, datarr, 1);
+                preparedstatement(pstat, datarr, 1);
                 break;
             case 6:
                 if (datarr.length == 6)
                 {
                     pstat = conn.prepareStatement("INSERT INTO Song(nam, dur, cat) VALUES(?, ?, 'Каверы');");
-                    PreparedStatement(pstat, datarr, 2);
+                    preparedstatement(pstat, datarr, 2);
                     try
                     {
                         row = pstat.executeUpdate();
@@ -424,19 +424,19 @@ public class audiolibrarydb
                     }
                     if (row == 0)
                         return "Your data hasn't been saved";
-                    datarr[0] = String.valueOf(SongID());
-                    datarr[1] = String.valueOf(MusicArtistBandID(datarr[2]));
+                    datarr[0] = String.valueOf(songid());
+                    datarr[1] = String.valueOf(musicartistbandid(datarr[2]));
                     datarr[2] = datarr[3];
                     datarr[3] = datarr[4];
                     datarr[4] = datarr[5];
                     datarr = Arrays.copyOfRange(datarr, 0, 5);
-                    INSERT(6, datarr);
+                    insert(6, datarr);
                     return "Your data has been saved";
                 }
                 if (datarr.length == 5)
                 {
                     pstat = conn.prepareStatement("INSERT INTO `Music artist/band's song`(song, artband, feat) VALUES(?, ?, ?);");
-                    PreparedStatement(pstat, datarr, 3);
+                    preparedstatement(pstat, datarr, 3);
                     try
                     {
                         row = pstat.executeUpdate();
@@ -447,18 +447,18 @@ public class audiolibrarydb
                     }
                     if (row == 0)
                         return "Your data hasn't been saved";
-                    datarr[1] = String.valueOf(MusicArtistBandID(datarr[3]));
+                    datarr[1] = String.valueOf(musicartistbandid(datarr[3]));
                     datarr[2] = datarr[4];
                     datarr = Arrays.copyOfRange(datarr, 0, 3);
-                    INSERT(6, datarr);
+                    insert(6, datarr);
                     return "Your data has been saved";
                 }
                 pstat = conn.prepareStatement("INSERT INTO `Cover's original music artist/band`(song, artband, feat) VALUES(?, ?, ?);");
-                PreparedStatement(pstat, datarr, 3);
+                preparedstatement(pstat, datarr, 3);
                 break;
             case 7:
                 pstat = conn.prepareStatement("INSERT INTO Soundtrack(movanimsergam, artband, song, nosongs, songsdur, cat) VALUES(?, ?, ?, ?, ?, 'Саундтреки');");
-                PreparedStatement(pstat, datarr, 5);
+                preparedstatement(pstat, datarr, 5);
                 break;
         }
         try
@@ -477,7 +477,7 @@ public class audiolibrarydb
             return "Your data hasn't been saved";
     }
 
-    public static String UPDATE(int chang, String[] datarr) throws Exception
+    public static String update(int chang, String[] datarr) throws Exception
     {
         String swap;
 
@@ -487,17 +487,17 @@ public class audiolibrarydb
         {
             case 1:
                 pstat = conn.prepareStatement("UPDATE `Music artist/band` SET artband=?, genr=? WHERE ID=?;");
-                PreparedStatement(pstat, datarr, 3);
+                preparedstatement(pstat, datarr, 3);
                 break;
             case 2:
                 pstat = conn.prepareStatement("UPDATE `Related music artist/band` SET relartband=?, artband=? WHERE ID=?;");
-                PreparedStatement(pstat, datarr, 3);
+                preparedstatement(pstat, datarr, 3);
                 break;
             case 3:
                 if (datarr.length == 4)
                 {
                     pstat = conn.prepareStatement("UPDATE Song SET nam=?, dur=? WHERE ID=?;");
-                    PreparedStatement(pstat, datarr, 3);
+                    preparedstatement(pstat, datarr, 3);
                     try
                     {
                         row = pstat.executeUpdate();
@@ -509,24 +509,24 @@ public class audiolibrarydb
                     if (row == 0)
                         return "Your data hasn't been updated";
                     datarr = Arrays.copyOfRange(datarr, 2, datarr.length);
-                    UPDATE(3, datarr);
+                    update(3, datarr);
                     return "Your data has been updated";
                 }
                 swap = datarr[0];
                 datarr[0] = datarr[1];
                 datarr[1] = swap;
                 pstat = conn.prepareStatement("UPDATE `Music artist/band's song`SET feat=? WHERE song=?;");
-                PreparedStatement(pstat, datarr, 2);
+                preparedstatement(pstat, datarr, 2);
                 break;
             case 4:
                 pstat = conn.prepareStatement("UPDATE `Music artist/band` SET artband=? WHERE ID=?;");
-                PreparedStatement(pstat, datarr, 2);
+                preparedstatement(pstat, datarr, 2);
                 break;
             case 5:
                 if (datarr.length == 6)
                 {
                     pstat = conn.prepareStatement("UPDATE Song SET nam=?, dur=? WHERE ID=?;");
-                    PreparedStatement(pstat, datarr, 3);
+                    preparedstatement(pstat, datarr, 3);
                     try
                     {
                         row = pstat.executeUpdate();
@@ -537,12 +537,12 @@ public class audiolibrarydb
                     }
                     if (row == 0)
                         return "Your data hasn't been updated";
-                    datarr[0] = String.valueOf(MusicArtistBandID(audiolibrary.textfield2.getText()));
+                    datarr[0] = String.valueOf(musicartistbandid(AudioLibrary.textfield2.getText()));
                     datarr[1] = datarr[3];
                     datarr[3] = datarr[4];
                     datarr[4] = datarr[5];
                     datarr = Arrays.copyOfRange(datarr, 0, 5);
-                    UPDATE(5, datarr);
+                    update(5, datarr);
                     if (!datarr[0].equals("0"))
                         return "Your data has been updated";
                     else
@@ -551,7 +551,7 @@ public class audiolibrarydb
                 if (datarr.length == 5)
                 {
                     pstat = conn.prepareStatement("UPDATE `Music artist/band's song` SET artband=?, feat=? WHERE song=?;");
-                    PreparedStatement(pstat, datarr, 3);
+                    preparedstatement(pstat, datarr, 3);
                     try
                     {
                         row = pstat.executeUpdate();
@@ -562,21 +562,21 @@ public class audiolibrarydb
                     }
                     if (row == 0)
                         return "Your data hasn't been updated";
-                    datarr[0] = String.valueOf(MusicArtistBandID(datarr[3]));
+                    datarr[0] = String.valueOf(musicartistbandid(datarr[3]));
                     datarr[1] = datarr[4];
                     datarr = Arrays.copyOfRange(datarr, 0, 3);
-                    UPDATE(5, datarr);
+                    update(5, datarr);
                     return "Your data has been updated";
                 }
                 if (datarr.length == 3)
                 {
                     pstat = conn.prepareStatement("UPDATE `Cover's original music artist/band` SET artband=?, feat=? WHERE song=?;");
-                    PreparedStatement(pstat, datarr, 3);
+                    preparedstatement(pstat, datarr, 3);
                 }
                 break;
             case 6:
                 pstat = conn.prepareStatement("UPDATE Soundtrack SET movanimsergam=?, artband=?, song=?, nosongs=?, songsdur=? WHERE ID=?;");
-                PreparedStatement(pstat, datarr, 6);
+                preparedstatement(pstat, datarr, 6);
                 break;
         }
         try
@@ -595,7 +595,7 @@ public class audiolibrarydb
             return "Your data hasn't been updated";
     }
 
-    public static String DELETE(int chang, String[] datarr) throws Exception
+    public static String delete(int chang, String[] datarr) throws Exception
     {
         conn();
         PreparedStatement pstat = null;
@@ -603,11 +603,11 @@ public class audiolibrarydb
         {
             case 1:
                 pstat = conn.prepareStatement("DELETE FROM `Music artist/band's song` WHERE song=?;");
-                PreparedStatement(pstat, datarr, 1);
+                preparedstatement(pstat, datarr, 1);
                 break;
             case 2:
                 pstat = conn.prepareStatement("DELETE FROM `Cover's original music artist/band` WHERE song=?;");
-                PreparedStatement(pstat, datarr, 1);
+                preparedstatement(pstat, datarr, 1);
                 try
                 {
                     row = pstat.executeUpdate();
@@ -616,11 +616,11 @@ public class audiolibrarydb
                 {
                     row = 0;
                 }
-                if (audiolibrary.textfield5.getText() == null || audiolibrary.textfield5.getText().equals(""))
-                    DELETE(1, datarr);
+                if (AudioLibrary.textfield5.getText() == null || AudioLibrary.textfield5.getText().equals(""))
+                    delete(1, datarr);
                 if (row == 0)
                     return "Your data hasn't been deleted";
-                DELETE(1, datarr);
+                delete(1, datarr);
                 return "Your data has been deleted";
         }
         try
@@ -639,16 +639,16 @@ public class audiolibrarydb
             return "Your data hasn't been deleted";
     }
 
-    public static String[][] SELECTMUSICARTISTBAND(int ID) throws Exception
+    public static String[][] selectmusicartistband(int ID) throws Exception
     {
         PreparedStatement pstat = null;
         ResultSet resset;
 
         conn();
         String[][] datarr = new String[1][9];
-        if (audiolibrary.tabl == 3)
+        if (AudioLibrary.tabl == 3)
             pstat = conn.prepareStatement("WITH musicartistband AS(WITH musicartistband AS(SELECT `Music artist/band`.artband, `Related music artist/band`.relartband, `Music artist/band`.genr, Song.nam, `Cover's original music artist/band`.artband AS coverorigartbandID, `Cover's original music artist/band`.feat, `Music artist/band`.nosongs, `Music artist/band`.songsdur, `Music artist/band`.totnosongs, `Music artist/band`.totsongsdur, `Music artist/band`.ID FROM `Music artist/band` LEFT JOIN `Related music artist/band` ON `Music artist/band`.ID=`Related music artist/band`.artband LEFT JOIN `Music artist/band's song` ON `Music artist/band`.ID=`Music artist/band's song`.artband LEFT JOIN Song ON `Music artist/band's song`.song=Song.ID LEFT JOIN `Cover's original music artist/band` ON Song.ID=`Cover's original music artist/band`.song WHERE `Music artist/band`.ID=?) SELECT musicartistband.artband, GROUP_CONCAT(DISTINCT relartband SEPARATOR ', ') AS relartband, musicartistband.genr, nam, `Music artist/band`.artband AS coverorigartband, feat, musicartistband.nosongs, musicartistband.songsdur, musicartistband.totnosongs, musicartistband.totsongsdur, musicartistband.ID FROM musicartistband LEFT JOIN `Music artist/band` ON `Music artist/band`.ID=musicartistband.coverorigartbandID GROUP BY artband, genr, nam, coverorigartband, feat, nosongs, songsdur, totnosongs, totsongsdur, ID) SELECT artband, relartband, genr, REPLACE(REPLACE(GROUP_CONCAT(CONCAT(IFNULL(nam, ''), ' (', IFNULL(coverorigartband, ''), ' & ', IFNULL(feat, ''), ')') ORDER BY coverorigartband IS NOT NULL, nam SEPARATOR ', '), ' ( & )', ''), ' & )', ')'), nosongs, REGEXP_REPLACE(TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':'))), '^:', '0:'), totnosongs, REGEXP_REPLACE(TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(totsongsdur, ':0', ':'))), '^:', '0:'), ID FROM musicartistband GROUP BY artband, relartband, genr, nosongs, songsdur, totnosongs, totsongsdur, ID ORDER BY artband;");
-        else if (audiolibrary.tabl == 4 || audiolibrary.tabl == 5)
+        else if (AudioLibrary.tabl == 4 || AudioLibrary.tabl == 5)
             pstat = conn.prepareStatement("WITH musicartistband AS(SELECT `Music artist/band`.artband, Song.nam, `Music artist/band`.nosongs, `Music artist/band`.songsdur, `Music artist/band`.ID FROM `Music artist/band` LEFT JOIN `Music artist/band's song` ON `Music artist/band`.ID=`Music artist/band's song`.artband LEFT JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE `Music artist/band`.ID=?) SELECT artband, GROUP_CONCAT(nam ORDER BY nam SEPARATOR ', '), nosongs, REGEXP_REPLACE(TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':'))), '^:', '0:'), ID FROM musicartistband GROUP BY artband, nosongs, songsdur, ID ORDER BY artband;");
         pstat.setInt(1, ID);
         resset = pstat.executeQuery();
@@ -664,7 +664,7 @@ public class audiolibrarydb
             datarr[0][2] = genr;
             datarr[0][3] = songs;
             datarr[0][4] = String.valueOf(nosongs);
-            if (audiolibrary.tabl == 3)
+            if (AudioLibrary.tabl == 3)
             {
                 String songsdur = resset.getString(6);
                 int totnosongs = resset.getInt(7);
@@ -681,7 +681,7 @@ public class audiolibrarydb
         return datarr;
     }
 
-    public static String[][] SELECTCOVER(int ID) throws Exception
+    public static String[][] selectcover(int ID) throws Exception
     {
         PreparedStatement pstat;
         ResultSet resset;
@@ -713,7 +713,7 @@ public class audiolibrarydb
         return datarr;
     }
 
-    public static String[][] SELECTSOUNDTRACK(int ID) throws Exception
+    public static String[][] selectsoundtrack(int ID) throws Exception
     {
         PreparedStatement pstat;
         ResultSet resset;
@@ -743,7 +743,7 @@ public class audiolibrarydb
         return datarr;
     }
 
-    public static String[][] SELECTSEARCHING(int tabl, int obslist, String search) throws Exception
+    public static String[][] selectsearching(int tabl, int obslist, String search) throws Exception
     {
         int count = 0;
         PreparedStatement pstat;
@@ -796,12 +796,12 @@ public class audiolibrarydb
                     if (obslist == 1)
                     {
                         pstat = conn.prepareStatement("WITH song AS(SELECT Song.nam, REGEXP_REPLACE(TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(Song.dur, ':0', ':'))), '^:', '0:'), `Music artist/band's song`.feat, Song.ID FROM `Music artist/band's song` JOIN `Music artist/band` ON `Music artist/band's song`.artband=`Music artist/band`.ID JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE `Music artist/band's song`.artband=? AND Song.cat IS NULL AND Song.nam LIKE ? ORDER BY Song.nam) SELECT COUNT(ID) FROM song;");
-                        pstat.setInt(1, audiolibrary.MusicArtistBandID());
+                        pstat.setInt(1, AudioLibrary.musicartistbandid());
                     }
                     else
                     {
                         pstat = conn.prepareStatement("WITH song AS(SELECT Song.nam, REGEXP_REPLACE(TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(Song.dur, ':0', ':'))), '^:', '0:'), `Music artist/band's song`.feat, Song.ID FROM `Music artist/band's song` JOIN `Related music artist/band` ON `Music artist/band's song`.artband=`Related music artist/band`.ID JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE `Music artist/band's song`.artband=? AND Song.cat IS NULL AND Song.nam LIKE ? ORDER BY Song.nam) SELECT COUNT(ID) FROM song;");
-                        pstat.setInt(1, audiolibrary.RelatedMusicArtistBandID());
+                        pstat.setInt(1, AudioLibrary.relatedmusicartistbandid());
                     }
                     pstat.setString(2, search);
                     resset = pstat.executeQuery();
@@ -811,12 +811,12 @@ public class audiolibrarydb
                     if (obslist == 1)
                     {
                         pstat = conn.prepareStatement("SELECT Song.nam, REGEXP_REPLACE(TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(Song.dur, ':0', ':'))), '^:', '0:'), `Music artist/band's song`.feat, Song.ID FROM `Music artist/band's song` JOIN `Music artist/band` ON `Music artist/band's song`.artband=`Music artist/band`.ID JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE `Music artist/band's song`.artband=? AND Song.cat IS NULL AND Song.nam LIKE ? ORDER BY Song.nam;");
-                        pstat.setInt(1, audiolibrary.MusicArtistBandID());
+                        pstat.setInt(1, AudioLibrary.musicartistbandid());
                     }
                     else
                     {
                         pstat = conn.prepareStatement("SELECT Song.nam, REGEXP_REPLACE(TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(Song.dur, ':0', ':'))), '^:', '0:'), `Music artist/band's song`.feat, Song.ID FROM `Music artist/band's song` JOIN `Related music artist/band` ON `Music artist/band's song`.artband=`Related music artist/band`.ID JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE `Music artist/band's song`.artband=? AND Song.cat IS NULL AND Song.nam LIKE ? ORDER BY Song.nam;");
-                        pstat.setInt(1, audiolibrary.RelatedMusicArtistBandID());
+                        pstat.setInt(1, AudioLibrary.relatedmusicartistbandid());
                     }
                     pstat.setString(2, search);
                     resset = pstat.executeQuery();
@@ -873,14 +873,14 @@ public class audiolibrarydb
                 else if (obslist == 1)
                 {
                     pstat = conn.prepareStatement("WITH song AS(SELECT Song.nam, REGEXP_REPLACE(TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(Song.dur, ':0', ':'))), '^:', '0:'), `Music artist/band's song`.feat, Song.ID FROM `Music artist/band's song` JOIN `Music artist/band` ON `Music artist/band's song`.artband=`Music artist/band`.ID JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE `Music artist/band's song`.artband=? AND Song.cat IS NULL AND Song.nam LIKE ? ORDER BY Song.nam) SELECT COUNT(ID) FROM song;");
-                    pstat.setInt(1, audiolibrary.MusicArtistBandID());
+                    pstat.setInt(1, AudioLibrary.musicartistbandid());
                     pstat.setString(2, search);
                     resset = pstat.executeQuery();
                     while (resset.next())
                         count = resset.getInt("COUNT(ID)");
                     datarr = new String[count][4];
                     pstat = conn.prepareStatement("SELECT Song.nam, REGEXP_REPLACE(TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(Song.dur, ':0', ':'))), '^:', '0:'), `Music artist/band's song`.feat, Song.ID FROM `Music artist/band's song` JOIN `Music artist/band` ON `Music artist/band's song`.artband=`Music artist/band`.ID JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE `Music artist/band's song`.artband=? AND Song.cat IS NULL AND Song.nam LIKE ? ORDER BY Song.nam;");
-                    pstat.setInt(1, audiolibrary.MusicArtistBandID());
+                    pstat.setInt(1, AudioLibrary.musicartistbandid());
                     pstat.setString(2, search);
                     resset = pstat.executeQuery();
                     count = 0;
@@ -976,7 +976,7 @@ public class audiolibrarydb
         return datarr;
     }
 
-    public static String[][] SELECTFILTERING(int tabl) throws Exception
+    public static String[][] selectfiltering(int tabl) throws Exception
     {
         int count = 0;
         PreparedStatement pstat;
@@ -988,78 +988,78 @@ public class audiolibrarydb
         {
             case 3:
                 pstat = conn.prepareStatement("WITH musicartistband AS(WITH musicartistband AS(WITH musicartistband AS(SELECT `Music artist/band`.artband, `Related music artist/band`.relartband, `Music artist/band`.genr, Song.nam, `Cover's original music artist/band`.artband AS coverorigartbandID, `Cover's original music artist/band`.feat, `Music artist/band`.nosongs, `Music artist/band`.songsdur, `Music artist/band`.totnosongs, `Music artist/band`.totsongsdur, `Music artist/band`.ID, `Related music artist/band`.ID AS relartbandid FROM `Music artist/band` LEFT JOIN `Related music artist/band` ON `Music artist/band`.ID=`Related music artist/band`.artband LEFT JOIN `Music artist/band's song` ON `Music artist/band`.ID=`Music artist/band's song`.artband LEFT JOIN Song ON `Music artist/band's song`.song=Song.ID LEFT JOIN `Cover's original music artist/band` ON Song.ID=`Cover's original music artist/band`.song WHERE `Music artist/band`.cat='Жанр' AND (`Music artist/band`.genr LIKE ? AND `Music artist/band`.genr IS NOT ?) AND IFNULL(`Related music artist/band`.relartband, '') LIKE ? AND `Music artist/band`.totnosongs BETWEEN ? AND ? AND `Music artist/band`.totsongsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME)) SELECT musicartistband.artband, GROUP_CONCAT(DISTINCT relartband ORDER BY relartbandid SEPARATOR ', ') AS relartband, musicartistband.genr, nam, `Music artist/band`.artband AS coverorigartband, feat, musicartistband.nosongs, musicartistband.songsdur, musicartistband.totnosongs, musicartistband.totsongsdur, musicartistband.ID FROM musicartistband LEFT JOIN `Music artist/band` ON `Music artist/band`.ID=musicartistband.coverorigartbandID GROUP BY artband, genr, nam, coverorigartband, feat, nosongs, songsdur, totnosongs, totsongsdur, ID) SELECT artband, relartband, genr, REPLACE(REPLACE(GROUP_CONCAT(CONCAT(IFNULL(nam, ''), ' (', IFNULL(coverorigartband, ''), ' & ', IFNULL(feat, ''), ')') ORDER BY coverorigartband IS NOT NULL, nam SEPARATOR ', '), ' ( & )', ''), ' & )', ')'), nosongs, TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':'))), totnosongs, TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(totsongsdur, ':0', ':'))), ID FROM musicartistband GROUP BY artband, relartband, genr, nosongs, songsdur, totnosongs, totsongsdur, ID ORDER BY artband) SELECT COUNT(ID) FROM musicartistband;");
-                if (audiolibrary.combobox1.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox1.getSelectionModel().isEmpty())
                 {
                     pstat.setString(1, "%");
                     pstat.setString(2, null);
                 }
                 else
                 {
-                    pstat.setString(1, String.valueOf(audiolibrary.combobox1.getValue()));
+                    pstat.setString(1, String.valueOf(AudioLibrary.combobox1.getValue()));
                     pstat.setString(2, null);
                 }
-                if (audiolibrary.combobox2.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox2.getSelectionModel().isEmpty())
                     pstat.setString(3, "%");
-                else if (audiolibrary.combobox2.getValue().equals("With related artist(-s)/band(-s)"))
+                else if (AudioLibrary.combobox2.getValue().equals("With related artist(-s)/band(-s)"))
                     pstat.setString(3, "%_%");
-                else if (audiolibrary.combobox2.getValue().equals("Without related artist(-s)/band(-s)"))
+                else if (AudioLibrary.combobox2.getValue().equals("Without related artist(-s)/band(-s)"))
                     pstat.setString(3, "");
-                if (audiolibrary.combobox3.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox3.getSelectionModel().isEmpty())
                 {
                     pstat.setString(4, "1");
                     pstat.setString(5, "999");
                 }
-                else if (audiolibrary.combobox3.getValue().equals("<10"))
+                else if (AudioLibrary.combobox3.getValue().equals("<10"))
                 {
                     pstat.setString(4, "1");
                     pstat.setString(5, "9");
                 }
-                else if (audiolibrary.combobox3.getValue().equals("15"))
+                else if (AudioLibrary.combobox3.getValue().equals("15"))
                 {
                     pstat.setString(4, "15");
                     pstat.setString(5, "15");
                 }
-                else if (audiolibrary.combobox3.getValue().equals("25"))
+                else if (AudioLibrary.combobox3.getValue().equals("25"))
                 {
                     pstat.setString(4, "25");
                     pstat.setString(5, "25");
                 }
-                else if (audiolibrary.combobox3.getValue().equals("55"))
+                else if (AudioLibrary.combobox3.getValue().equals("55"))
                 {
                     pstat.setString(4, "55");
                     pstat.setString(5, "55");
                 }
-                else if (audiolibrary.combobox3.getValue().equals("70"))
+                else if (AudioLibrary.combobox3.getValue().equals("70"))
                 {
                     pstat.setString(4, "70");
                     pstat.setString(5, "70");
                 }
-                else if (audiolibrary.combobox3.getValue().equals(">70"))
+                else if (AudioLibrary.combobox3.getValue().equals(">70"))
                 {
                     pstat.setString(4, "71");
                     pstat.setString(5, "999");
                 }
-                if (audiolibrary.combobox4.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox4.getSelectionModel().isEmpty())
                 {
                     pstat.setString(6, "0:0:1");
                     pstat.setString(7, "71:59:59");
                 }
-                else if (audiolibrary.combobox4.getValue().equals("<45:00"))
+                else if (AudioLibrary.combobox4.getValue().equals("<45:00"))
                 {
                     pstat.setString(6, "0:0:1");
                     pstat.setString(7, "0:44:59");
                 }
-                else if (audiolibrary.combobox4.getValue().equals(">=45:00 & <1:15:00"))
+                else if (AudioLibrary.combobox4.getValue().equals(">=45:00 & <1:15:00"))
                 {
                     pstat.setString(6, "0:45:0");
                     pstat.setString(7, "1:14:59");
                 }
-                else if (audiolibrary.combobox4.getValue().equals(">=1:15:00 & <2:5:00"))
+                else if (AudioLibrary.combobox4.getValue().equals(">=1:15:00 & <2:5:00"))
                 {
                     pstat.setString(6, "1:15:0");
                     pstat.setString(7, "2:4:59");
                 }
-                else if (audiolibrary.combobox4.getValue().equals(">=2:5:00"))
+                else if (AudioLibrary.combobox4.getValue().equals(">=2:5:00"))
                 {
                     pstat.setString(6, "2:5:00");
                     pstat.setString(7, "71:59:59");
@@ -1070,78 +1070,78 @@ public class audiolibrarydb
                 datarr = new String[count][9];
 
                 pstat = conn.prepareStatement("WITH musicartistband AS(WITH musicartistband AS(SELECT `Music artist/band`.artband, `Related music artist/band`.relartband, `Music artist/band`.genr, Song.nam, `Cover's original music artist/band`.artband AS coverorigartbandID, `Cover's original music artist/band`.feat, `Music artist/band`.nosongs, `Music artist/band`.songsdur, `Music artist/band`.totnosongs, `Music artist/band`.totsongsdur, `Music artist/band`.ID, `Related music artist/band`.ID AS relartbandid FROM `Music artist/band` LEFT JOIN `Related music artist/band` ON `Music artist/band`.ID=`Related music artist/band`.artband LEFT JOIN `Music artist/band's song` ON `Music artist/band`.ID=`Music artist/band's song`.artband LEFT JOIN Song ON `Music artist/band's song`.song=Song.ID LEFT JOIN `Cover's original music artist/band` ON Song.ID=`Cover's original music artist/band`.song WHERE `Music artist/band`.cat='Жанр' AND (`Music artist/band`.genr LIKE ? AND `Music artist/band`.genr IS NOT ?) AND IFNULL(`Related music artist/band`.relartband, '') LIKE ? AND `Music artist/band`.totnosongs BETWEEN ? AND ? AND `Music artist/band`.totsongsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME)) SELECT musicartistband.artband, GROUP_CONCAT(DISTINCT relartband ORDER BY relartbandid SEPARATOR ', ') AS relartband, musicartistband.genr, nam, `Music artist/band`.artband AS coverorigartband, feat, musicartistband.nosongs, musicartistband.songsdur, musicartistband.totnosongs, musicartistband.totsongsdur, musicartistband.ID FROM musicartistband LEFT JOIN `Music artist/band` ON `Music artist/band`.ID=musicartistband.coverorigartbandID GROUP BY artband, genr, nam, coverorigartband, feat, nosongs, songsdur, totnosongs, totsongsdur, ID) SELECT artband, relartband, genr, REPLACE(REPLACE(GROUP_CONCAT(CONCAT(IFNULL(nam, ''), ' (', IFNULL(coverorigartband, ''), ' & ', IFNULL(feat, ''), ')') ORDER BY coverorigartband IS NOT NULL, nam SEPARATOR ', '), ' ( & )', ''), ' & )', ')'), nosongs, TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':'))), totnosongs, TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(totsongsdur, ':0', ':'))), ID FROM musicartistband GROUP BY artband, relartband, genr, nosongs, songsdur, totnosongs, totsongsdur, ID ORDER BY artband;");
-                if (audiolibrary.combobox1.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox1.getSelectionModel().isEmpty())
                 {
                     pstat.setString(1, "%");
                     pstat.setString(2, null);
                 }
                 else
                 {
-                    pstat.setString(1, String.valueOf(audiolibrary.combobox1.getValue()));
+                    pstat.setString(1, String.valueOf(AudioLibrary.combobox1.getValue()));
                     pstat.setString(2, null);
                 }
-                if (audiolibrary.combobox2.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox2.getSelectionModel().isEmpty())
                     pstat.setString(3, "%");
-                else if (audiolibrary.combobox2.getValue().equals("With related artist(-s)/band(-s)"))
+                else if (AudioLibrary.combobox2.getValue().equals("With related artist(-s)/band(-s)"))
                     pstat.setString(3, "%_%");
-                else if (audiolibrary.combobox2.getValue().equals("Without related artist(-s)/band(-s)"))
+                else if (AudioLibrary.combobox2.getValue().equals("Without related artist(-s)/band(-s)"))
                     pstat.setString(3, "");
-                if (audiolibrary.combobox3.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox3.getSelectionModel().isEmpty())
                 {
                     pstat.setString(4, "1");
                     pstat.setString(5, "999");
                 }
-                else if (audiolibrary.combobox3.getValue().equals("<10"))
+                else if (AudioLibrary.combobox3.getValue().equals("<10"))
                 {
                     pstat.setString(4, "1");
                     pstat.setString(5, "9");
                 }
-                else if (audiolibrary.combobox3.getValue().equals("15"))
+                else if (AudioLibrary.combobox3.getValue().equals("15"))
                 {
                     pstat.setString(4, "15");
                     pstat.setString(5, "15");
                 }
-                else if (audiolibrary.combobox3.getValue().equals("25"))
+                else if (AudioLibrary.combobox3.getValue().equals("25"))
                 {
                     pstat.setString(4, "25");
                     pstat.setString(5, "25");
                 }
-                else if (audiolibrary.combobox3.getValue().equals("55"))
+                else if (AudioLibrary.combobox3.getValue().equals("55"))
                 {
                     pstat.setString(4, "55");
                     pstat.setString(5, "55");
                 }
-                else if (audiolibrary.combobox3.getValue().equals("70"))
+                else if (AudioLibrary.combobox3.getValue().equals("70"))
                 {
                     pstat.setString(4, "70");
                     pstat.setString(5, "70");
                 }
-                else if (audiolibrary.combobox3.getValue().equals(">70"))
+                else if (AudioLibrary.combobox3.getValue().equals(">70"))
                 {
                     pstat.setString(4, "71");
                     pstat.setString(5, "999");
                 }
-                if (audiolibrary.combobox4.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox4.getSelectionModel().isEmpty())
                 {
                     pstat.setString(6, "0:0:1");
                     pstat.setString(7, "71:59:59");
                 }
-                else if (audiolibrary.combobox4.getValue().equals("<45:00"))
+                else if (AudioLibrary.combobox4.getValue().equals("<45:00"))
                 {
                     pstat.setString(6, "0:0:1");
                     pstat.setString(7, "0:44:59");
                 }
-                else if (audiolibrary.combobox4.getValue().equals(">=45:00 & <1:15:00"))
+                else if (AudioLibrary.combobox4.getValue().equals(">=45:00 & <1:15:00"))
                 {
                     pstat.setString(6, "0:45:00");
                     pstat.setString(7, "1:14:59");
                 }
-                else if (audiolibrary.combobox4.getValue().equals(">=1:15:00 & <2:5:00"))
+                else if (AudioLibrary.combobox4.getValue().equals(">=1:15:00 & <2:5:00"))
                 {
                     pstat.setString(6, "1:15:00");
                     pstat.setString(7, "2:4:59");
                 }
-                else if (audiolibrary.combobox4.getValue().equals(">=2:5:00"))
+                else if (AudioLibrary.combobox4.getValue().equals(">=2:5:00"))
                 {
                     pstat.setString(6, "2:5:00");
                     pstat.setString(7, "71:59:59");
@@ -1178,32 +1178,32 @@ public class audiolibrarydb
                     pstat = conn.prepareStatement("WITH composer AS(WITH composer AS(SELECT `Music artist/band`.artband, Song.nam, `Music artist/band`.nosongs, `Music artist/band`.songsdur, `Music artist/band`.ID FROM `Music artist/band` LEFT JOIN `Music artist/band's song` ON `Music artist/band`.ID=`Music artist/band's song`.artband LEFT JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE `Music artist/band`.cat='Композиторы' AND `Music artist/band`.nosongs BETWEEN ? AND ? AND `Music artist/band`.songsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME)) SELECT artband, GROUP_CONCAT(nam ORDER BY nam SEPARATOR ', '), nosongs, TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':'))), ID FROM composer GROUP BY artband, nosongs, songsdur, ID ORDER BY artband) SELECT COUNT(ID) FROM composer;");
                 if (tabl == 5)
                     pstat = conn.prepareStatement("WITH blogger AS(WITH blogger AS(SELECT `Music artist/band`.artband, Song.nam, `Music artist/band`.nosongs, `Music artist/band`.songsdur, `Music artist/band`.ID FROM `Music artist/band` LEFT JOIN `Music artist/band's song` ON `Music artist/band`.ID=`Music artist/band's song`.artband LEFT JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE `Music artist/band`.cat='Блогеры' AND `Music artist/band`.nosongs BETWEEN ? AND ? AND `Music artist/band`.songsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME)) SELECT artband, GROUP_CONCAT(nam ORDER BY nam SEPARATOR ', '), nosongs, TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':'))), ID FROM blogger GROUP BY artband, nosongs, songsdur, ID ORDER BY artband) SELECT COUNT(ID) FROM blogger;");
-                if (audiolibrary.combobox1.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox1.getSelectionModel().isEmpty())
                 {
                     pstat.setString(1, "0");
                     pstat.setString(2, "999");
                 }
-                else if (audiolibrary.combobox1.getValue().equals("<5"))
+                else if (AudioLibrary.combobox1.getValue().equals("<5"))
                 {
                     pstat.setString(1, "1");
                     pstat.setString(2, "4");
                 }
-                else if (audiolibrary.combobox1.getValue().equals(">=5"))
+                else if (AudioLibrary.combobox1.getValue().equals(">=5"))
                 {
                     pstat.setString(1, "5");
                     pstat.setString(2, "999");
                 }
-                if (audiolibrary.combobox2.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox2.getSelectionModel().isEmpty())
                 {
                     pstat.setString(3, "0:0:1");
                     pstat.setString(4, "71:59:59");
                 }
-                else if (audiolibrary.combobox2.getValue().equals("<20:00"))
+                else if (AudioLibrary.combobox2.getValue().equals("<20:00"))
                 {
                     pstat.setString(3, "0:0:1");
                     pstat.setString(4, "0:19:59");
                 }
-                else if (audiolibrary.combobox2.getValue().equals(">=20:00"))
+                else if (AudioLibrary.combobox2.getValue().equals(">=20:00"))
                 {
                     pstat.setString(3, "0:20:00");
                     pstat.setString(4, "71:59:59");
@@ -1216,32 +1216,32 @@ public class audiolibrarydb
                     pstat = conn.prepareStatement("WITH composer AS(SELECT `Music artist/band`.artband, Song.nam, `Music artist/band`.nosongs, `Music artist/band`.songsdur, `Music artist/band`.ID FROM `Music artist/band` LEFT JOIN `Music artist/band's song` ON `Music artist/band`.ID=`Music artist/band's song`.artband LEFT JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE `Music artist/band`.cat='Композиторы' AND `Music artist/band`.nosongs BETWEEN ? AND ? AND `Music artist/band`.songsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME)) SELECT artband, GROUP_CONCAT(nam ORDER BY nam SEPARATOR ', '), nosongs, TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':'))), ID FROM composer GROUP BY artband, nosongs, songsdur, ID ORDER BY artband;");
                 if (tabl == 5)
                     pstat = conn.prepareStatement("WITH blogger AS(SELECT `Music artist/band`.artband, Song.nam, `Music artist/band`.nosongs, `Music artist/band`.songsdur, `Music artist/band`.ID FROM `Music artist/band` LEFT JOIN `Music artist/band's song` ON `Music artist/band`.ID=`Music artist/band's song`.artband LEFT JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE `Music artist/band`.cat='Блогеры' AND `Music artist/band`.nosongs BETWEEN ? AND ? AND `Music artist/band`.songsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME)) SELECT artband, GROUP_CONCAT(nam ORDER BY nam SEPARATOR ', '), nosongs, TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':'))), ID FROM blogger GROUP BY artband, nosongs, songsdur, ID ORDER BY artband;");
-                if (audiolibrary.combobox1.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox1.getSelectionModel().isEmpty())
                 {
                     pstat.setString(1, "0");
                     pstat.setString(2, "999");
                 }
-                else if (audiolibrary.combobox1.getValue().equals("<5"))
+                else if (AudioLibrary.combobox1.getValue().equals("<5"))
                 {
                     pstat.setString(1, "1");
                     pstat.setString(2, "4");
                 }
-                else if (audiolibrary.combobox1.getValue().equals(">=5"))
+                else if (AudioLibrary.combobox1.getValue().equals(">=5"))
                 {
                     pstat.setString(1, "5");
                     pstat.setString(2, "999");
                 }
-                if (audiolibrary.combobox2.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox2.getSelectionModel().isEmpty())
                 {
                     pstat.setString(3, "0:0:1");
                     pstat.setString(4, "71:59:59");
                 }
-                else if (audiolibrary.combobox2.getValue().equals("<20:00"))
+                else if (AudioLibrary.combobox2.getValue().equals("<20:00"))
                 {
                     pstat.setString(3, "0:0:1");
                     pstat.setString(4, "0:19:59");
                 }
-                else if (audiolibrary.combobox2.getValue().equals(">=20:00"))
+                else if (AudioLibrary.combobox2.getValue().equals(">=20:00"))
                 {
                     pstat.setString(3, "0:20:00");
                     pstat.setString(4, "71:59:59");
@@ -1265,21 +1265,21 @@ public class audiolibrarydb
                 break;
             case 6:
             pstat = conn.prepareStatement("WITH cover AS(WITH cover AS(WITH cover AS(SELECT Song.nam, `Music artist/band`.artband, `Music artist/band's song`.feat, Song.dur, Song.ID FROM `Music artist/band's song` JOIN `Music artist/band` ON `Music artist/band's song`.artband=`Music artist/band`.ID JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE Song.cat='Каверы' AND Song.dur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME) UNION (SELECT Song.nam, `Related music artist/band`.relartband, `Music artist/band's song`.feat, Song.dur, Song.ID FROM `Music artist/band's song` JOIN `Related music artist/band` ON `Music artist/band's song`.artband=`Related music artist/band`.ID JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE Song.cat='Каверы' AND Song.dur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME))) SELECT cover.nam, cover.artband, cover.feat, cover.dur, `Music artist/band`.artband AS origartband, `Cover's original music artist/band`.feat AS origfeat, cover.ID FROM cover JOIN `Cover's original music artist/band` ON cover.ID=`Cover's original music artist/band`.song JOIN `Music artist/band` ON `Cover's original music artist/band`.artband=`Music artist/band`.ID UNION (SELECT cover.nam, cover.artband, cover.feat, cover.dur, `Related music artist/band`.relartband, `Cover's original music artist/band`.feat, cover.ID FROM cover JOIN `Cover's original music artist/band` ON cover.ID=`Cover's original music artist/band`.song JOIN `Related music artist/band` ON `Cover's original music artist/band`.artband=`Related music artist/band`.ID)) SELECT nam, artband, feat, TRIM(LEADING '00:' FROM REPLACE(dur, ':0', ':')), GROUP_CONCAT(origartband SEPARATOR ', '), origfeat, ID FROM cover GROUP BY artband, nam, feat, dur, origfeat, ID ORDER BY nam, artband) SELECT COUNT(ID) FROM cover;");
-            if (audiolibrary.combobox1.getSelectionModel().isEmpty())
+            if (AudioLibrary.combobox1.getSelectionModel().isEmpty())
             {
                 pstat.setString(1, "0:0:1");
                 pstat.setString(2, "71:59:59");
                 pstat.setString(3, "0:0:1");
                 pstat.setString(4, "71:59:59");
             }
-            else if (audiolibrary.combobox1.getValue().equals("<4:00"))
+            else if (AudioLibrary.combobox1.getValue().equals("<4:00"))
             {
                 pstat.setString(1, "0:0:1");
                 pstat.setString(2, "0:3:59");
                 pstat.setString(3, "0:0:1");
                 pstat.setString(4, "0:3:59");
             }
-            else if (audiolibrary.combobox1.getValue().equals(">=4:00"))
+            else if (AudioLibrary.combobox1.getValue().equals(">=4:00"))
             {
                 pstat.setString(1, "0:4:00");
                 pstat.setString(2, "71:59:59");
@@ -1291,21 +1291,21 @@ public class audiolibrarydb
                 count = resset.getInt("COUNT(ID)");
             datarr = new String[count][7];
             pstat = conn.prepareStatement("WITH cover AS(WITH cover AS(SELECT Song.nam, `Music artist/band`.artband, `Music artist/band's song`.feat, Song.dur, Song.ID FROM `Music artist/band's song` JOIN `Music artist/band` ON `Music artist/band's song`.artband=`Music artist/band`.ID JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE Song.cat='Каверы' AND Song.dur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME) UNION (SELECT Song.nam, `Related music artist/band`.relartband, `Music artist/band's song`.feat, Song.dur, Song.ID FROM `Music artist/band's song` JOIN `Related music artist/band` ON `Music artist/band's song`.artband=`Related music artist/band`.ID JOIN Song ON `Music artist/band's song`.song=Song.ID WHERE Song.cat='Каверы' AND Song.dur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME))) SELECT cover.nam, cover.artband, cover.feat, cover.dur, `Music artist/band`.artband AS origartband, `Cover's original music artist/band`.feat AS origfeat, cover.ID FROM cover JOIN `Cover's original music artist/band` ON cover.ID=`Cover's original music artist/band`.song JOIN `Music artist/band` ON `Cover's original music artist/band`.artband=`Music artist/band`.ID UNION (SELECT cover.nam, cover.artband, cover.feat, cover.dur, `Related music artist/band`.relartband, `Cover's original music artist/band`.feat, cover.ID FROM cover JOIN `Cover's original music artist/band` ON cover.ID=`Cover's original music artist/band`.song JOIN `Related music artist/band` ON `Cover's original music artist/band`.artband=`Related music artist/band`.ID)) SELECT nam, artband, feat, TRIM(LEADING '00:' FROM REPLACE(dur, ':0', ':')), GROUP_CONCAT(origartband SEPARATOR ', '), origfeat, ID FROM cover GROUP BY artband, nam, feat, dur, origfeat, ID ORDER BY nam, artband;");
-                if (audiolibrary.combobox1.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox1.getSelectionModel().isEmpty())
                 {
                     pstat.setString(1, "0:0:1");
                     pstat.setString(2, "71:59:59");
                     pstat.setString(3, "0:0:1");
                     pstat.setString(4, "71:59:59");
                 }
-                else if (audiolibrary.combobox1.getValue().equals("<4:00"))
+                else if (AudioLibrary.combobox1.getValue().equals("<4:00"))
                 {
                     pstat.setString(1, "0:0:1");
                     pstat.setString(2, "0:3:59");
                     pstat.setString(3, "0:0:1");
                     pstat.setString(4, "0:3:59");
                 }
-                else if (audiolibrary.combobox1.getValue().equals(">=4:00"))
+                else if (AudioLibrary.combobox1.getValue().equals(">=4:00"))
                 {
                     pstat.setString(1, "0:4:00");
                     pstat.setString(2, "71:59:59");
@@ -1335,32 +1335,32 @@ public class audiolibrarydb
             break;
             case 7:
                 pstat = conn.prepareStatement("WITH soundtrack AS(SELECT movanimsergam, artband, song, nosongs, REGEXP_REPLACE(TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':'))), '^:', '0:'), ID FROM Soundtrack WHERE nosongs BETWEEN ? AND ? AND songsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME) ORDER BY movanimsergam) SELECT COUNT(ID) FROM soundtrack;");
-                if (audiolibrary.combobox1.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox1.getSelectionModel().isEmpty())
                 {
                     pstat.setString(1, "1");
                     pstat.setString(2, "999");
                 }
-                else if (audiolibrary.combobox1.getValue().equals("1"))
+                else if (AudioLibrary.combobox1.getValue().equals("1"))
                 {
                     pstat.setString(1, "1");
                     pstat.setString(2, "1");
                 }
-                else if (audiolibrary.combobox1.getValue().equals(">1"))
+                else if (AudioLibrary.combobox1.getValue().equals(">1"))
                 {
                     pstat.setString(1, "2");
                     pstat.setString(2, "999");
                 }
-                if (audiolibrary.combobox2.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox2.getSelectionModel().isEmpty())
                 {
                     pstat.setString(3, "0:0:1");
                     pstat.setString(4, "71:59:59");
                 }
-                else if (audiolibrary.combobox2.getValue().equals("<4:00"))
+                else if (AudioLibrary.combobox2.getValue().equals("<4:00"))
                 {
                     pstat.setString(3, "0:0:1");
                     pstat.setString(4, "0:3:59");
                 }
-                else if (audiolibrary.combobox2.getValue().equals(">=4:00"))
+                else if (AudioLibrary.combobox2.getValue().equals(">=4:00"))
                 {
                     pstat.setString(3, "0:4:00");
                     pstat.setString(4, "71:59:59");
@@ -1370,32 +1370,32 @@ public class audiolibrarydb
                     count = resset.getInt("COUNT(ID)");
                 datarr = new String[count][6];
                 pstat = conn.prepareStatement("SELECT movanimsergam, artband, song, nosongs, REGEXP_REPLACE(TRIM(LEADING '0' FROM TRIM(LEADING '00:' FROM REPLACE(songsdur, ':0', ':'))), '^:', '0:'), ID FROM Soundtrack WHERE nosongs BETWEEN ? AND ? AND songsdur BETWEEN CAST(? AS TIME) AND CAST(? AS TIME) ORDER BY movanimsergam;");
-                if (audiolibrary.combobox1.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox1.getSelectionModel().isEmpty())
                 {
                     pstat.setString(1, "1");
                     pstat.setString(2, "999");
                 }
-                else if (audiolibrary.combobox1.getValue().equals("1"))
+                else if (AudioLibrary.combobox1.getValue().equals("1"))
                 {
                     pstat.setString(1, "1");
                     pstat.setString(2, "1");
                 }
-                else if (audiolibrary.combobox1.getValue().equals(">1"))
+                else if (AudioLibrary.combobox1.getValue().equals(">1"))
                 {
                     pstat.setString(1, "2");
                     pstat.setString(2, "999");
                 }
-                if (audiolibrary.combobox2.getSelectionModel().isEmpty())
+                if (AudioLibrary.combobox2.getSelectionModel().isEmpty())
                 {
                     pstat.setString(3, "0:0:1");
                     pstat.setString(4, "71:59:59");
                 }
-                else if (audiolibrary.combobox2.getValue().equals("<4:00"))
+                else if (AudioLibrary.combobox2.getValue().equals("<4:00"))
                 {
                     pstat.setString(3, "0:0:1");
                     pstat.setString(4, "0:3:59");
                 }
-                else if (audiolibrary.combobox2.getValue().equals(">=4:00"))
+                else if (AudioLibrary.combobox2.getValue().equals(">=4:00"))
                 {
                     pstat.setString(3, "0:4:00");
                     pstat.setString(4, "71:59:59");
@@ -1425,7 +1425,7 @@ public class audiolibrarydb
         return datarr;
     }
 
-    public static String ArtistsStatistics(String cat) throws Exception
+    public static String artistsstatistics(String cat) throws Exception
     {
         String artistsstatistics = "";
 
@@ -1464,7 +1464,7 @@ public class audiolibrarydb
         return artistsstatistics;
     }
 
-    public static String[][] SongsStatistics(String cat) throws Exception
+    public static String[][] songsstatistics(String cat) throws Exception
     {
         int count;
 
@@ -1517,7 +1517,7 @@ public class audiolibrarydb
         return datarr;
     }
 
-    public static int NewMusicArtistBandID() throws Exception
+    public static int newmusicartistbandid() throws Exception
     {
         int artbandid = 0;
 
@@ -1532,7 +1532,7 @@ public class audiolibrarydb
         return artbandid;
     }
 
-    public static int SoundtrackID() throws Exception
+    public static int soundtrackid() throws Exception
     {
         int soundtrackid = 0;
 

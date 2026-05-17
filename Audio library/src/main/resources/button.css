@@ -1,4 +1,8 @@
 .button{-fx-background-color: #4B0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 14; -fx-text-fill: #FF0000}
 .button:hover{-fx-font-weight: bold}
-.button1audiolibrarygenre{-fx-background-color: #4B0000; -fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-style: italic; -fx-font-size: 14; -fx-text-fill: #FF0000}
-.button1audiolibrarygenre:hover{-fx-font-size: 15}
+.buttons1audiolibrarygenre15musicartistsbandsbynumberofsongsvisualization{-fx-background-color: #4B0000; -fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-style: italic; -fx-font-size: 14; -fx-text-fill: #FF0000}
+.buttons1audiolibrarygenre15musicartistsbandsbynumberofsongsvisualization:hover{-fx-font-size: 15}
+.button16songsbydurationrange{-fx-padding: 0; -fx-background-color: #4B0000; -fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-style: italic; -fx-font-size: 20; -fx-text-fill: #FF0000}
+.button16songsbydurationrange:hover{-fx-font-size: 21}
+.button17exit{-fx-background-color: transparent; -fx-font-family: Times New Roman; -fx-font-size: 18; -fx-text-fill: #4B0000}
+.button17exit:hover{-fx-font-weight: bold; -fx-text-fill: #FF0000}
