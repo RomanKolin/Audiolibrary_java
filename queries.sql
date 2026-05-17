@@ -66,3 +66,14 @@ CALL SongsStatisticsComposers();
 CALL SongsStatisticsBloggers();
 CALL SongsStatisticsCovers();
 CALL SongsStatisticsSoundtracks();
+
+SELECT * FROM NumberofMusicArtistsBandsInCategoryByNumberofSongsVIEW;
+SELECT DISTINCT SUM(`Number of music artists/bands`) FROM NumberofMusicArtistsBandsInCategoryByNumberofSongsVIEW GROUP BY `Number of songs`;
+SELECT SUM(`Number of music artists/bands`) FROM NumberofMusicArtistsBandsInCategoryByNumberofSongsVIEW GROUP BY `Number of songs`;
+SELECT GROUP_CONCAT(`Music artist/band` SEPARATOR '\n') FROM MusicArtistsBandsInCategoryByNumberofSongsVIEW WHERE Category=? AND `Number of songs`=?;
+SELECT CONCAT(`Song duration range in minutes`, ':0-', `Song duration range in minutes`, ':59'), `Number of songs` FROM NumberofSongsByDurationRangeVIEW ORDER BY `Number of songs`;
+SELECT `Number of songs` FROM NumberofSongsByDurationRangeVIEW;
+SELECT GROUP_CONCAT(Song ORDER BY SUBSTRING_INDEX(Song, '- ', -1) SEPARATOR '\n') FROM SongsByDurationRangeVIEW WHERE `Song duration range in minutes`=?;
+SELECT CONCAT(`Song duration range in minutes`, ':0-', `Song duration range in minutes`, ':59'), `Number of songs` FROM NumberofSongsByDurationRangeVIEW ORDER BY `Number of songs`, `Song duration range in minutes` DESC LIMIT ?;
+SELECT GROUP_CONCAT(Song ORDER BY SUBSTRING_INDEX(Song, '- ', -1) SEPARATOR '\n') FROM SongsByDurationRangeVIEW WHERE `Number of songs`<? AND Song LIKE ?;
+SELECT CONCAT((SELECT COUNT(Song) FROM SongsByDurationRangeVIEW WHERE `Number of songs`<? AND Song LIKE ?), ' songs in range ', (SELECT MIN(`Song duration range in minutes`) FROM SongsByDurationRangeVIEW WHERE `Number of songs`<? AND Song LIKE ?), ':0-', (SELECT MAX(`Song duration range in minutes`) FROM SongsByDurationRangeVIEW WHERE `Number of songs`<? AND Song LIKE ?), ':59');
