@@ -1,0 +1,8 @@
+.scroll-pane{-fx-background: #FFFFFF; -fx-background-insets: 0; -fx-padding: 25 0 0 0; -fx-border-width: 1 1 0 0; -fx-border-color: #4B0000}
+.scroll-bar:horizontal *{-fx-pref-width: 0.1; -fx-pref-height: 0.1; -fx-background-color: #FFFFFF}
+.scroll-bar:vertical{-fx-background-color: transparent; -fx-pref-width: 10}
+.scroll-bar:vertical .thumb{-fx-color: #4B0000}
+.scroll-bar:vertical .increment-button{-fx-padding: 0 10}
+.scroll-bar:vertical .decrement-button{-fx-padding: 0 10}
+.scroll-bar:vertical .increment-arrow{-fx-shape: ""; -fx-padding: 0}
+.scroll-bar:vertical .decrement-arrow{-fx-shape: ""; -fx-padding: 25 0 0 0}

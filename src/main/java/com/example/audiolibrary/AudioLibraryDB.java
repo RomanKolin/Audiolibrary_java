@@ -85,7 +85,7 @@ public class AudioLibraryDB
                     datarr[count][1] = String.valueOf(noorigartsbands);
                     datarr[count][2] = String.valueOf(nosongs);
                     datarr[count][3] = String.valueOf(songsdur);
-                    count += 1;
+                    count+=1;
                 }
                 break;
             case 2:
@@ -105,7 +105,7 @@ public class AudioLibraryDB
                     datarr[count][1] = String.valueOf(noartsbands);
                     datarr[count][2] = String.valueOf(nosongs);
                     datarr[count][3] = String.valueOf(songsdur);
-                    count += 1;
+                    count+=1;
                 }
                 break;
             case 3:
@@ -135,7 +135,7 @@ public class AudioLibraryDB
                     datarr[count][6] = String.valueOf(totnosongs);
                     datarr[count][7] = totsongsdur;
                     datarr[count][8] = String.valueOf(id);
-                    count += 1;
+                    count+=1;
                 }
                 break;
             case 4:
@@ -157,7 +157,7 @@ public class AudioLibraryDB
                     datarr[count][2] = String.valueOf(nosongs);
                     datarr[count][3] = songsdur;
                     datarr[count][4] = String.valueOf(id);
-                    count += 1;
+                    count+=1;
                 }
                 break;
             case 5:
@@ -179,7 +179,7 @@ public class AudioLibraryDB
                     datarr[count][2] = String.valueOf(nosongs);
                     datarr[count][3] = songsdur;
                     datarr[count][4] = String.valueOf(id);
-                    count += 1;
+                    count+=1;
                 }
                 break;
             case 6:
@@ -205,7 +205,7 @@ public class AudioLibraryDB
                     datarr[count][4] = origartband;
                     datarr[count][5] = origfeat;
                     datarr[count][6] = String.valueOf(id);
-                    count += 1;
+                    count+=1;
                 }
 
                 ResultSet resset1;
@@ -219,7 +219,7 @@ public class AudioLibraryDB
                 {
                     String artband = resset1.getString(1);
                     AudioLibrary.coverartbandarr[count] = artband;
-                    count += 1;
+                    count+=1;
                 }
                 break;
             case 7:
@@ -243,7 +243,7 @@ public class AudioLibraryDB
                     datarr[count][3] = String.valueOf(nosongs);
                     datarr[count][4] = songsdur;
                     datarr[count][5] = String.valueOf(id);
-                    count += 1;
+                    count+=1;
                 }
                 break;
             case 8:
@@ -273,7 +273,7 @@ public class AudioLibraryDB
                     datarr[count][6] = String.valueOf(totnosongs);
                     datarr[count][7] = totsongsdur;
                     datarr[count][8] = String.valueOf(num);
-                    count += 1;
+                    count+=1;
                 }
                 break;
         }
@@ -311,7 +311,7 @@ public class AudioLibraryDB
             datarr[count][2] = String.valueOf(nosongs);
             datarr[count][3] = songsdur;
             datarr[count][4] = String.valueOf(id);
-            count += 1;
+            count+=1;
         }
         conn.close();
 
@@ -348,7 +348,7 @@ public class AudioLibraryDB
             datarr[count][1] = dur;
             datarr[count][2] = feat;
             datarr[count][3] = String.valueOf(id);
-            count += 1;
+            count+=1;
         }
         conn.close();
 
@@ -788,7 +788,7 @@ public class AudioLibraryDB
                         datarr[count][6] = String.valueOf(totnosongs);
                         datarr[count][7] = totsongsdur;
                         datarr[count][8] = String.valueOf(id);
-                        count += 1;
+                        count+=1;
                     }
                 }
                 else if (obslist == 1 || obslist == 2)
@@ -831,7 +831,7 @@ public class AudioLibraryDB
                         datarr[count][1] = dur;
                         datarr[count][2] = feat;
                         datarr[count][3] = String.valueOf(id);
-                        count += 1;
+                        count+=1;
                     }
                 }
                 break;
@@ -867,7 +867,7 @@ public class AudioLibraryDB
                         datarr[count][2] = String.valueOf(nosongs);
                         datarr[count][3] = songsdur;
                         datarr[count][4] = String.valueOf(id);
-                        count += 1;
+                        count+=1;
                     }
                 }
                 else if (obslist == 1)
@@ -894,7 +894,7 @@ public class AudioLibraryDB
                         datarr[count][1] = dur;
                         datarr[count][2] = feat;
                         datarr[count][3] = String.valueOf(id);
-                        count += 1;
+                        count+=1;
                     }
                 }
                 break;
@@ -935,7 +935,7 @@ public class AudioLibraryDB
                     datarr[count][4] = origartband;
                     datarr[count][5] = origfeat;
                     datarr[count][6] = String.valueOf(id);
-                    count += 1;
+                    count+=1;
                 }
                 break;
             case 7:
@@ -967,7 +967,7 @@ public class AudioLibraryDB
                     datarr[count][3] = String.valueOf(nosongs);
                     datarr[count][4] = songsdur;
                     datarr[count][5] = String.valueOf(id);
-                    count += 1;
+                    count+=1;
                 }
                 break;
         }
@@ -1168,7 +1168,7 @@ public class AudioLibraryDB
                     datarr[count][6] = String.valueOf(totnosongs);
                     datarr[count][7] = totsongsdur;
                     datarr[count][8] = String.valueOf(id);
-                    count += 1;
+                    count+=1;
                 }
                 break;
             case 4:
@@ -1260,7 +1260,7 @@ public class AudioLibraryDB
                     datarr[count][2] = String.valueOf(nosongs);
                     datarr[count][3] = songsdur;
                     datarr[count][4] = String.valueOf(id);
-                    count += 1;
+                    count+=1;
                 }
                 break;
             case 6:
@@ -1330,7 +1330,7 @@ public class AudioLibraryDB
                 datarr[count][4] = origartband;
                 datarr[count][5] = origfeat;
                 datarr[count][6] = String.valueOf(id);
-                count += 1;
+                count+=1;
             }
             break;
             case 7:
@@ -1416,7 +1416,7 @@ public class AudioLibraryDB
                     datarr[count][3] = String.valueOf(nosongs);
                     datarr[count][4] = songsdur;
                     datarr[count][5] = String.valueOf(id);
-                    count += 1;
+                    count+=1;
                 }
                 break;
         }
@@ -1510,7 +1510,185 @@ public class AudioLibraryDB
             String longestsongs = resset.getString(2);
             datarr[count][0] = shortestsongs;
             datarr[count][1] = longestsongs;
-            count += 1;
+            count+=1;
+        }
+        conn.close();
+
+        return datarr;
+    }
+
+    public static String[][] visualization(Integer num, Integer subnum, String catrang, String search, Integer nosongsnodistsongs) throws Exception
+    {
+        int count = 0;
+
+        conn();
+        Statement stat = conn.createStatement();
+        PreparedStatement pstat;
+        ResultSet resset;
+        String[][] datarr = new String[0][0];
+        if (num == 1)
+        {
+            if (subnum == 1)
+            {
+                resset = stat.executeQuery("SELECT COUNT(*) FROM NumberofMusicArtistsBandsInCategoryByNumberofSongsVIEW;");
+                while (resset.next())
+                    count = resset.getInt("COUNT(*)");
+                datarr = new String[count][3];
+                resset = stat.executeQuery("SELECT * FROM NumberofMusicArtistsBandsInCategoryByNumberofSongsVIEW;");
+                count = 0;
+                while (resset.next())
+                {
+                    String nosongs = resset.getString(1);
+                    String genr = resset.getString(2);
+                    int noartsbands = resset.getInt(3);
+                    datarr[count][0] = nosongs;
+                    datarr[count][1] = genr;
+                    datarr[count][2] = String.valueOf(noartsbands);
+                    count+=1;
+                }
+            }
+            if (subnum == 2 || subnum == 3)
+            {
+                if (subnum == 2)
+                {
+                    resset = stat.executeQuery("WITH noartsbandsbynosongs AS(SELECT DISTINCT SUM(`Number of music artists/bands`) FROM NumberofMusicArtistsBandsInCategoryByNumberofSongsVIEW GROUP BY `Number of songs`) SELECT COUNT(*) FROM noartsbandsbynosongs;");
+                    while (resset.next())
+                        count = resset.getInt("COUNT(*)");
+                    datarr = new String[count][1];
+                    resset = stat.executeQuery("SELECT DISTINCT SUM(`Number of music artists/bands`) FROM NumberofMusicArtistsBandsInCategoryByNumberofSongsVIEW GROUP BY `Number of songs`;");
+                }
+                else
+                {
+                    resset = stat.executeQuery("WITH noartsbandsbynosongs AS(SELECT SUM(`Number of music artists/bands`) FROM NumberofMusicArtistsBandsInCategoryByNumberofSongsVIEW GROUP BY `Number of songs`) SELECT COUNT(*) FROM noartsbandsbynosongs;");
+                    while (resset.next())
+                        count = resset.getInt("COUNT(*)");
+                    datarr = new String[count][1];
+                    resset = stat.executeQuery("SELECT SUM(`Number of music artists/bands`) FROM NumberofMusicArtistsBandsInCategoryByNumberofSongsVIEW GROUP BY `Number of songs`;");
+                }
+                count = 0;
+                while (resset.next())
+                {
+                    int noartsbands = resset.getInt(1);
+                    datarr[count][0] = String.valueOf(noartsbands);
+                    count+=1;
+                }
+            }
+            if (subnum == 4)
+            {
+                datarr = new String[1][1];
+                pstat = conn.prepareStatement("SELECT GROUP_CONCAT(`Music artist/band` SEPARATOR '\\n') FROM MusicArtistsBandsInCategoryByNumberofSongsVIEW WHERE Category=? AND `Number of songs`=?;");
+                pstat.setString(1, catrang);
+                pstat.setInt(2, nosongsnodistsongs);
+                resset = pstat.executeQuery();
+                resset.next();
+                String artsbands = resset.getString(1);
+                datarr[0][0] = artsbands;
+            }
+        }
+        if (num == 2)
+        {
+            if (subnum == 1)
+            {
+                resset = stat.executeQuery("SELECT COUNT(*) FROM NumberofSongsByDurationRangeVIEW;");
+                while (resset.next())
+                    count = resset.getInt("COUNT(*)");
+                datarr = new String[count][2];
+                resset = stat.executeQuery("SELECT CONCAT(`Song duration range in minutes`, ':0-', `Song duration range in minutes`, ':59'), `Number of songs` FROM NumberofSongsByDurationRangeVIEW;");
+                count = 0;
+                while (resset.next())
+                {
+                    String songsdurrang = resset.getString(1);
+                    int nosongs = resset.getInt(2);
+                    datarr[count][0] = songsdurrang;
+                    datarr[count][1] = String.valueOf(nosongs);
+                    count+=1;
+                }
+            }
+            if (subnum == 2)
+            {
+                resset = stat.executeQuery("SELECT COUNT(*) FROM NumberofSongsByDurationRangeVIEW;");
+                while (resset.next())
+                    count = resset.getInt("COUNT(*)");
+                datarr = new String[count][2];
+                resset = stat.executeQuery("SELECT `Number of songs` FROM NumberofSongsByDurationRangeVIEW;");
+                count = 0;
+                while (resset.next())
+                {
+                    int numb = count + 1;
+                    int nosongs = resset.getInt(1);
+                    datarr[count][0] = String.valueOf(numb);
+                    datarr[count][1] = String.valueOf(nosongs);
+                    count+=1;
+                }
+            }
+            if (subnum == 3)
+            {
+                datarr = new String[1][1];
+                pstat = conn.prepareStatement("SELECT GROUP_CONCAT(Song ORDER BY SUBSTRING_INDEX(Song, '- ', -1) SEPARATOR '\\n') FROM SongsByDurationRangeVIEW WHERE `Song duration range in minutes`=?;");
+                pstat.setString(1, catrang);
+                resset = pstat.executeQuery();
+                resset.next();
+                String song = resset.getString(1);
+                datarr[0][0] = song;
+            }
+            if (subnum == 4)
+            {
+                pstat = conn.prepareStatement("WITH nosongsbydurrang AS(SELECT CONCAT(`Song duration range in minutes`, ':0-', `Song duration range in minutes`, ':59'), `Number of songs` FROM NumberofSongsByDurationRangeVIEW WHERE `Number of songs`<=?) SELECT COUNT(*) FROM nosongsbydurrang;");
+                pstat.setInt(1, nosongsnodistsongs);
+                resset = pstat.executeQuery();
+                while (resset.next())
+                    count = resset.getInt("COUNT(*)");
+                datarr = new String[count][2];
+                pstat = conn.prepareStatement("SELECT CONCAT(`Song duration range in minutes`, ':0-', `Song duration range in minutes`, ':59'), `Number of songs` FROM NumberofSongsByDurationRangeVIEW WHERE `Number of songs`<=?;");
+                pstat.setInt(1, nosongsnodistsongs);
+                resset = pstat.executeQuery();
+                count = 0;
+                while (resset.next())
+                {
+                    String durrang = resset.getString(1);
+                    String nosongs = resset.getString(2);
+                    datarr[count][0] = durrang;
+                    datarr[count][1] = nosongs;
+                    count+=1;
+                }
+            }
+            if (subnum == 5)
+            {
+                resset = stat.executeQuery("WITH songsbydurrang AS(SELECT CONCAT(COUNT(Song), ' songs in range ', MIN(`Song duration range in minutes`), ':0-', MAX(`Song duration range in minutes`), ':59'), GROUP_CONCAT(Song ORDER BY SUBSTRING_INDEX(Song, '- ', -1) SEPARATOR '\\n') FROM (SELECT DISTINCT `Number of songs` FROM SongsByDurationRangeVIEW) fstview JOIN SongsByDurationRangeVIEW sndview ON sndview.`Number of songs`<=fstview.`Number of songs` GROUP BY fstview.`Number of songs` ORDER BY fstview.`Number of songs` DESC) SELECT COUNT(*) FROM songsbydurrang;");
+                while (resset.next())
+                    count = resset.getInt("COUNT(*)");
+                datarr = new String[count][2];
+                resset = stat.executeQuery("SELECT CONCAT(COUNT(Song), ' songs in range ', MIN(`Song duration range in minutes`), ':0-', MAX(`Song duration range in minutes`), ':59'), GROUP_CONCAT(Song ORDER BY SUBSTRING_INDEX(Song, '- ', -1) SEPARATOR '\\n') FROM (SELECT DISTINCT `Number of songs` FROM SongsByDurationRangeVIEW) fstview JOIN SongsByDurationRangeVIEW sndview ON sndview.`Number of songs`<=fstview.`Number of songs` GROUP BY fstview.`Number of songs` ORDER BY fstview.`Number of songs` DESC;");
+                count = 0;
+                while (resset.next())
+                {
+                    String nosongsindurrang = resset.getString(1);
+                    String songs = resset.getString(2);
+                    datarr[count][0] = nosongsindurrang;
+                    datarr[count][1] = songs;
+                    count+=1;
+                }
+            }
+            if (subnum == 6)
+            {
+                datarr = new String[1][1];
+                pstat = conn.prepareStatement("SELECT GROUP_CONCAT(Song ORDER BY SUBSTRING_INDEX(Song, '- ', -1) SEPARATOR '\\n') FROM SongsByDurationRangeVIEW WHERE Song LIKE ?;");
+                pstat.setString(1, search);
+                resset = pstat.executeQuery();
+                resset.next();
+                String song = resset.getString(1);
+                datarr[0][0] = song;
+            }
+            if (subnum == 7)
+            {
+                datarr = new String[1][1];
+                pstat = conn.prepareStatement("SELECT CONCAT(COUNT(Song), ' songs in range ', MIN(`Song duration range in minutes`), ':0-', MAX(`Song duration range in minutes`), ':59') FROM SongsByDurationRangeVIEW WHERE Song LIKE ?;");
+                pstat.setString(1, search);
+                resset = pstat.executeQuery();
+                resset.next();
+                String song = resset.getString(1);
+                datarr[0][0] = song;
+            }
         }
         conn.close();
 

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.chart.StackedBarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.geometry.Insets?>
+
+<FlowPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.audiolibrary.MusicArtistsBandsByNumberofSongsVisualization">
+    <padding>
+        <Insets bottom="5" left="-40" right="5" top="-15"/>
+    </padding>
+    <StackPane alignment="TOP_RIGHT">
+        <HBox>
+            <StackPane alignment="TOP_LEFT">
+                <HBox>
+                    <padding>
+                        <Insets bottom="143" left="60" top="15"/>
+                    </padding>
+                    <AnchorPane fx:id="AnchorPane1" style="-fx-background-color: #FFFFFF">
+                    </AnchorPane>
+                </HBox>
+                <StackedBarChart fx:id="bc" prefWidth="1325" prefHeight="1080" stylesheets="/barchart.css">
+                    <xAxis>
+                        <CategoryAxis fx:id="x" label="Number of songs" styleClass="x"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis fx:id="y" label="Number of music artists/bands" prefWidth="45" styleClass="y"/>
+                    </yAxis>
+                </StackedBarChart>
+                <HBox mouseTransparent="true">
+                    <padding>
+                        <Insets bottom="147" top="15"/>
+                    </padding>
+                    <AnchorPane fx:id="AnchorPane2">
+                    </AnchorPane>
+                </HBox>
+            </StackPane>
+        </HBox>
+        <HBox alignment="TOP_RIGHT" maxWidth="655" maxHeight="475">
+            <padding>
+                <Insets right="15" top="15"/>
+            </padding>
+            <HBox minHeight="475" style="-fx-border-width: 0 0 1 1; -fx-border-color: #4B0000">
+                <VBox>
+                    <Label id="label1musicartistbandincategorybynumberofsongs" text="Music artists/bands in category by number of songs" prefWidth="400" prefHeight="24" alignment="CENTER" style="-fx-background-color: #FFFFFF; -fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #000000"/>
+                    <StackPane alignment="TOP_CENTER">
+                        <ScrollPane fx:id="ScrollPane1" fitToWidth="true" prefWidth="400" prefHeight="450" stylesheets="/scrollpane.css">
+                            <VBox fx:id="VBox2">
+                            </VBox>
+                        </ScrollPane>
+                        <TextField fx:id="textfield1musicartistbandincategorybynumberofsongs" prefWidth="400" prefHeight="25" alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-border-width: 0 0 1 0; -fx-border-color: #4B0000; -fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000; -fx-cursor: default"/>
+                    </StackPane>
+                </VBox>
+                <StackPane alignment="TOP_RIGHT" maxWidth="240" maxHeight="445">
+                    <VBox fx:id="VBox1">
+                        <padding>
+                            <Insets top="24"/>
+                        </padding>
+                    </VBox>
+                    <Label id="label2category" text="Category" prefWidth="240" prefHeight="24" alignment="CENTER" style="-fx-background-color: #FFFFFF; -fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #000000"/>
+                    <HBox alignment="TOP_RIGHT" maxWidth="25" maxHeight="25">
+                        <padding>
+                            <Insets right="-5" top="-9"/>
+                        </padding>
+                        <Button fx:id="button17exit" text="&#x00D7;" prefWidth="35" prefHeight="35" styleClass="button17exit" stylesheets="/button.css" onAction="#button17exit"/>
+                    </HBox>
+                </StackPane>
+            </HBox>
+        </HBox>
+    </StackPane>
+</FlowPane>

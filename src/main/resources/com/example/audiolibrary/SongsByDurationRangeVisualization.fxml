@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.geometry.Insets?>
+
+<FlowPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.audiolibrary.SongsByDurationRangeVisualization">
+    <padding>
+        <Insets bottom="5" right="5"/>
+    </padding>
+    <HBox style="-fx-background-color: #FFFFFF">
+        <PieChart fx:id="pc" prefWidth="719" prefHeight="955" stylesheets="/piechart.css">
+        </PieChart>
+        <StackPane alignment="TOP_RIGHT">
+            <VBox>
+                <HBox alignment="TOP_RIGHT" maxWidth="565" maxHeight="830">
+                    <HBox minHeight="830" style="-fx-border-width: 0 0 1 1; -fx-border-color: #4B0000">
+                        <VBox>
+                            <Label id="label1songsbydurationrange" text="Songs by duration range" prefWidth="400" prefHeight="24" alignment="CENTER" style="-fx-background-color: #FFFFFF; -fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #000000"/>
+                            <StackPane alignment="TOP_CENTER">
+                                <ScrollPane fx:id="ScrollPane1" fitToWidth="true" prefWidth="400" prefHeight="805" stylesheets="/scrollpane.css">
+                                    <VBox fx:id="VBox2">
+                                    </VBox>
+                                </ScrollPane>
+                                <TextField fx:id="textfield1songsbydurationrange" prefWidth="400" prefHeight="25" alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-border-width: 0 0 1 0; -fx-border-color: #4B0000; -fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000; -fx-cursor: default"/>
+                            </StackPane>
+                        </VBox>
+                        <StackPane alignment="TOP_RIGHT" maxWidth="150" maxHeight="800">
+                            <VBox fx:id="VBox1">
+                                <padding>
+                                    <Insets top="24"/>
+                                </padding>
+                            </VBox>
+                            <Label id="label2durationrange" text="Duration range" prefWidth="150" prefHeight="24" alignment="CENTER" style="-fx-background-color: #FFFFFF; -fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #000000"/>
+                            <HBox alignment="TOP_RIGHT" maxWidth="25" maxHeight="25">
+                                <padding>
+                                    <Insets right="-5" top="-8"/>
+                                </padding>
+                                <Button fx:id="button17exit" text="&#x00D7;" prefWidth="35" prefHeight="35" styleClass="button17exit" stylesheets="/button.css" onAction="#button17exit"/>
+                            </HBox>
+                        </StackPane>
+                    </HBox>
+                </HBox>
+                <HBox>
+                    <padding>
+                        <Insets left="250"/>
+                    </padding>
+                    <TextField fx:id="textfield2search" prefWidth="150" prefHeight="25" style="-fx-focus-color: #4B0000; -fx-faint-focus-color: transparent; -fx-highlight-fill: #FF0000; -fx-font-family: Times New Roman; -fx-font-style: italic; -fx-font-size: 12; -fx-text-fill: #000000"/>
+                </HBox>
+            </VBox>
+        </StackPane>
+    </HBox>
+</FlowPane>

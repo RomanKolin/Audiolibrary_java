@@ -84,6 +84,7 @@ BEGIN
 SET @genr=genre;
 WITH songsstatisticsasc AS(SELECT `Music artist/band`.artband, `Music artist/band's song`.feat, Song.nam, Song.dur FROM `Music artist/band` JOIN `Music artist/band's song` ON `Music artist/band`.ID=`Music artist/band's song`.artband JOIN Song ON Song.ID=`Music artist/band's song`.song WHERE `Music artist/band`.genr=@genr AND Song.cat IS NULL UNION SELECT `Related music artist/band`.relartband, `Music artist/band's song`.feat, Song.nam, Song.dur FROM `Related music artist/band` JOIN `Music artist/band` ON `Music artist/band`.ID=`Related music artist/band`.artband JOIN `Music artist/band's song` ON `Related music artist/band`.ID=`Music artist/band's song`.artband JOIN Song ON Song.ID=`Music artist/band's song`.song WHERE `Music artist/band`.genr=@genr AND Song.cat IS NULL) SELECT REPLACE(CONCAT(songsstatisticsasc.artband, REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(IFNULL(songsstatisticsasc.feat, ''), '^', ', '), ',(?!.*,)', ' &'), '(?=.*[А-Яа-я])&', 'и'), ' - ', songsstatisticsasc.nam, ' (', TRIM(LEADING '00:' FROM REPLACE(songsstatisticsasc.dur, ':0', ':')), ')'), ',  -', ' -') AS 'Shortest songs', REPLACE(CONCAT(songsstatisticsdesc.artband, REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(IFNULL(songsstatisticsdesc.feat, ''), '^', ', '), ',(?!.*,)', ' &'), '(?=.*[А-Яа-я])&', 'и'), ' - ', songsstatisticsdesc.nam, ' (', TRIM(LEADING '00:' FROM REPLACE(songsstatisticsdesc.dur, ':0', ':')), ')'), ',  -', ' -') AS 'Longest songs' FROM (SELECT *, ROW_NUMBER() OVER(ORDER BY dur, nam) AS rnasc FROM songsstatisticsasc) AS songsstatisticsasc JOIN (SELECT *, ROW_NUMBER() OVER(ORDER BY dur DESC, nam ASC) AS rndesc FROM songsstatisticsasc) AS songsstatisticsdesc ON songsstatisticsasc.rnasc=songsstatisticsdesc.rndesc;
 END$
+DELIMITER ;
 CREATE PROCEDURE SongsStatisticsComposers()
 WITH songsstatisticsasc AS(SELECT `Music artist/band`.artband, `Music artist/band's song`.feat, Song.nam, Song.dur FROM `Music artist/band` JOIN `Music artist/band's song` ON `Music artist/band`.ID=`Music artist/band's song`.artband JOIN Song ON Song.ID=`Music artist/band's song`.song WHERE `Music artist/band`.cat='Композиторы' AND Song.cat IS NULL) SELECT REPLACE(CONCAT(songsstatisticsasc.artband, REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(IFNULL(songsstatisticsasc.feat, ''), '^', ', '), ',(?!.*,)', ' &'), '(?=.*[А-Яа-я])&', 'и'), ' - ', songsstatisticsasc.nam, ' (', TRIM(LEADING '00:' FROM REPLACE(songsstatisticsasc.dur, ':0', ':')), ')'), ',  -', ' -') AS 'Shortest songs', REPLACE(CONCAT(songsstatisticsdesc.artband, REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(IFNULL(songsstatisticsdesc.feat, ''), '^', ', '), ',(?!.*,)', ' &'), '(?=.*[А-Яа-я])&', 'и'), ' - ', songsstatisticsdesc.nam, ' (', TRIM(LEADING '00:' FROM REPLACE(songsstatisticsdesc.dur, ':0', ':')), ')'), ',  -', ' -') AS 'Longest songs' FROM (SELECT *, ROW_NUMBER() OVER(ORDER BY dur, nam) AS rnasc FROM songsstatisticsasc) AS songsstatisticsasc JOIN (SELECT *, ROW_NUMBER() OVER(ORDER BY dur DESC, nam ASC) AS rndesc FROM songsstatisticsasc) AS songsstatisticsdesc ON songsstatisticsasc.rnasc=songsstatisticsdesc.rndesc;
 CREATE PROCEDURE SongsStatisticsBloggers()
@@ -93,6 +94,7 @@ WITH songsstatisticsasc AS(WITH songsstatisticsasc AS(SELECT `Music artist/band`
 CREATE PROCEDURE SongsStatisticsSoundtracks()
 WITH soundtracksstatisticsasc AS(SELECT movanimsergam, nosongs, songsdur FROM Soundtrack) SELECT CONCAT(soundtracksstatisticsasc.movanimsergam, ' (', soundtracksstatisticsasc.nosongs, ', ', TRIM(LEADING '00:' FROM REPLACE(soundtracksstatisticsasc.songsdur, ':0', ':')), ')') AS 'Shortest soundtrack', CONCAT(soundtracksstatisticsdesc.movanimsergam, ' (', soundtracksstatisticsdesc.nosongs, ', ', TRIM(LEADING '00:' FROM REGEXP_REPLACE(REGEXP_REPLACE(REPLACE(soundtracksstatisticsdesc.songsdur, ':0', ':'), '^01', '1'), '^02', '2')), ')') AS 'Longest soundtrack' FROM (SELECT *, ROW_NUMBER() OVER(ORDER BY songsdur, movanimsergam) AS rnasc FROM soundtracksstatisticsasc) AS soundtracksstatisticsasc JOIN (SELECT *, ROW_NUMBER() OVER(ORDER BY songsdur DESC, movanimsergam ASC) AS rndesc FROM soundtracksstatisticsasc) AS soundtracksstatisticsdesc ON soundtracksstatisticsasc.rnasc=soundtracksstatisticsdesc.rndesc;
 
+DELIMITER $
 CREATE TRIGGER MusicArtistBandIDBEFOREINSERTONMUSICARTISTBAND BEFORE INSERT ON `Music artist/band` FOR EACH ROW
 BEGIN
 SET @artbandid=(SELECT MAX(ID) FROM `Music artist/band`);
@@ -156,24 +158,24 @@ CREATE TRIGGER SoundtracksCountandDurationAFTERUPDATEONSOUNDTRACK AFTER UPDATE O
 UPDATE `Audio library` SET noorigartsbands=0, nosongs=(SELECT SUM(nosongs) FROM Soundtrack), songsdur=REGEXP_REPLACE(REPLACE((SELECT DATE_FORMAT(DATE('1000-01-01 00:00:00') + INTERVAL SUM(TIME_TO_SEC(songsdur)) SECOND - INTERVAL 1 DAY, '%jd %H:%i:%s') FROM Soundtrack), '365d ', ''), '^00', '') WHERE cat='Саундтреки';
 
 INSERT INTO `Audio library`(cat) VALUES('Жанр'),
-                                                                          ('Композиторы'),
-                                                                          ('Блогеры'),
-                                                                          ('Каверы'),
-                                                                          ('Саундтреки');
+                                       ('Композиторы'),
+                                       ('Блогеры'),
+                                       ('Каверы'),
+                                       ('Саундтреки');
 INSERT INTO Genre(nam) VALUES('Авторская песня, Шансон'),
-                                                               ('Альтернатива, Инди'),
-                                                               ('Блюз'),
-                                                               ('ВИА'),
-                                                               ('Вокальная музыка'),
-                                                               ('Джаз'),
-                                                               ('Кантри'),
-                                                               ('Легкая, Инструментальная музыка'),
-                                                               ('Метал, Ню-метал, Металкор'),
-                                                               ('Панк, Эмо, Постхардкор'),
-                                                               ('Поп'),
-                                                               ('Поп-рок'),
-                                                               ('Регги, Реггетон'),
-                                                               ('Рок'),
-                                                               ('Соул, Фанк, Диско'),
-                                                               ('Хип-хоп'),
-                                                               ('Электронная музыка');
+                             ('Альтернатива, Инди'),
+                             ('Блюз'),
+                             ('ВИА'),
+                             ('Вокальная музыка'),
+                             ('Джаз'),
+                             ('Кантри'),
+                             ('Легкая, Инструментальная музыка'),
+                             ('Метал, Ню-метал, Металкор'),
+                             ('Панк, Эмо, Постхардкор'),
+                             ('Поп'),
+                             ('Поп-рок'),
+                             ('Регги, Реггетон'),
+                             ('Рок'),
+                             ('Соул, Фанк, Диско'),
+                             ('Хип-хоп'),
+                             ('Электронная музыка');

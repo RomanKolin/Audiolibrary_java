@@ -1,0 +1,6 @@
+.chart-plot-background{-fx-background-color: transparent}
+.chart-horizontal-grid-lines{-fx-stroke: transparent}
+.chart-vertical-grid-lines{-fx-stroke: transparent}
+.axis{-fx-tick-label-font-family: Times New Roman; -fx-tick-label-font-size: 10; -fx-tick-label-fill: #000000}
+.x .axis-label{-fx-padding: -5; -fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #000000}
+.y .axis-label{-fx-padding: 20; -fx-font-family: Times New Roman; -fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #000000}

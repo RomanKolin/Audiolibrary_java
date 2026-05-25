@@ -2,7 +2,6 @@ package com.example.audiolibrary;
 
 import javafx.application.*;
 import javafx.fxml.*;
-import javafx.util.*;
 import javafx.stage.*;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
@@ -11,6 +10,7 @@ import javafx.scene.input.*;
 import javafx.scene.transform.*;
 import javafx.scene.image.*;
 import javafx.scene.text.*;
+import javafx.util.*;
 import javafx.event.*;
 import javafx.collections.*;
 import javafx.beans.property.*;
@@ -193,7 +193,13 @@ public class AudioLibrary extends Application
     static TextField textfield16;
     static TextField textfield17;
     static TextField textfield18;
+    static Button button1;
+    static Button button2;
+    static Button button3;
+    static Button button4;
     static Button button5;
+    static Button button6;
+    static Button button7;
     static TableView<String[]> tableview1;
     static TableView<String[]> tableview2;
     static TableView<String[]> tableview3;
@@ -220,6 +226,7 @@ public class AudioLibrary extends Application
         stage.show();
     }
 
+    static Runnable buttonrun;
     EventHandler<MouseEvent> me = Event::consume;
     int subtabl, siz10, rfnum, rsnum, rtnum, nodat, songsartband;
     static int tabl, siz9, siz11, siz12, siz13, siz14, siz15, artbandid, relartbandid, songid, coverid, soundtrackid, backup;
@@ -235,7 +242,7 @@ public class AudioLibrary extends Application
     public void initialize()
     {
         if (Screen.getPrimary().getBounds().getWidth() >= 1920)
-            FlowPane1.getTransforms().add(new Scale(Screen.getPrimary().getBounds().getWidth()/1280, Screen.getPrimary().getBounds().getHeight()/1024));
+            FlowPane1.getTransforms().add(new Scale(Math.round((Screen.getPrimary().getBounds().getWidth()/1280.0)*100.0)/100.0, Math.round((Screen.getPrimary().getBounds().getHeight()/1024.0)*100.0)/100.0));
 
         flowpane1 = FlowPane1;
         label24 = label24numberofartistssongscountandduration;
@@ -257,7 +264,13 @@ public class AudioLibrary extends Application
         textfield16 = textfield16change;
         textfield17 = textfield17search;
         textfield18 = textfield18search;
+        button1 = button1audiolibrarygenre;
+        button2 = button2musicartistband;
+        button3 = button3composers;
+        button4 = button4bloggers;
         button5 = button5covers;
+        button6 = button6soundtracks;
+        button7 = button7favourites;
         tableview1 = tableview1audiolibrary;
         tableview2 = tableview2genrerelatedartistsbands;
         tableview3 = tableview3songs;
@@ -746,8 +759,8 @@ public class AudioLibrary extends Application
             for (int i = 0; i < tableviewstring.getItems().size(); i++)
             {
                 tableviewstring.getSelectionModel().select(i);
-                noart += Integer.parseInt(Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(rsong-1));
-                songscount += Integer.parseInt(Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(rsong));
+                noart+=Integer.parseInt(Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(rsong-1));
+                songscount+=Integer.parseInt(Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(rsong));
                 if (!Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(3).contains("d"))
                 {
                     day = 0;
@@ -786,7 +799,7 @@ public class AudioLibrary extends Application
             for (int i = 0; i < tableviewstring.getItems().size(); i++)
             {
                 tableviewstring.getSelectionModel().select(i);
-                songscount += Integer.parseInt(Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(rsong));
+                songscount+=Integer.parseInt(Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(rsong));
                 if ((Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(4).length()>=3 && Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(4).length()<=5) && Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(4).lastIndexOf(":") != 3)
                     dur = "00:" + Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(4);
                 else
@@ -802,7 +815,7 @@ public class AudioLibrary extends Application
                 for (int i = 0; i < tableviewstring.getItems().size(); i++)
                 {
                     tableviewstring.getSelectionModel().select(i);
-                    songscount += Integer.parseInt(Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(rsong));
+                    songscount+=Integer.parseInt(Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(rsong));
                     try
                     {
                         if((Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(rsong+1).length()>=3 && Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(rsong+1).length()<=5) && Arrays.asList(tableviewstring.getSelectionModel().getSelectedItem()).get(rsong+1).lastIndexOf(":") != 3)
@@ -1442,6 +1455,8 @@ public class AudioLibrary extends Application
         rsnum = 0;
         rtnum = 0;
         table(100, 225, 130, 130, 238, 175, 125, 125, 0, 0, 0, 0, 0, 0);
+
+        buttonrun = () -> button1.fire();
     }
 
     public void button2musicartistband() throws Exception
@@ -1516,52 +1531,54 @@ public class AudioLibrary extends Application
         combobox1.setVisibleRowCount(17);
         combobox1.setItems(FXCollections.observableArrayList(
                 "Авторская песня, Шансон",
-                     "Альтернатива, Инди",
-                     "Блюз",
-                     "ВИА",
-                     "Вокальная музыка",
-                     "Джаз",
-                     "Кантри",
-                     "Легкая, Инструментальная музыка",
-                     "Метал, Ню-метал, Металкор",
-                     "Панк, Эмо, Постхардкор",
-                     "Поп",
-                     "Поп-рок",
-                     "Регги, Реггетон",
-                     "Рок",
-                     "Соул, Фанк, Диско",
-                     "Хип-хоп",
-                     "Электронная музыка"));
+                       "Альтернатива, Инди",
+                       "Блюз",
+                       "ВИА",
+                       "Вокальная музыка",
+                       "Джаз",
+                       "Кантри",
+                       "Легкая, Инструментальная музыка",
+                       "Метал, Ню-метал, Металкор",
+                       "Панк, Эмо, Постхардкор",
+                       "Поп",
+                       "Поп-рок",
+                       "Регги, Реггетон",
+                       "Рок",
+                       "Соул, Фанк, Диско",
+                       "Хип-хоп",
+                       "Электронная музыка"));
         combobox1.setOnAction(e -> filtering());
         combobox2.setPrefWidth(285);
         combobox2.setVisible(true);
         combobox2.setVisibleRowCount(2);
         combobox2.setItems(FXCollections.observableArrayList(
                 "With related artist(-s)/band(-s)",
-                     "Without related artist(-s)/band(-s)"));
+                       "Without related artist(-s)/band(-s)"));
         combobox2.setOnAction(e -> filtering());
         combobox3.setVisible(true);
         combobox3.setVisibleRowCount(6);
         combobox3.setItems(FXCollections.observableArrayList(
                 "<10",
-                     "15",
-                     "25",
-                     "55",
-                     "70",
-                     ">70"));
+                       "15",
+                       "25",
+                       "55",
+                       "70",
+                       ">70"));
         combobox3.setOnAction(e -> filtering());
         combobox4.setVisible(true);
         combobox4.setVisibleRowCount(4);
         combobox4.setItems(FXCollections.observableArrayList(
                 "<45:00",
-                     ">=45:00 & <1:15:00",
-                     ">=1:15:00 & <2:5:00",
-                     ">=2:5:00"));
+                       ">=45:00 & <1:15:00",
+                       ">=1:15:00 & <2:5:00",
+                       ">=2:5:00"));
         combobox4.setOnAction(e -> filtering());
 
         musicartistband.combobox5genre.setVisibleRowCount(17);
         musicartistband.combobox5genre.getItems().addAll(combobox1.getItems());
         musicartistband.combobox5genre.setOnAction(e -> textfield3.setText(String.valueOf(musicartistband.combobox5genre.getValue())));
+
+        buttonrun = () -> button2.fire();
     }
 
     public void button3composers() throws Exception
@@ -1619,14 +1636,16 @@ public class AudioLibrary extends Application
         combobox1.setVisibleRowCount(2);
         combobox1.setItems(FXCollections.observableArrayList(
                 "<5",
-                ">=5"));
+                       ">=5"));
         combobox1.setOnAction(e -> filtering());
         combobox2.setPrefWidth(100);
         combobox2.setVisibleRowCount(2);
         combobox2.setItems(FXCollections.observableArrayList(
                 "<20:00",
-                ">=20:00"));
+                       ">=20:00"));
         combobox2.setOnAction(e -> filtering());
+
+        buttonrun = () -> button3.fire();
     }
 
     public void button4bloggers() throws Exception
@@ -1684,14 +1703,16 @@ public class AudioLibrary extends Application
         combobox1.setVisibleRowCount(2);
         combobox1.setItems(FXCollections.observableArrayList(
                 "<5",
-                ">=5"));
+                       ">=5"));
         combobox1.setOnAction(e -> filtering());
         combobox2.setPrefWidth(100);
         combobox2.setVisibleRowCount(2);
         combobox2.setItems(FXCollections.observableArrayList(
                 "<20:00",
-                ">=20:00"));
+                       ">=20:00"));
         combobox2.setOnAction(e -> filtering());
+
+        buttonrun = () -> button4.fire();
     }
 
     public void button5covers() throws Exception
@@ -1729,8 +1750,10 @@ public class AudioLibrary extends Application
         combobox1.setVisibleRowCount(2);
         combobox1.setItems(FXCollections.observableArrayList(
                 "<4:00",
-                ">=4:00"));
+                       ">=4:00"));
         combobox1.setOnAction(e -> filtering());
+
+        buttonrun = () -> button5.fire();
     }
 
     public void button6soundtracks() throws Exception
@@ -1768,14 +1791,16 @@ public class AudioLibrary extends Application
         combobox1filtering.setVisibleRowCount(2);
         combobox1filtering.setItems(FXCollections.observableArrayList(
                 "1",
-                ">1"));
+                       ">1"));
         combobox1filtering.setOnAction(e -> filtering());
         combobox2filtering.setPrefWidth(100);
         combobox2filtering.setVisibleRowCount(2);
         combobox2filtering.setItems(FXCollections.observableArrayList(
                 "<4:00",
-                ">=4:00"));
+                       ">=4:00"));
         combobox2filtering.setOnAction(e -> filtering());
+
+        buttonrun = () -> button6.fire();
     }
 
     public void button7favourites() throws Exception
@@ -1839,6 +1864,28 @@ public class AudioLibrary extends Application
         nam15="Featuring";
         siz15=410;
         table(250, 0, 230, 0, 135, 135, 0, 0, 215, 135, 135, 770, 75, 410);
+
+        buttonrun = () -> button7.fire();
+    }
+
+    public void button15musicartistsbandsbynumberofsongsvisualization() throws Exception
+    {
+        FlowPane1.getChildren().clear();
+        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("MusicArtistsBandsByNumberofSongsVisualization.fxml"));
+        FlowPane1.getChildren().add(fxmlloader.load());
+        MusicArtistsBandsByNumberofSongsVisualization musicartistsbandsbynumberofsongsvisualization = fxmlloader.getController();
+
+        musicartistsbandsbynumberofsongsvisualization.musicartistsbandsbynumberofsongsvisualization();
+    }
+
+    public void button16songsbydurationrange() throws Exception
+    {
+        FlowPane1.getChildren().clear();
+        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("SongsByDurationRangeVisualization.fxml"));
+        FlowPane1.getChildren().add(fxmlloader.load());
+        SongsByDurationRangeVisualization songsbydurationrangevisualization = fxmlloader.getController();
+        
+        songsbydurationrangevisualization.songsbydurationrangevisualization();
     }
 
     public static int musicartistbandid()
