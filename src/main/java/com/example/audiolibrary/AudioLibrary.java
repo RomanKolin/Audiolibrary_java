@@ -1981,6 +1981,6 @@ public class AudioLibrary extends Application
     public void stop() throws Exception
     {
         if (backup == 1)
-            Runtime.getRuntime().exec("/home/romankolin/AudioLibrary/./.audiolibrarybackup.sh");
+            Runtime.getRuntime().exec("/home/romankolin/audiolibrary/./.audiolibrarybackup.sh");
     }
 }
