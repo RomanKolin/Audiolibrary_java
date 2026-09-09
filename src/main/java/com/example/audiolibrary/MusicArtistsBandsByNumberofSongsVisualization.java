@@ -206,9 +206,9 @@ public class MusicArtistsBandsByNumberofSongsVisualization
             labeltick = new Label(String.valueOf(noartsbandsbynosongs[0]));
             labeltick.setPrefWidth(18);
             labeltick.setStyle("-fx-alignment: CENTER; -fx-font-family: Times New Roman; -fx-font-size: 10; -fx-text-fill: #000000");
-            labeltick.setLayoutX(lx+44.25);
+            labeltick.setLayoutX(lx+45);
             AnchorPane2.getChildren().add(labeltick);
-            labeltick.translateYProperty().bind(Bindings.createDoubleBinding(() -> y.getDisplayPosition(Integer.parseInt(noartsbandsbynosongs[0])+6), y.lowerBoundProperty(), y.upperBoundProperty()));
+            labeltick.translateYProperty().bind(Bindings.createDoubleBinding(() -> y.getDisplayPosition(Integer.parseInt(noartsbandsbynosongs[0])+10), y.lowerBoundProperty(), y.upperBoundProperty()));
             lx+=1240.0/noartsbandsbynosongslabarr.length;
         }
         for (int i = 0; i < 17; i++)
